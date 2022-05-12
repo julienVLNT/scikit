@@ -1,0 +1,65 @@
+/*
+    Exploration du type string du langage FreeFem++.
+
+    - Déclaration
+    - Déclaration d'une liste
+    - Attribut .length
+    - Concatenation de chaines et de types int, real, complex
+    - Extraction d'une sous-chaine
+    - Insérer une chaine dans une autre
+    - Méthodes de recherche .find(str), .find(str, ind), .rfind(str), .ffind(str, ind)
+
+    auteur : Julien VALENTIN, d'après https://doc.freefem.org/examples/developers.html#examplestring
+    date   : Mai 2022
+
+    execution dans un terminal externe :
+        FreeFem++ -v 0 "C:\Users\julien\Documents\GitHub\Scikit\fr\langages\FreeFem\string.edp"
+*/
+
+// Déclaration
+string chaine0 = "Hello, World !";
+
+// Déclaration d'une liste
+string[int] chaines(4);
+chaines[0] = "Hello";
+chaines[1] = ", ";
+chaines[2] = "World";
+chaines[3] = " !";
+
+// Attribut .length
+int nombreDeCaracteres = chaine0.length;
+
+// Concaténation de chaines de caracteres
+string chaine1 = "Hello" + ", " + "World " + "!";
+string chaine2 = "J'ai " + 27 + " ans.";             // int 27
+string chaine3 = "Je mesure " + 1.80 + " m";         // real 1.80
+string chaine4 = "|z| = " + abs(1+1i);               // complex 1+1i
+
+// Extraction d'une sous-chaine
+string sousChaine = chaine0(1:3);                    // borne sup incluse
+
+// Insérer une chaine dans une autre
+string chaine5 = "0123456789";
+chaine5(4:3) = "abcd";                               // insérer à l'indexe i (i:(i-1))
+
+// Méthode de recherche .find(str)
+string chaine6 = "abcdefghijklmnopqrstuvwxyz";
+cout << chaine6.find("ghi") << endl;                 // renvoie 6 : indexe du début de l'argument
+cout << chaine6.find("0") << endl;                   // renvoie -1 si l'argument n'est pas dans la chaine
+cout << endl;
+
+// Méthode de recherche .rfind(str)
+string chaine7 = "abcdaaa";
+cout << chaine6.rfind("a") << endl;                  // renvoie 0 : indexe de la première occurence de l'argument
+cout << chaine6.rfind("0") << endl;                  // renvoie -1 si l'argument n'est pas dans la chaine
+
+// Méthode de recherche .find(str, ind)
+cout << chaine7.find("a", 3) << endl;                // renvoie 4 : premier indexe > 3 où l'argument apparaît
+cout << chaine6.find("a", 5) << endl;                // renvoie -1 : aucune occurence de l'argument au-delà de l'indexe 5
+
+// Méthode de recherche .ffind(str, ind)
+cout << chaine7.ffind("a", 3) << endl;               // renvoie -1
+
+/////////
+// FIN //
+////////

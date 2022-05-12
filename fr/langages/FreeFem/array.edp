@@ -1,0 +1,61 @@
+/*
+    Ce script est dédié à l'utilisation des vecteurs en langage FreeFem.
+
+    - Declaration de vecteurs,
+    - Declaration de matrices denses,
+    - Attributs d'un vecteur,
+    - Attributs d'une matrice,
+    - Tri d'un vecteur
+
+    auteur : Julien VALENTIN
+    date   : 12 mai 2022
+
+    execution dans un terminal externe
+    FreeFem++ "C:\Users\julien\Documents\GitHub\Scikit\fr\langages\FreeFem\array.edp" -ns
+*/
+
+// Declaration d'un vecteur de type <type>
+string[int]  a = ["a", "b", "c", "d"];
+int[int]     b = [1, 2, 3, 4];
+real[int]    c = [0.25, 0.5, 0.75, 1.];
+complex[int] d = [1+1i, -1i, 0, 0.2i];
+
+mesh Th; fespace Vh(Th, P0);
+Vh[int] uh(5);
+Vh<complex>[int] vh(3);
+
+cout << a << endl;
+cout << b << endl;
+cout << c << endl;
+cout << d << endl;
+cout << uh[0] << uh[1] << uh[2] << uh[3] << uh[4] << endl;
+cout << vh[0] << vh[1] << vh[1] << vh[2] << endl;
+
+// Declaration de vecteurs de vecteurs (matrices)
+real[int, int] f = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]];
+cout << f << endl;
+
+// Attributs d'un vecteur
+int     n = c.n;
+real minc = c.min;
+real maxc = c.max;
+int imaxc = c.imax;
+int iminc = c.imin;
+
+cout << "Nombre d'elements " << n << endl;
+cout << "Minimum " << minc << endl;
+cout << "Maximum " << maxc << endl;
+cout << "Indexe du maximum " << imaxc << endl;
+cout << "Indexe du minimum " << iminc << endl;
+cout << endl;
+
+// Attributs d'une matrice
+int k = f.n;
+int l = f.m;
+cout << k << " " << l << endl;
+
+// Tri d'un vecteur
+int[int] e = [9, 8, 7, 6, 5];
+e.sort;
+
+cout << e << endl;

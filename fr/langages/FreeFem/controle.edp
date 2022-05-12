@@ -1,0 +1,61 @@
+/*
+    Exploration des structures de contrôle en langage FreeFem.
+
+    - gestion des erreurs avec try / catch
+    - evaluation conditionnelle if / else
+    - evaluation répétée avec for
+    - evaluation répétée avec while
+    - test unitaire avec assert
+
+    auteur : Julien VALENTIN
+    date   : 12 mai 2022
+
+    execution dans un terminal externe :
+        FreeFem++ "C:\Users\julien\Documents\GitHub\Scikit\fr\langages\FreeFem\controle.edp" -ns
+*/
+
+// Gestion des erreurs avec try / catch
+real a;
+
+try{
+    a = 1/0;
+}
+catch(...){
+    cout << "Erreur ! Division par 0 !" << endl;
+    a = 0;
+}
+cout << endl;
+
+// Evaluation conditionnelle
+int b = 0;
+if(b == 0){
+    cout << "Hello, World !" << endl;
+}
+else{ 
+    cout << "Good morning, World !" << endl;
+}
+cout << endl;
+
+// Evaluation répétée avec for
+for(int i=0; i < 5; i++){
+    cout << i << " ";
+}
+cout << endl;
+
+for(int i=0; i < 5; ++i){
+    cout << i << " ";
+}
+cout << endl;
+
+// Evaluation répétée avec while
+int c = 0;
+cout << endl;
+while(c < 5){
+    cout << c << " ";
+    c++;
+}
+cout << endl;
+// Test unitaire avec assert()
+cout << endl;
+cout << "Test unitaire a == 1 ";
+assert(a==1);

@@ -1,0 +1,111 @@
+/*
+    Etude de l'impact de la parallelisation sur n processeurs pour le probleme 
+    modele.
+
+    ----- PARALLELISATION SUR 2 PROCESSEURS -----
+
+    |------------------------------|---------------------|
+    | Nombre de points sur le bord | Temps de calcul (s) |
+    |------------------------------|---------------------|
+    |                          128 | 0.089               |
+    |                          256 | 0.075               |
+    |                          512 | 0.316               |
+    |                         1024 | 4.526               |
+    |                         2048 | 43.382              |
+    |                         4096 | 184.834 ~ 3 min     |
+    |                         8192 | execution > 15 min  |
+    |------------------------------|---------------------|
+
+    ----- PARALLELISATION SUR 4 PROCESSEURS -----
+
+    |------------------------------|---------------------|
+    | Nombre de points sur le bord | Temps de calcul (s) |
+    |------------------------------|---------------------|
+    |                          128 | 0.047               |
+    |                          256 | 0.032               |
+    |                          512 | 0.172               |
+    |                         1024 | 2.156               |
+    |                         2048 | 19.813              |
+    |                         4096 | 189.854             |
+    |------------------------------|---------------------|
+    
+    ----- PARALLELISATION SUR 8 PROCESSEURS -----
+
+    |------------------------------|---------------------|
+    | Nombre de points sur le bord | Temps de calcul (s) |
+    |------------------------------|---------------------|
+    |                          128 | 0.047               |
+    |                          256 | 0.032               |
+    |                          512 | 0.191               |
+    |                         1024 | 2.031               |
+    |                         2048 | 25.919              |
+    |                         4096 | 187.327             |
+    |------------------------------|---------------------|
+
+    A l'evidence, l'impact est nul. Peut-être qu'il ne faut pas seulement 
+    modifier le parametre -n 2 a l'execution mais aussi un parametre dans le 
+    code ? Par exemple "-split", 1 ligne 78 ?
+
+    auteur : Julien VALENTIN
+    date   : 10 mai 2022
+
+    execution dans un terminal externe
+    ----------------------------------
+    FreeFem++-mpi "C:\Users\julien\Documents\GitHub\Scikit\fr\edp\poisson\FreeFem\04_poisson2d_resolution.edp" -n 2 -ns
+*/
+
+// Solution exacte
+func u = 1 - x^2 - y^2;
+
+// A.P.I PETSc
+load "PETSc"
+macro dimension()2// fin de macro
+
+// Librairie FreeFem pour la parallelisation
+include "macro_ddm.idp"
+
+// Maillage global
+int npoints = 128;
+border C(t=0, 1){
+    x = cos(2*pi*t);
+    y = sin(2*pi*t);
+    label=1;
+}
+mesh Th = buildmesh(C(getARGV("-global", npoints)));
+
+// Creation de l'operateur distribue
+Mat Ah;
+buildMat(Th, getARGV("-split", 1), Ah, P1, mpiCommWorld)
+set(Ah, sparams = "-ksp_view");
+
+// Cadre fonctionnel
+fespace Vh(Th, P1);
+
+/*
+    Definition du probleme variationnel sous sa forme discrete, i.e sous forme 
+    de systeme lineaire
+
+                            Ah uh = bh
+    
+    à partir de la forme variationnelle du laplacien.
+*/
+varf a(uh, vh) = int2d(Th)( dx(uh)*dx(vh) + dy(uh)*dy(vh) ) + on(1, uh=0);
+Ah = a(Vh, Vh);
+
+varf l(uh, vh) = int2d(Th)( 4*vh );
+real[int] bh = l(0, Vh);
+
+// Declaration de la solution
+Vh<real> uh;
+
+real tic = clock();
+
+// Resolution
+uh[] = Ah^(-1) * bh;
+
+real tac = clock();
+cout << "Temps de calcul " << tac-tic << " s" << endl;
+
+/////////
+// FIN //
+/////////

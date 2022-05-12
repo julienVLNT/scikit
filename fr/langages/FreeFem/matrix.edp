@@ -1,0 +1,110 @@
+/*
+    Exploration du type `matrix` du langage FreeFem. Ce type implemente
+    l'objet mathematique matrice creuse. 
+
+    - Declaration d'une matrice vide
+    - Declaration par composantes
+    - Declaration par discrétisation d'une forme variationnelle
+    - Declaration par format COO : ([lignes], [colonnes], [donnees])
+    - Declaration par blocs
+    - Attributs d'une matrice
+        - nombre de lignes matrix.n
+        - nombre de colonnes matrix.m
+        - vecteur diagonal matrix.diag
+    - Matrice de nombres complexes et ses attributs
+    - Transposition d'une matrice
+    - Produit de deux matrices A' * B
+    - Produit exterieur de deux matrices A * B'
+
+    auteur : Julien VALENTIN, d'après https://doc.freefem.org/documentation/types.html#matrix
+    date   : Mai 2022
+
+    execution dans un terminal externe :
+        FreeFem++ -v 0 "C:\Users\julien\Documents\GitHub\Scikit\fr\langages\FreeFem\matrix.edp"
+*/
+
+// Declaration d'une matrice vide
+matrix A0;
+
+// Declaration par composantes
+matrix A1 = [ [1., 0., 0.],
+              [0., 1., 0.],
+              [0., 0., 1.] ]
+          ;
+cout << "----- PRINT DE LA MATRICE IDENTITE DU PLAN -----" << endl;
+cout << A1 << endl;
+
+/* Declaration par discrétisation d'une forme variationnelle
+   ---------------------------------------------------------
+
+   Sur le carre unite, on place cinq points sur chaque bord (Th)
+   On pose Vh = span(<P1>)
+   On regarde la formulation variationnelle pour le laplacien
+        a( , ) : u, v |--> \int_\Omega (grad(u) | grad(v)) dx dy */
+
+int   npts = 5;
+mesh    Th = square(npts, npts);
+fespace Vh(Th, P1);
+
+varf a(u, v) = int2d(Th)(dx(u)*dx(v) + dy(u)*dy(v));
+
+matrix A2 = a(Vh, Vh);
+
+// Declaration par format (ligne, colonne, donnee)
+int[int]  I = [0, 1, 2];
+int[int]  J = [0, 1, 2];
+real[int] D = [1., 1., 1.];
+
+matrix A3 = [I, J, D];
+
+cout << "----- PRINT DE LA MATRICE IDENTITE DU PLAN -----" << endl;
+cout << A3 << endl;
+
+// Declaration par blocs
+matrix A4, Aii, Aij;
+
+Aii = A1;
+
+Aij = [ [0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.] ]
+    ;
+
+A4 = [ [Aii, Aij, Aij],
+       [Aij, Aii, Aij],
+       [Aij, Aij, Aii] ]
+   ;
+
+// Attributs d'une matrice
+real[int] diagonale = A4.diag;
+
+cout << endl;
+cout << "---------- ATTRIBUTS D'UNE MATRICE ----------" << endl;
+cout << "Nombre de lignes                      " << A4.n << endl;
+cout << "Nombre de colonnes                    " << A4.m << endl;
+cout << "Diagonale de la matrice               " << diagonale << endl;
+
+// Matrice complexe et ses attributs
+matrix<complex> A5 = [ [1+1i, -1.],
+                       [-1., 1+1i] 
+                     ]
+                   ;
+matrix ReA5 = A5.re;
+matrix ImA5 = A5.im;
+
+cout << endl;
+cout << "---------- PARTIES REELLE ET IMAGINAIRE D'UNE MATRICE COMPLEXE ----------" << endl;
+cout << "Patrie reelle " << ReA5 << endl;
+cout << "Partie imaginaire " << ImA5 << endl;
+
+// Transposition d'une matrice
+matrix A6 = [ [1., 2., 3.],
+              [4., 5., 6.],
+              [7., 8., 9.] ];
+matrix A7 = A6';
+cout << "Transposee " << A7 << endl;
+
+
+/////////
+// FIN //
+/////////

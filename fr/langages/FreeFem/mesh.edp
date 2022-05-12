@@ -1,0 +1,94 @@
+/*
+    Exploration du type mesh du langage FreeFem++. le type `mesh` correspond
+    à un maillage d'une géométrie en deux dimensions uniquement. Pour mailler
+    une géométrie à trois dimensions, importer
+        load "mesh3"
+    et déclarer un objet mesh3.
+
+    Le mailleur de FreeFem crée des triangulations de la géométrie. On peut 
+    accéder à un certain nombre d'attributs de chaque objet maillage.
+
+    - Déclaration d'un maillage vide
+    - Déclaration d'un maillage du carré unité
+    - Attributs de l'objet `mesh`
+        - nombre de triangles,
+        - nombre d'éléments au bord,
+        - aire du maillage,
+        - périmètre du bord du maillage,
+        - accéder à un triangle du maillage, Th[k]
+        - accéder à un sommet du maillage, Th(i) 
+        - accéder à un sommet d'un triangle, Th[k][i]
+        - quel triangle contient le point (x,y) ?
+        - accéder à un élément du bord Th.be(k)
+        - accéder à un sommet du bord Th.be(k)[i]
+    - Attributs d'un triangle du maillage
+        - aire
+        - région
+        - label
+    - Attributs d'un sommet du maillage
+        - coordonnees
+        - label
+    - L'objet `border` (argument possible pour plot())
+    - Maillage de la surface délimitée par un bord (argument possible pour plot())
+    - La fonction `triangulate()` est non-traitée ici : elle permet de mailler
+      l'enveloppe convexe d'un ensemble de points donné sous forme de table.
+    
+    
+    auteur : Julien VALENTIN, d'après https://doc.freefem.org/documentation/mesh-generation.html#mesh-connectivity-and-data
+    date   : Mai 2022
+
+    execution dans un terminal externe :
+        FreeFem++ -v 0 "C:\Users\julien\Documents\GitHub\Scikit\fr\langages\FreeFem\mesh.edp"
+*/
+
+// Déclaration d'un maillage vide
+mesh ThVide;
+
+// Déclaration d'un maillage du carré unité
+int npts = 4;    // nombre de points par segment au bord
+mesh carre = square(npts, npts);
+
+// Attributs de l'objet mesh
+cout << "---------- EXTRAIT D'INFORMATIONS SUR LE MAILLAGE ----------" << endl;
+cout << "Nombre de triangles    " << carre.nt << endl;
+cout << "Nombre d'elmts au bord " << carre.nbe << endl;
+cout << "Aire du maillage       " << carre.measure << endl;
+cout << "Perimetre du maillage  " << carre.bordermeasure << endl;
+cout << endl;
+cout << "Triangle 0             " << carre[0] << endl;
+cout << "Sommet 0               " << carre(0) << endl;
+cout << "Sommet 1 du triangle 0 " << carre[0][1] << endl;
+cout << "Numero d'un triangle   " << carre(0.5, 0.5).nuTriangle << endl;
+cout << "Element au bord        " << carre.be(0) << endl;
+cout << "Sommet d'un element au bord " << carre.be(0)[0] << endl;
+cout << endl;
+
+// Attributs d'un triangle du maillage
+cout << "---------- EXTRAIT D'INFORMATIONS SUR UN TRIANGLE ----------" << endl;
+cout << "Aire d'un triangle     " << carre[21].area << endl;
+cout << "Region d'un triangle   " << carre[21].region << endl;
+cout << "Label d'un triangle    " << carre[21].label << endl;
+cout << endl;
+
+// Attributs d'un point au bord
+cout << "---------- EXTRAIT D'INFORMATIONS SUR UN SOMMET ----------" << endl;
+cout << "Coordonnees du sommet  " << "(x,y) = (" << carre[0][1].x << "," << carre[0][1].y << ")" << endl;
+cout << "Label du sommet        " << carre[0][1].label << endl;
+
+// L'objet `border` : trace du cercle unite
+npts = 64;
+border C(t=0, 1){
+    x = cos(2*pi*t);
+    y = sin(2*pi*t);
+    label = 0;
+}
+plot(C(npts), cmm="Cercle unite", wait=true);
+
+// Maillage de la surface délimitée par un bord
+npts = 256;
+mesh Dh = buildmesh(C(npts));
+plot(Dh, cmm="Maillage du disque unite");
+
+/////////
+// FIN //
+/////////

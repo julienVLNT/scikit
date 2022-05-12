@@ -1,0 +1,10 @@
+/*
+    Script dédié à l'exploration des fonctions et des macros en FreeFem.
+
+    auteur : Julien VALENTIN
+    date   : 12 mai 2022
+
+    execution dans un terminal externe
+    FreeFem++ "C:\Users\julien\Documents\GitHub\Scikit\fr\langages\FreeFem\array.edp" -ns
+*/
+

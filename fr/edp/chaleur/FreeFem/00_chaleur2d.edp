@@ -1,0 +1,100 @@
+/*
+    Implementation d'un probleme de type chaleur en deux dimensions d'espace 
+    avec FreeFem. On considere le disque de rayon 1. et centre en (0., 0.). On  
+    note egalement I := (0, 1) l'intervalle de nombres reels. Sur le disque, 
+    soit
+
+        u : (t,x,y) |--> t (1 - x^2 - y^2)
+
+    Alors
+
+        du/dt(t,x,y) = (1 - x^2 - y^2)
+        
+        du/dx(t,x,y)   = -2 t x
+        d2u/dx2(t,x,y) = -2 t
+
+        du/dy(t,x,y)   = -2 t y
+        d2u/dy2(t,x,y) = -2 t
+
+    si bien que u verifie le probleme de la chaleur avec conditions de 
+    Dirichlet au bord et condition initiale nulle
+
+            du/dt - (d2u/dx2 + d2u/dy2) = (1-x^2-y^2) + 4t
+                               u(t,x,y) = 0    sur le bord 
+                               u(0,x,y) = 0    à t = 0
+    
+    L'extrapolation temporelle s'effectue à l'aide du schema d'Euler implicite.
+
+    auteur : Julien VALENTIN
+    date   : 10 mai 2022
+
+    execution dans un terminal externe
+    ----------------------------------
+    FreeFem++ "C:\Users\julien\Documents\GitHub\Scikit\fr\edp\chaleur\FreeFem\00_chaleur2d.edp" -ns
+*/
+// Solution exacte
+func real u(real t){ return t*(1-x^2-y^2); }
+
+// Second membre
+func real f(real t){ return (1-x^2-y^2) + 4*t; }
+
+// Discretisation temporelle
+real t  = 0;
+real tf = 1;
+real dt = 0.01;
+
+// Discretisation du bord du disque
+int npoints = 128;
+
+border C(t=0, 1){
+    x = cos(2*pi*t);
+    y = sin(2*pi*t);
+    label = 1;
+}
+
+// Maillage du disque
+mesh Th = buildmesh(C(npoints));
+
+// Definition du cadre fonctionnel
+fespace Vh(Th, P1);
+Vh fh, uh, uhold, vh;
+
+/*
+    Definition du probleme variationnel : la discretisation en temps s'obtient a l'aide 
+    de la methode des differences finies, en particulier on choisit le schema d'Euler 
+    implicite
+
+                    u^{n+1} - u^n ~ dt * f(t_{n+1}, u^{n+1})
+
+    ce qui donne les formes
+
+    a(uh, vh) = \int_\Omega (uh^{n+1} vh) + dt (\nabla uh^{n+1} | \nabla vh) - dt fh*vh - uh^n vh
+    l(uh, vh) = 0
+*/
+problem chaleur(uh, vh, solver=GMRES) = int2d(Th)( uh*vh + dt*(dx(uh)*dx(vh) + dy(uh)*dy(vh)) )
+                                      - int2d(Th)( dt*fh*vh )
+                                      - int2d(Th)( uhold*vh )
+                                      + on(1, uh=0);
+
+// Iteration temporelle et export
+load "iovtk"
+int          i = 0;
+int[int] ordre = [1];
+string  chemin = "C:/Users/julien/Documents/GitHub/Scikit/fr/edp/chaleur/FreeFem/out/";
+string     nom;
+
+while(t <= tf){
+    t += dt;
+    fh = f(t);
+
+    chaleur;
+
+    uhold = uh;
+
+    nom = chemin + "eulerImplicite_" + i + ".vtk";
+    //savevtk(nom, Th, [uh, 0.0, 0.0], dataname="Uh", order=ordre);
+    i++;
+}
+
+Vh erreur = abs(uh - u(tf));
+plot(erreur, cmm="Champ d'erreur", value=true);

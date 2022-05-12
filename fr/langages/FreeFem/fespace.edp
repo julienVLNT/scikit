@@ -1,0 +1,91 @@
+/*
+    Exploration du type `fespace` du langage FreeFem. Ce type modélise un
+    espace d'interpolation par elements finis sur un maillage. Sur un maillage
+    Th, triangulation d'une geometrie raisonnable \Omega, on construit un 
+    espace de Hilbert de dimension finie Vh, issu de la methode de Galerkin 
+    appliquee à un espace fonctionnel de Hilbert V. Vh est alors de type 
+    `fespace`. Les elements de Vh sont ensuite declares sous le type `Vh`.
+    
+        Les bases de Vh sont nommees fonctions de forme, notees \phi_{i}, i 
+    allant de 0 à (M-1) où M est la dimension de l'espace Vh. Alors, tout 
+    element de V s'interpole à l'aide de la base de Vh
+
+                u(x,y) \sim \sum_{i=0}^{M-1} w_{i} \phi_{i}(x,y)
+
+    Il s'agit ici d'une interpolation spatiale uniquement. Il est theoriquement
+    possible de procéder à des interpolations espace - temps lorsqu'on 
+    rencontre des problèmes d'evolution.
+
+        La famille de nombres reels { w_i }_i est la famille des degres de 
+    liberte du probleme.
+
+    - Declaration d'un maillage et affichage
+    - Declaration de Vh = span(<P0>)
+    - Attributs d'un espace d'interpolation element fini
+    - Declaration d'un fonction element fini scalaire Uh
+    - Attributs d'une fonction element fini scalaire Uh
+    - Interpolation d'une fonction abstraite `f` dans l'espace
+      span(<P1>) sur le maillage Th
+    - Assemblage d'une application element fini vectorielle par ses coordonnees scalaires
+
+    auteur : Julien VALENTIN, d'après https://doc.freefem.org/documentation/finite-element
+    date   : Mai 2022
+
+    execution dans un terminal externe :
+        FreeFem++ -v 0 "C:\Users\julien\Documents\GitHub\Scikit\fr\langages\FreeFem\fespace.edp"
+*/
+
+// Declaration d'un maillage
+int npts = 3;
+mesh Th  = square(npts, npts);
+plot(Th, cmm="Maillage", wait=true);
+
+// Declaration de Vh = span(<P0>)
+fespace Vh0(Th, P0);
+
+// Attributs d'un espace d'interpolation element fini
+cout << "---------- ATTRIBUTS DE L'ESPACE Vh ----------" << endl;
+cout << "Nombre de degres de liberte           " << Vh0.ndof  << endl;
+cout << "Nombre de degres de liberte / element " << Vh0.ndofK << endl;
+cout << "Degres de liberte de l'element k=4    ";
+for(int i=0; i < Vh0.ndofK; i++){
+    cout << Vh0(4, i) << " ";
+}
+cout << endl;
+
+// Declaration d'un fonction element fini scalaire uh
+Vh0 Uh0;
+
+cout << "---------- ATTRIBUTS D'UNE FONCTION Uh ----------" << endl;
+cout << "Degres de liberte de Uh               " << Uh0[] << endl;
+cout << "Uh est initialisee a 0." << endl;
+cout << "Uh evaluee en (x, y)=(0.25,0.3)       " << Uh0(0.25,0.3) << endl;
+
+// Interpolation d'une fonction abstraite sur le maillage dans l'espace span(<P1>)
+// -------------------------------------------------------------------------------
+
+/* declaration "inline" d'une fonction abstraite
+   `x`, `y` sont des identificateurs globaux */
+func f = sqrt(x^2 + y^2);
+
+fespace Vh1(Th, P1); 
+Vh1 Uh1 = f;
+
+plot(Uh1, cmm="Graphe de (x,y) |-> norme(x,y)", value=true, wait=true);
+
+// Assemblage d'une application element fini vectorielle par ses coordonnees scalaires
+// -----------------------------------------------------------------------------------
+
+/* on construit une application vectorielle abstraite de Th --> \mathbb{R}^2
+  (identite du plan) à l'aide de ses coordonnees */
+func Idx = x;
+func Idy = y;
+
+// declaration et affectation de chaque fonction coordonnee
+Vh1 Uhx=Idx, Uhy=Idy;
+
+plot([Uhx, Uhy], cmm="Champ de vecteurs identite", value=true, wait=true);
+
+/////////
+// FIN //
+/////////
