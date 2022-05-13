@@ -11,7 +11,7 @@
     date   : 12 mai 2022
 
     execution dans un terminal externe
-    FreeFem++ "C:\Users\julien\Documents\GitHub\Scikit\fr\langages\FreeFem\array.edp" -ns
+    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\langages\FreeFem\array.edp" -ns
 */
 
 // Declaration d'un vecteur de type <type>
@@ -25,6 +25,7 @@ Vh[int] uh(5);
 Vh<complex>[int] vh(3);
 
 cout << a << endl;
+cout << a[2] << endl;
 cout << b << endl;
 cout << c << endl;
 cout << d << endl;
