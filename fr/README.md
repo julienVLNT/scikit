@@ -35,6 +35,7 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 
 ### Equations aux dérivées partielles (éléments finis)
 
+- Problème de [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/ecoulement_de_darcy/FreeFem/00_darcy.edp) pour l'écoulement de Poiseuille en milieu poreux dans un matériau homogène isotrope.
 - Probleme de [Poisson 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/00_poisson2d.edp) sur le disque unité
 - Probleme de [Poisson 2D avec solveur](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/01_poisson2d_solvers.edp) sur le disque unité
 - Probleme de [Poisson 2D parallèle (PETSc)](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/02_poisson2d_petsc.edp) sur le disque unité
@@ -95,6 +96,13 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - [FreeFem : Poisson 2D, impact de la résolution sur le temps calcul (parallèle)](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/05_poisson2d_resolution.edp)
 - [FreeFem : Chaleur 2D, intégration par Euler Implicite](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/00_chaleur2d.edp)
 - [FreeFem : transport par un champ de vecteurs 2D d'une fonction scalaire](https://github.com/julienVLNT/scikit/tree/main/fr/edp/transport/transport.edp)
+
+## Physiques
+
+### Ecoulement de Darcy
+
+- [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/ecoulement_de_darcy/FreeFem/00_darcy.edp) pour l'écoulement de Poiseuille en cavité, milieu homogène et isotrope
+
 
 ## Visualisation de données
 
