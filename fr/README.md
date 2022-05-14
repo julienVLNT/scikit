@@ -35,7 +35,8 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 
 ### Equations aux dérivées partielles (éléments finis)
 
-- Problème de [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/ecoulement_de_darcy/FreeFem/00_darcy.edp) pour l'écoulement de Poiseuille en milieu poreux dans un matériau homogène isotrope.
+- Problème de [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/00_darcy.edp) pour l'écoulement de Poiseuille en milieu poreux dans un matériau homogène isotrope
+- Problème de [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/01_darcy_evolution.edp) pour l'imprégnation d'un poreux initialement plein d'air qui se remplit de fluide
 - Probleme de [Poisson 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/00_poisson2d.edp) sur le disque unité
 - Probleme de [Poisson 2D avec solveur](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/01_poisson2d_solvers.edp) sur le disque unité
 - Probleme de [Poisson 2D parallèle (PETSc)](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/02_poisson2d_petsc.edp) sur le disque unité
@@ -43,7 +44,7 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - Impact de la résolution spatiale pour le probleme de [Poisson 2D de Dirichlet non-parallélisé](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/04_poisson2d_resolution.edp) sur le disque unité
 - Impact de la résolution spatiale pour le probleme de [Poisson 2D de Dirichlet parallélisé](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/05_poisson2d_resolution.edp) sur le disque unité
 - Probleme de [Poisson 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/06_poisson2d_optimisation.edp) dans sa forme de probleme d'optimisation
-- Probleme de [Chaleur 2D avec intégration par Euler Implicite](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/00_chaleur2d.edp)
+- Probleme de [Chaleur 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/00_chaleur2d.edp) avec intégration par Euler Implicite
 - Problème de [Transport](https://github.com/julienVLNT/scikit/tree/main/fredp/transport/transport.edp) par un champ de vecteurs 2D constant d'une fonction scalaire
 - Problème de [Transport](https://github.com/julienVLNT/scikit/tree/main/fr/edp/transport/transport_maillage.edp) d'un maillage par un champ de vecteurs 2D constant.
 
@@ -94,14 +95,15 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - [FreeFem : Poisson 2D avec conditions aux limites de Dirichlet / Neumann](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/03_poisson2d_cl_mixtes.edp)
 - [FreeFem : Poisson 2D, impact de la résolution sur le temps calcul (non-parallèle)](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/04_poisson2d_resolution.edp)
 - [FreeFem : Poisson 2D, impact de la résolution sur le temps calcul (parallèle)](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/05_poisson2d_resolution.edp)
-- [FreeFem : Chaleur 2D, intégration par Euler Implicite](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/00_chaleur2d.edp)
+- [FreeFem : Chaleur 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/00_chaleur2d.edp), intégration par Euler Implicite
 - [FreeFem : transport par un champ de vecteurs 2D d'une fonction scalaire](https://github.com/julienVLNT/scikit/tree/main/fr/edp/transport/transport.edp)
 
 ## Physiques
 
-### Ecoulement de Darcy
+### Darcy
 
-- [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/ecoulement_de_darcy/FreeFem/00_darcy.edp) pour l'écoulement de Poiseuille en cavité, milieu homogène et isotrope
+- [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/00_darcy.edp) pour l'écoulement de Poiseuille en cavité, milieu homogène et isotrope
+- [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/01_darcy_evolution.edp) pour l'imprégnation d'un poreux initialement plein d'air qui se remplit de fluide
 
 
 ## Visualisation de données

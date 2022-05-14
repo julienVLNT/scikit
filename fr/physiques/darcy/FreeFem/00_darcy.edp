@@ -1,4 +1,10 @@
 /*
+    Ecoulement de Poiseuille stationnaire dans un poreux homogène et isotrope. 
+    Tous les coefficients physiques sont normalisés à 1.
+
+        L'écoulement de Poiseuille se fait pour un gradient de pression de 1
+    entre les faces supérieures et inférieures d'une cavité.
+
     auteur : Julien VALENTIN
     date   : 13 mai 2022
 
@@ -10,28 +16,7 @@
 real largeur = 10;
 real hauteur =  1;
 
-border b0(t=0,1){
-    x = t*largeur;
-    y = 0;
-    label=0;
-}
-border b1(t=0,1){
-    x = largeur;
-    y = t*hauteur;
-    label=1;
-}
-border b2(t=0,1){
-    x = (1-t)*largeur;
-    y = hauteur;
-    label=0;
-}
-border b3(t=0,1){
-    x = 0;
-    y = (1-t)*hauteur;
-    label=2;
-}
-
-mesh Th = buildmesh( b0(20) + b1(10) + b2(20) + b3(10) );
+mesh Th = square(100, 10, [largeur*x, hauteur*y]);
 plot(Th, cmm="cavite", wait=true);
 
 // Definition du cadre variationnel
@@ -45,15 +30,16 @@ Vh ph, qh, uh, vh;
     Pour cette démonstration, les coefficients sont normalisés.
 */
 real mu = 1;
-
-matrix K = [[1, 0], [0, 1]];
+real  K = 1;
 
 // Probleme variationnel
 macro grad(u)[dx(u), dy(u)]//
-solve darcy(ph, qh) = int2d(Th)( grad(ph)'*K*grad(qh) ) + on(3, ph=1) + on(1, ph=0);
+solve darcy(ph, qh) = int2d(Th)( grad(ph)'*grad(qh) ) + on(3, ph=1) + on(1, ph=0);
 
-uh = dx(ph);
-vh = dy(ph);
+uh = K/mu*dx(ph);
+vh = K/mu*dy(ph);
 
 plot(ph, cmm="pression", value=true, wait=true);
+plot(uh, cmm="vitesse horizontale", value=true, wait=true);
+plot(vh, cmm="vitesse verticale", value=true, wait=true);
 plot([uh,vh], cmm="vitesse", value=true, wait=true);

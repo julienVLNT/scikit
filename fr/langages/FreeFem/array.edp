@@ -5,6 +5,7 @@
     - Declaration de matrices denses,
     - Attributs d'un vecteur,
     - Attributs d'une matrice,
+    - Sélection dans un vecteur et dans une matrice dense
     - Tri d'un vecteur
 
     auteur : Julien VALENTIN
@@ -54,6 +55,10 @@ cout << endl;
 int k = f.n;
 int l = f.m;
 cout << k << " " << l << endl;
+
+// Sélection dans un vecteur et dans une matrice
+cout << a[3] << endl;
+cout << f(1, 1) << endl;
 
 // Tri d'un vecteur
 int[int] e = [9, 8, 7, 6, 5];
