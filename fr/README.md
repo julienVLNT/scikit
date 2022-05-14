@@ -33,6 +33,10 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 
 ## FreeFem++
 
+### Algèbre linéaire
+
+- [Transformations du plan](https://github.com/julienVLNT/scikit/tree/main/fr/algebre_lineaire/FreeFem/transformations_planes.edp)
+
 ### Equations aux dérivées partielles (éléments finis)
 
 - Probleme de [Poisson 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/00_poisson2d.edp) sur le disque unité
@@ -88,6 +92,7 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 
 ## Algèbre linéaire
 
+- [FreeFem : transformations du plan](https://github.com/julienVLNT/scikit/tree/main/fr/algebre_lineaire/FreeFem/transformations_planes.edp)
 - [Julia : calcul tensoriel](https://github.com/julienVLNT/scikit/tree/main/fr/algebre_lineaire/Julia/tenseurs.ipynb)
 - [SageMath : modules libres de rang fini sur un anneau commutatif](https://github.com/julienVLNT/scikit/tree/main/fr/algebre_lineaire/SageMath/module_libre_de_rang_fini_sur_anneau_commutatif.ipynb)
 
