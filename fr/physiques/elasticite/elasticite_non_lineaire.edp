@@ -1,0 +1,5 @@
+/*
+    execution dans un terminal externe
+    ----------------------------------
+    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\physiques\elasticite\elasticite_non_lineaire.edp" -ns
+*/

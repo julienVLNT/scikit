@@ -16,7 +16,7 @@ Ainsi, dans un milieu **non-homogène**, chaque coefficient défini plus haut de
 
 ---
 
-La dynamique du problème est en fait celle de l'écoulement du fluide. Dans une vision eulérienne, l'état du fluide est entièrement déterminé par deux champs
+Le problème stationnaire est le problème de l'écoulement du fluide. Dans une vision eulérienne, l'état du fluide est entièrement déterminé par deux champs
 
 - $\mathbf{v} : \Omega \rightarrow \mathbb R^2$, le champ de vecteurs vitesse dans le fluide
 - $p : \Omega \rightarrow \mathbb R$, le champ scalaire de pression dans le fluide.

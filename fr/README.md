@@ -45,7 +45,6 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - Probleme de [Poisson 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/03_poisson2d_cl_mixtes.edp) avec conditions aux limites de Dirichlet / Neumann sur le disque unité
 - Impact de la résolution spatiale pour le probleme de [Poisson 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/04_poisson2d_resolution.edp) de Dirichlet non-parallélisé sur le disque unité
 - Impact de la résolution spatiale pour le probleme de [Poisson 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/05_poisson2d_resolution.edp) de Dirichlet parallélisé sur le disque unité
-- Probleme de [Poisson 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/06_poisson2d_optimisation.edp) dans sa forme de probleme d'optimisation
 - Probleme de [Chaleur 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/00_chaleur2d.edp) avec intégration par Euler Implicite
 - Problème de [Transport](https://github.com/julienVLNT/scikit/tree/main/fredp/transport/transport.edp) par un champ de vecteurs 2D constant d'une fonction scalaire
 - Problème de [Transport](https://github.com/julienVLNT/scikit/tree/main/fr/edp/transport/transport_maillage.edp) d'un maillage par un champ de vecteurs 2D constant.

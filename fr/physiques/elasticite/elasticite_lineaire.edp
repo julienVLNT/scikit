@@ -1,0 +1,12 @@
+/*
+    Resolution d'un probleme d'elasticite lineaire a l'aide de FreeFem++.
+    On resoud le probleme d'une poutre soumise a un effort sur sa face superieure.
+    
+    a partir de : https://doc.freefem.org/models/elasticity.html
+    date        : 14/05/200
+
+    execution dans un terminal externe
+    ----------------------------------
+    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\physiques\elasticite\elasticite_lineaire.edp" -ns
+*/
+
