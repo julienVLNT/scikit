@@ -22,7 +22,7 @@
 
     execution dans un terminal externe
     ----------------------------------
-    FreeFem++-mpi "C:\Users\julien\Documents\GitHub\Scikit\fr\edp\poisson\FreeFem\02_poisson2d_petsc.edp" -n 4 -v 0 -wg
+    mpiexec -n 2 FreeFem++-mpi "C:\Users\julien\Documents\GitHub\Scikit\fr\edp\poisson\FreeFem\02_poisson2d_petsc.edp" -v 0 -wg
 */
 
 // Solution exacte
@@ -36,7 +36,7 @@ macro dimension()2// fin de macro
 include "macro_ddm.idp"
 
 // Maillage global
-int npoints = 4096;
+int npoints = 64;
 border C(t=0, 1){
     x = cos(2*pi*t);
     y = sin(2*pi*t);
