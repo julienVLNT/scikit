@@ -10,6 +10,27 @@ Ce dépôt synthétise ce que je sais des langages de programmation et des bonne
 
 # L'environnement
 
+## L'I.D.E
+
+Pour développer, j'utilise [Visual Studio Code](https://code.visualstudio.com/) et [Visual Studio](https://visualstudio.microsoft.com/fr/). On reproduit ici ce [tutoriel](https://docs.microsoft.com/fr-fr/cpp/build/walkthrough-creating-and-using-a-dynamic-link-library-cpp?view=msvc-170).
+
+J'utilise les extensions :
+
+- [C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
+- [docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+- [docs-markdown](https://marketplace.visualstudio.com/items?itemName=docsmsft.docs-markdown)
+- [french language pack](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-fr)
+- [jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter)
+- [jupyter notebook renderers](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter-renderers)
+- [pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance)
+- [python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+- [remote-containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+- [vscode-FreeFem](https://marketplace.visualstudio.com/items?itemName=Pierre-Marchand.vscode-freefem)
+
+## L'environnement C++
+
+On utilise les outils natifs de l'I.D.E [Visual Studio](). 
+
 ## Environnement FreeFem++
 
 On installe l'[interpréteur FreeFem++](https://freefem.org) dans une version compatible avec la parallélisation via MPI, PETSc, SLEPSc... Par exemple la 4.11. Le post-traitement des champs se fera à l'aide de [Paraview](https://www.paraview.org/).
@@ -29,11 +50,14 @@ Après installation du [compilateur Julia](https://julialang.org/), on installer
 
 On installe l'[interpréteur SageMath](https://sagemath.org).
 
-## Environnement Python 3.x
-
-
 
 # Index par langage
+
+## C++ 
+
+### Implémentation, compilation et usage d'une D.L.L
+
+- Une [D.L.L](https://github.com/julienVLNT/scikit/tree/main/fr/compilation/DLL-C++/README.md) qui calcule les termes de Fibonacci
 
 ## FreeFem++
 
@@ -98,6 +122,10 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - [FreeFem : transformations du plan](https://github.com/julienVLNT/scikit/tree/main/fr/algebre_lineaire/FreeFem/transformations_planes.edp)
 - [Julia : calcul tensoriel](https://github.com/julienVLNT/scikit/tree/main/fr/algebre_lineaire/Julia/tenseurs.ipynb)
 - [SageMath : modules libres de rang fini sur un anneau commutatif](https://github.com/julienVLNT/scikit/tree/main/fr/algebre_lineaire/SageMath/module_libre_de_rang_fini_sur_anneau_commutatif.ipynb)
+
+## Implémentation, compilation et usage d'une D.L.L
+
+- [C++ : DLL Fibonacci et son client](https://github.com/julienVLNT/scikit/tree/main/fr/compilation/DLL-C++/README.md)
 
 ## Equations aux dérivées partielles (éléments finis)
 
