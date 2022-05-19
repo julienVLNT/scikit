@@ -12,7 +12,13 @@ On commence par ouvrire Visual Studio.
 
 ## Ajouter un fichier header `fibonacci.h`
 
-Dans le noeud de l'explorateur de projet `Fichiers d'en-tête`, ajouter un fichier `header.h`. On le rédige ainsi
+Dans le noeud de l'explorateur de projet `Fichiers d'en-tête`, ajouter un fichier `header.h`.
+
+![](images/nouvelleEnTete.jpg)
+
+![](images/nouveauFichierEnTete.jpg)
+
+On le rédige ainsi
 
 ```cpp
 #pragma once
@@ -35,7 +41,13 @@ extern "C" FIBONACCI_API unsigned fibonacci_index();
 
 ## Ajouter une implémentation pour la D.L.L
 
-On clique sur le noeud `Fichiers sources` et on ajoute un fichier `source.cpp`. On le rédige avec
+On clique sur le noeud `Fichiers sources` et on ajoute un fichier `source.cpp`. 
+
+![](images/nouveauFichierSource.jpg)
+
+![](images/nouveauFichierSourceCpp.jpg)
+
+On le rédige avec
 
 ```cpp
 #include "pch.h"
@@ -97,3 +109,5 @@ unsigned fibonacci_index()
 On peut utiliser le raccourci `<ctrl>+<maj>+b`, raccourci pour 
 
 ![compiler une DLL](images/compilerUneDll.jpg)
+
+![compilation reussie](images/compilationReussie.jpg)
