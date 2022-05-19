@@ -123,10 +123,6 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - [Julia : calcul tensoriel](https://github.com/julienVLNT/scikit/tree/main/fr/algebre_lineaire/Julia/tenseurs.ipynb)
 - [SageMath : modules libres de rang fini sur un anneau commutatif](https://github.com/julienVLNT/scikit/tree/main/fr/algebre_lineaire/SageMath/module_libre_de_rang_fini_sur_anneau_commutatif.ipynb)
 
-## Implémentation, compilation et usage d'une D.L.L
-
-- [C++ : DLL Fibonacci et son client](https://github.com/julienVLNT/scikit/tree/main/fr/compilation/DLL-C++/README.md)
-
 ## Equations aux dérivées partielles (éléments finis)
 
 - [FreeFem : Poisson 2D sur le disque unité](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/00_poisson2d.edp)
@@ -137,6 +133,10 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - [FreeFem : Poisson 2D, impact de la résolution sur le temps calcul (parallèle)](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/05_poisson2d_resolution.edp)
 - [FreeFem : Chaleur 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/00_chaleur2d.edp), intégration par Euler Implicite
 - [FreeFem : transport par un champ de vecteurs 2D d'une fonction scalaire](https://github.com/julienVLNT/scikit/tree/main/fr/edp/transport/transport.edp)
+
+## Implémentation, compilation et usage d'une D.L.L
+
+- [C++ : DLL Fibonacci et son client](https://github.com/julienVLNT/scikit/tree/main/fr/compilation/DLL-C++/README.md)
 
 ## Physiques
 
