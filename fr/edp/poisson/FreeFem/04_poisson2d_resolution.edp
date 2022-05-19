@@ -3,24 +3,25 @@
     grille fine. On reprend le probleme modele et on le resoud par algorithme 
     GMRES. Resultats sur Intel(R) Core(TM) i7-8750H CPU @2.20Ghz.
 
-    |------------------------------|---------------------|
-    | Nombre de points sur le bord | Temps de calcul (s) |
-    |------------------------------|---------------------|
-    |                          128 | 0.061               |
-    |                          256 | 0.197               |
-    |                          512 | 3.589               |
-    |                         1024 | 83.429 ~ 1 min 23   |
-    |                         2048 | 1023.48 ~ 17 min 05 |
-    |------------------------------|---------------------|
+    |------------------------------|-----------------------|
+    | Nombre de points sur le bord | Temps d'execution (s) |
+    |------------------------------|-----------------------|
+    |                          128 | 0.037                 |
+    |                          256 | 0.208                 |
+    |                          512 | 2.676                 |
+    |                         1024 | 79.843 ~ 1 min 19     |
+    |                         2048 |                       |
+    |------------------------------|-----------------------|
 
-    Dans le prochain script, on utilise le meme cas test sur la parallelisation.
+    Dans le prochain script, on utilise le meme cas test avec parallelisation
+    PETSc.
 
     auteur : Julien VALENTIN
     date   : 10 mai 2022
 
     execution dans un terminal externe
     ----------------------------------
-    FreeFem++ "C:\Users\julien\Documents\GitHub\Scikit\fr\edp\poisson\FreeFem\04_poisson2d_resolution.edp" -v 0
+    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\edp\poisson\FreeFem\04_poisson2d_resolution.edp" -ns
 */
 
 // Solution exacte
@@ -45,13 +46,9 @@ mesh Th = buildmesh(C(npoints));
 fespace Vh(Th, P1);
 Vh uh, vh;
 
-real tic = clock();
-
 // Resolution du probleme variationnel
 solve poisson2d(uh, vh, solver=GMRES) = int2d(Th)( dx(uh)*dx(vh) + dy(uh)*dy(vh) ) - int2d(Th)( f*vh ) + on(1, uh=0);
 
-real tac = clock();
-cout << "Temps de calcul " << tac-tic << " s" << endl;
 
 /////////
 // FIN //

@@ -25,8 +25,8 @@
     mpiexec -n 2 FreeFem++-mpi "C:\Users\julien\Documents\GitHub\Scikit\fr\edp\poisson\FreeFem\02_poisson2d_petsc.edp" -v 0 -wg
 */
 
-// Solution exacte
-func u = 1 - x^2 - y^2;
+// Second membre
+func f = -4;
 
 // A.P.I PETSc
 load "PETSc"
@@ -49,39 +49,24 @@ Mat Ah;
 buildMat(Th, getARGV("-split", 1), Ah, P1, mpiCommWorld)
 set(Ah, sparams = "-ksp_view");
 
-// Cadre fonctionnel
+// Cadre fonctionnel local
 fespace Vh(Th, P1);
 
-/*
-    Definition du probleme variationnel sous sa forme discrete, i.e sous forme 
-    de systeme lineaire
+// Probleme pour l'assemblage du second membre
+varf vPb(u, v) = int2d(Th)(dx(u)*dx(v) + dy(u)*dy(v)) + int2d(Th)(f*v) + on(1, u = 0.0);
+real[int] rhs = vPb(0, Vh);
 
-                            Ah uh = bh
-    
-    à partir de la forme variationnelle du laplacien.
-*/
-varf a(uh, vh) = int2d(Th)( dx(uh)*dx(vh) + dy(uh)*dy(vh) ) + on(1, uh=0);
-Ah = a(Vh, Vh);
+// Modification d'un parametre sur A
+set(Ah, sparams = "-ksp_view");
 
-varf l(uh, vh) = int2d(Th)( 4*vh );
-real[int] bh = l(0, Vh);
+// Declaration de la solution locale
+Vh<real> u;
 
-// Declaration de la solution
-Vh<real> uh;
+Ah = vPb(Vh, Vh);
+u[] = Ah^-1 * rhs;
 
-// Resolution
-uh[] = Ah^(-1) * bh;
-
-// Visualisation
-macro def(u)u// fin de macro
-plotMPI(Th, uh, P1, def, real, cmm="Solution");
-
-if(mpirank == 0){
-    load "iovtk"
-    int[int] ordre = [1];
-    string     nom = "C:/Users/julien/Documents/GitHub/Scikit/fr/edp/poisson/FreeFem/out/uhpetsc.vtk";
-    savevtk(nom, Th, [uh, 0.0, 0.0], dataname="Uh", order=ordre);
-}
+macro def(u)u//
+plotMPI(Th, u, P1, def, real, cmm="Global solution")
 
 /////////
 // FIN //

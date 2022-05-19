@@ -4,58 +4,45 @@
 
     ----- PARALLELISATION SUR 2 PROCESSEURS -----
 
-    |------------------------------|---------------------|
-    | Nombre de points sur le bord | Temps de calcul (s) |
-    |------------------------------|---------------------|
-    |                          128 | 0.089               |
-    |                          256 | 0.075               |
-    |                          512 | 0.316               |
-    |                         1024 | 4.526               |
-    |                         2048 | 43.382              |
-    |                         4096 | 184.834 ~ 3 min     |
-    |                         8192 | execution > 15 min  |
-    |------------------------------|---------------------|
+    |------------------------------|-----------------------|
+    | Nombre de points sur le bord | Temps d'execution (s) |
+    |------------------------------|-----------------------|
+    |                          128 | 0.039                 |
+    |                          256 | 0.102                 |
+    |                          512 | 0.658                 |
+    |                         1024 | 4.089                 |
+    |                         2048 | 33.649                |
+    |                         4096 | 396.195               |
+    |                         8192 |                       |
+    |------------------------------|-----------------------|
 
     ----- PARALLELISATION SUR 4 PROCESSEURS -----
 
-    |------------------------------|---------------------|
-    | Nombre de points sur le bord | Temps de calcul (s) |
-    |------------------------------|---------------------|
-    |                          128 | 0.047               |
-    |                          256 | 0.032               |
-    |                          512 | 0.172               |
-    |                         1024 | 2.156               |
-    |                         2048 | 19.813              |
-    |                         4096 | 189.854             |
-    |------------------------------|---------------------|
-    
-    ----- PARALLELISATION SUR 8 PROCESSEURS -----
+    |------------------------------|-----------------------|
+    | Nombre de points sur le bord | Temps d'execution (s) |
+    |------------------------------|-----------------------|
+    |                          128 | 0.048                 |
+    |                          256 | 0.102                 |
+    |                          512 | 0.53                  |
+    |                         1024 | 3.637                 |
+    |                         2048 | 30.393                |
+    |                         4096 | 424.492               |
+    |------------------------------|-----------------------|
 
-    |------------------------------|---------------------|
-    | Nombre de points sur le bord | Temps de calcul (s) |
-    |------------------------------|---------------------|
-    |                          128 | 0.047               |
-    |                          256 | 0.032               |
-    |                          512 | 0.191               |
-    |                         1024 | 2.031               |
-    |                         2048 | 25.919              |
-    |                         4096 | 187.327             |
-    |------------------------------|---------------------|
-
-    A l'evidence, l'impact est nul. Peut-être qu'il ne faut pas seulement 
-    modifier le parametre -n 2 a l'execution mais aussi un parametre dans le 
-    code ? Par exemple "-split", 1 ligne 78 ?
+    Apres consultation des ressources du gestionnaire des taches, il semblerait
+    que ma machine instancie quatre processus mais uniquement sur deux 
+    processeurs. D'ou, probablement, la similitude entre les tables n=2 et n=4.
 
     auteur : Julien VALENTIN
     date   : 10 mai 2022
 
     execution dans un terminal externe
     ----------------------------------
-    mpiexec -n 4 FreeFem++-mpi "C:\Users\julien\Documents\GitHub\Scikit\fr\edp\poisson\FreeFem\04_poisson2d_resolution.edp" -ns
+    mpiexec -n 2 FreeFem++-mpi "C:\Users\julien\Desktop\scikit\fr\edp\poisson\FreeFem\05_poisson2d_resolution.edp" -ns
 */
 
-// Solution exacte
-func u = 1 - x^2 - y^2;
+// Second membre
+func f = -4;
 
 // A.P.I PETSc
 load "PETSc"
@@ -65,7 +52,7 @@ macro dimension()2// fin de macro
 include "macro_ddm.idp"
 
 // Maillage global
-int npoints = 1024;
+int npoints = 4096;
 border C(t=0, 1){
     x = cos(2*pi*t);
     y = sin(2*pi*t);
@@ -78,33 +65,21 @@ Mat Ah;
 buildMat(Th, getARGV("-split", 1), Ah, P1, mpiCommWorld)
 set(Ah, sparams = "-ksp_view");
 
-// Cadre fonctionnel
+// Cadre fonctionnel local
 fespace Vh(Th, P1);
 
-/*
-    Definition du probleme variationnel sous sa forme discrete, i.e sous forme 
-    de systeme lineaire
+// Probleme pour l'assemblage du second membre
+varf vPb(u, v) = int2d(Th)(dx(u)*dx(v) + dy(u)*dy(v)) + int2d(Th)(f*v) + on(1, u = 0.0);
+real[int] rhs = vPb(0, Vh);
 
-                            Ah uh = bh
-    
-    à partir de la forme variationnelle du laplacien.
-*/
-varf a(uh, vh) = int2d(Th)( dx(uh)*dx(vh) + dy(uh)*dy(vh) ) + on(1, uh=0);
-Ah = a(Vh, Vh);
+// Modification d'un parametre sur A
+set(Ah, sparams = "-ksp_view");
 
-varf l(uh, vh) = int2d(Th)( 4*vh );
-real[int] bh = l(0, Vh);
+// Declaration de la solution locale
+Vh<real> u;
 
-// Declaration de la solution
-Vh<real> uh;
-
-real tic = clock();
-
-// Resolution
-uh[] = Ah^(-1) * bh;
-
-real tac = clock();
-cout << "Temps de calcul " << tac-tic << " s" << endl;
+Ah = vPb(Vh, Vh);
+u[] = Ah^-1 * rhs;
 
 /////////
 // FIN //
