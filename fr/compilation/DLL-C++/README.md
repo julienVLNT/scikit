@@ -8,7 +8,7 @@ On commence par ouvrire Visual Studio.
 
 ## Créer un projet D.L.L
 
-![Créer un projet DLL](images/creerUnProjetDll.jpg)
+![Créer un projet DLL](images/creerUnProjet.jpg)
 
 ## Ajouter un fichier header `fibonacci.h`
 
