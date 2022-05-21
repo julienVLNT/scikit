@@ -1,0 +1,14 @@
+/*
+    On implemente le probleme precedent de sorte qu'il soit distribue sur deux
+    processeurs.
+
+    auteur : Julien VALENTIN
+    date   : 21/05/2022
+
+    execution dans un terminal externe
+    ----------------------------------
+    mpiexec -n 2 FreeFem++-mpi C:\Users\julien\Desktop\scikit\fr\edp\chaleur\FreeFem\01_chaleur2d_petsc.edp -ns -wg
+*/
+
+// Second membre
+func real f(real t){ return (1-x^2-y^2) + 4*t; }

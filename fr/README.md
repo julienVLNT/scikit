@@ -73,7 +73,10 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - Probleme de [Poisson 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/03_poisson2d_cl_mixtes.edp) avec conditions aux limites de Dirichlet / Neumann sur le disque unité
 - Impact de la résolution spatiale pour le probleme de [Poisson 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/04_poisson2d_resolution.edp) de Dirichlet non-parallélisé sur le disque unité
 - Impact de la résolution spatiale pour le probleme de [Poisson 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/05_poisson2d_resolution.edp) de Dirichlet parallélisé sur le disque unité
-- Probleme de [Chaleur 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/00_chaleur2d.edp) avec intégration par Euler Implicite
+- Résolution du problème de [Poisson 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/06_poisson2d_problem.edp) par la définition d'un `problem` et la résolution par l'appel.
+- Résolution du problème de [Poisson 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/07_poisson2d_matrice.edp) par la définition du système linéaire associé à un objet `varf`
+- Problème de [Chaleur 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/00_chaleur2d.edp) avec intégration par Euler Implicite
+- Problème de [Chaleur 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/01_chaleur2d_petsc.edp) distribué à l'aide de PETSc
 - Problème de [Transport](https://github.com/julienVLNT/scikit/tree/main/fredp/transport/transport.edp) par un champ de vecteurs 2D constant d'une fonction scalaire
 - Problème de [Transport](https://github.com/julienVLNT/scikit/tree/main/fr/edp/transport/transport_maillage.edp) d'un maillage par un champ de vecteurs 2D constant.
 
@@ -131,8 +134,12 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - [FreeFem : Poisson 2D avec conditions aux limites de Dirichlet / Neumann](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/03_poisson2d_cl_mixtes.edp)
 - [FreeFem : Poisson 2D, impact de la résolution sur le temps calcul (non-parallèle)](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/04_poisson2d_resolution.edp)
 - [FreeFem : Poisson 2D, impact de la résolution sur le temps calcul (parallèle)](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/05_poisson2d_resolution.edp)
-- [FreeFem : Chaleur 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/00_chaleur2d.edp), intégration par Euler Implicite
+- [FreeFem : Poisson 2D, impact de l'implémentation `problem` et résolution par appel du problème](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/06_poisson2d_problem.edp)
+- [FreeFem : Poisson 2D, construction du système linéaire et résolution du système linéaire](https://github.com/julienVLNT/scikit/tree/main/fr/edp/poisson/FreeFem/07_poisson2d_matrice.edp)
+- [FreeFem : Chaleur 2D, intégration par Euler Implicite](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/00_chaleur2d.edp)
+- [FreeFem : Chaleur 2D, intégration par Euler Implicite, parallélisation avec PETSc](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/01_chaleur2d_petsc.edp)
 - [FreeFem : transport par un champ de vecteurs 2D d'une fonction scalaire](https://github.com/julienVLNT/scikit/tree/main/fr/edp/transport/transport.edp)
+- [FreeFem : transport par un champ de vecteurs 2D d'un maillage](https://github.com/julienVLNT/scikit/tree/main/fr/edp/transport/transport_maillage.edp)
 
 ## Implémentation et compilation d'une D.L.L
 
