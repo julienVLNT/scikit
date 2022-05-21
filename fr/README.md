@@ -12,7 +12,7 @@ Ce dépôt synthétise ce que je sais des langages de programmation et des bonne
 
 ## L'I.D.E
 
-Pour développer, j'utilise [Visual Studio Code](https://code.visualstudio.com/) et [Visual Studio](https://visualstudio.microsoft.com/fr/). On reproduit ici ce [tutoriel](https://docs.microsoft.com/fr-fr/cpp/build/walkthrough-creating-and-using-a-dynamic-link-library-cpp?view=msvc-170).
+Pour développer, j'utilise [Visual Studio Code](https://code.visualstudio.com/) et [Visual Studio](https://visualstudio.microsoft.com/fr/). 
 
 J'utilise les extensions :
 
@@ -27,9 +27,9 @@ J'utilise les extensions :
 - [remote-containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 - [vscode-FreeFem](https://marketplace.visualstudio.com/items?itemName=Pierre-Marchand.vscode-freefem)
 
-## L'environnement C++
+## L'environnement C / C++
 
-On utilise les outils natifs de l'I.D.E [Visual Studio](). 
+On utilise les outils natifs de l'I.D.E [Visual Studio](). Pour les compilations de DLL à destination de [Nastran](https://www.mscsoftware.com/fr/product/msc-nastran), le logiciel certifie l'usage du compilateur [Intel oneAPI DPC++/C++ Compiler](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html#gs.0tnw5g), lequel s'intègre naturellement à Visual Studio.
 
 ## Environnement FreeFem++
 
@@ -55,9 +55,9 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 
 ## C++ 
 
-### Implémentation, compilation et usage d'une D.L.L
+### Implémentation et compilation d'une D.L.L
 
-- Une [D.L.L](https://github.com/julienVLNT/scikit/tree/main/fr/compilation/DLL-C++/README.md) qui calcule les termes de Fibonacci
+- Une [D.L.L](https://github.com/julienVLNT/scikit/tree/main/fr/compilation/DLL-C++/README.md) qui calcule les termes de Fibonacci (et son client)
 
 ## FreeFem++
 
@@ -134,9 +134,9 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - [FreeFem : Chaleur 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/00_chaleur2d.edp), intégration par Euler Implicite
 - [FreeFem : transport par un champ de vecteurs 2D d'une fonction scalaire](https://github.com/julienVLNT/scikit/tree/main/fr/edp/transport/transport.edp)
 
-## Implémentation, compilation et usage d'une D.L.L
+## Implémentation et compilation d'une D.L.L
 
-- [C++ : DLL Fibonacci et son client](https://github.com/julienVLNT/scikit/tree/main/fr/compilation/DLL-C++/README.md)
+- [C++ : DLL Fibonacci](https://github.com/julienVLNT/scikit/tree/main/fr/compilation/DLL-C++/README.md) et son client
 
 ## Physiques
 
