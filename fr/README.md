@@ -149,8 +149,11 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 
 ### Darcy
 
-- [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/00_darcy.edp) pour l'écoulement de Poiseuille en cavité, milieu homogène et isotrope
-- [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/01_darcy_evolution.edp) pour l'imprégnation d'un poreux initialement plein d'air qui se remplit de fluide
+- [FreeFem : problème de Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/00_darcy.edp) pour l'écoulement de Poiseuille en cavité, milieu homogène et isotrope
+- [FreeFem : problème de Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/01_darcy_nhani.edp) pour un écoulement en cavité, fluide non-homogène, milieu non-homogène anisotrope
+- [FreeFem : problème de Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/02_darcy_nhani_pets.edp) pour un écoulement en cavité, fluide non-homogène, milieu non-homogène anisotrope parallélisé avec PETSc
+- [FreeFem : problème de Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/03_darcy_evolution.edp) pour l'imprégnation d'un poreux initialement plein d'air qui se remplit de fluide
+- 
 
 
 ## Visualisation de données

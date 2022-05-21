@@ -10,5 +10,72 @@
     mpiexec -n 2 FreeFem++-mpi C:\Users\julien\Desktop\scikit\fr\edp\chaleur\FreeFem\01_chaleur2d_petsc.edp -ns -wg
 */
 
+// Chargement de la librairie PETSc et definition d'outils
+load "PETSc"
+macro dimension() 2 //
+include "macro_ddm.idp"
+
+// Discretisation temporelle
+real dt = getARGV("-dt", 0.1);
+int iMax = getARGV("-iMax", 10);
+
+// Solution exacte
+func real fu( int i ){ return (i*dt)*(1-x^2-y^2); }
+
 // Second membre
-func real f(real t){ return (1-x^2-y^2) + 4*t; }
+func real ff( int i ){ return (1-x^2-y^2) + 4*(i*dt); }
+
+// Maillage global du domaine
+int npoints = 1024;
+
+border C(t=0, 1){
+    x = cos(2*pi*t);
+    y = sin(2*pi*t);
+    label = 1;
+}
+
+mesh Th = buildmesh(C(getARGV("-global", npoints)));
+
+// Declaration de l'operateur global
+Mat A;
+buildMat(Th, getARGV("-split", 1), A, P1, mpiCommWorld)
+
+// Definition du cadre fonctionnel local
+fespace V(Th, P1);
+V err, f, u, uold, v;
+
+// Definition des elements du systeme lineaire local M u = b
+real[int] b(V.ndof);
+matrix M;
+
+// Remplissage de l'operateur global A et du preconditionnement M
+{
+    varf a(u, v) = int2d(Th)( u*v + dt*(dx(u)*dx(v) + dy(u)*dy(v)) ) + on(1, u=0);
+    A = a(V, V);
+    
+    varf preconditionnement(u, v) = int2d(Th)( u*v );
+    M = preconditionnement(V, V);
+}
+varf l(u, v) = int2d(Th)( u*v ) + int2d(Th)( uold*v + dt*f*v ) + on(1, u=0);
+
+// Manipulation sur l'operateur A.
+set(A, sparams = "-ksp_view");
+
+// Extrapolation temporelle
+for(int i=1; i <= iMax; ++i) {
+
+    f = ff(i);
+
+    b = l(0, V);
+
+    u[] = A^(-1) * b;
+
+    uold = u;
+
+    err = abs(u - fu(i));
+    cout << "==========" << err[].max << "==========" << endl;
+
+    // Visualisation
+    macro def(u)u//
+    plotMPI(Th, err, P1, def, real, cmm ="Erreur")
+}
