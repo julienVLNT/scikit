@@ -10,6 +10,10 @@ Ce dépôt synthétise ce que je sais des langages de programmation et des bonne
 
 # L'environnement
 
+## L'O.S
+
+Je travaille sur [Windows 11](https://www.microsoft.com/fr-fr/windows?wa=wsignin1.0) avec [Windows Subsysteme Linux v2](https://docs.microsoft.com/fr-fr/windows/wsl/).
+
 ## L'I.D.E
 
 Pour développer, j'utilise [Visual Studio Code](https://code.visualstudio.com/) et [Visual Studio](https://visualstudio.microsoft.com/fr/). 
@@ -29,7 +33,7 @@ J'utilise les extensions :
 
 ## L'environnement C / C++
 
-On utilise les outils natifs de l'I.D.E [Visual Studio](). Pour les compilations de DLL à destination de [Nastran](https://www.mscsoftware.com/fr/product/msc-nastran), le logiciel certifie l'usage du compilateur [Intel oneAPI DPC++/C++ Compiler](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html#gs.0tnw5g), lequel s'intègre naturellement à Visual Studio.
+On utilise les outils natifs de l'I.D.E [Visual Studio](). Pour les compilations de DLL à destination de [Nastran](https://www.mscsoftware.com/fr/product/msc-nastran), le logiciel certifie l'usage du compilateur [Intel oneAPI DPC++/C++ Compiler](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html#gs.0tnw5g), lequel s'intègre naturellement à Visual Studio. On ajoutera la bibliothèque [PETSc](https://petsc.org/release/).
 
 ## Environnement FreeFem++
 
