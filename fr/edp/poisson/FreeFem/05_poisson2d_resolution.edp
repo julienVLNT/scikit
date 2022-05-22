@@ -51,7 +51,7 @@ macro dimension()2// fin de macro
 include "macro_ddm.idp"
 
 // Maillage global
-int npoints = 8192;
+int npoints = 1024;
 border C(t=0, 1){
     x = cos(2*pi*t);
     y = sin(2*pi*t);
@@ -59,17 +59,20 @@ border C(t=0, 1){
 }
 mesh Th = buildmesh(C(getARGV("-global", npoints)));
 
-// Creation de l'operateur distribue
+// Creation de l'operateur global
 Mat Ah;
 buildMat(Th, getARGV("-split", 1), Ah, P1, mpiCommWorld)
 set(Ah, sparams = "-ksp_view");
 
-// Cadre fonctionnel local
+// Creation du second membe global
+real[int] b;
+
+// Cadre fonctionnel
 fespace Vh(Th, P1);
 
-// Probleme pour l'assemblage du second membre
-varf vPb(u, v) = int2d(Th)(dx(u)*dx(v) + dy(u)*dy(v)) + int2d(Th)(f*v) + on(1, u = 0.0);
-real[int] rhs = vPb(0, Vh);
+// Definition des formes variationnelles pour l'assemblage de A u = b 
+varf a(u, v, solver=sparsesolver) = int2d(Th)( dx(u)*dx(v) + dy(u)*dy(v) ) + on(1, u = 0);
+varf l(u, v) = int2d(Th)( u*v ) + int2d( f*v ) + on(1, u=0);
 
 // Modification d'un parametre sur A
 set(Ah, sparams = "-ksp_view");
@@ -77,8 +80,11 @@ set(Ah, sparams = "-ksp_view");
 // Declaration de la solution locale
 Vh<real> u;
 
-Ah = vPb(Vh, Vh);
-u[] = Ah^-1 * rhs;
+// Assemblage et resolution
+Ah = a(Vh, Vh);
+b = l(0, Vh);
+
+u[] = Ah^(-1) * b;
 
 /////////
 // FIN //

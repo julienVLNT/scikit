@@ -3,13 +3,23 @@
     Tous les coefficients physiques sont normalisés à 1.
 
         L'écoulement de Poiseuille se fait pour un gradient de pression de 1
-    entre les faces supérieures et inférieures d'une cavité.
+    entre les faces supérieures et inférieures d'une cavité. La solution 
+    cherchee est de la forme
+
+                        p(x, y) = DP * y
+                        u(x, y) = [0, -DP]
+    
+    a des coefficients multiplicatifs près. Ici DP est la difference de pression
+    entre les bords horizontaux, le fluide entre par la partie inferieure et 
+    sort par le bord superieur, la pression est pilotee a l'entree et mesuree a
+    la sortie.
 
     auteur : Julien VALENTIN
     date   : 13 mai 2022
 
     execution dans un terminal externe
-    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\physiques\ecoulement_de_darcy\FreeFem\00_darcy.edp" -ns
+    ----------------------------------
+    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\physiques\darcy\FreeFem\00_darcy.edp" -ns
 */
 
 // Géométrie : cavité rectangulaire
@@ -20,8 +30,11 @@ mesh Th = square(100, 10, [largeur*x, hauteur*y]);
 plot(Th, cmm="cavite", wait=true);
 
 // Definition du cadre variationnel
-fespace Vh(Th, P1);
-Vh ph, qh, uh, vh;
+fespace Qh(Th, P1);
+Qh ph, qh;
+
+fespace Vh(Th, P1b);
+Vh uh, vh; 
 
 /*
     Matériau homogène : mu est constant en espace
@@ -34,7 +47,7 @@ real  K = 1;
 
 // Probleme variationnel
 macro grad(u)[dx(u), dy(u)]//
-solve darcy(ph, qh) = int2d(Th)( grad(ph)'*grad(qh) ) + on(3, ph=1) + on(1, ph=0);
+solve darcy(ph, qh) = int2d(Th)( grad(ph)'*grad(qh) ) + on(1, ph=1) + on(3, ph=0);
 
 uh = K/mu*dx(ph);
 vh = K/mu*dy(ph);

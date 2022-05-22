@@ -22,7 +22,7 @@
 
     execution dans un terminal externe
     ----------------------------------
-    mpiexec -n 2 FreeFem++-mpi "C:\Users\julien\Documents\GitHub\Scikit\fr\edp\poisson\FreeFem\02_poisson2d_petsc.edp" -v 0 -wg
+    mpiexec -n 2 FreeFem++-mpi "C:\Users\julien\Desktop\scikit\fr\edp\poisson\FreeFem\02_poisson2d_petsc.edp" -ns -wg
 */
 
 // Second membre
@@ -36,7 +36,7 @@ macro dimension()2// fin de macro
 include "macro_ddm.idp"
 
 // Maillage global
-int npoints = 64;
+int npoints = 4096;
 border C(t=0, 1){
     x = cos(2*pi*t);
     y = sin(2*pi*t);
@@ -52,9 +52,11 @@ set(Ah, sparams = "-ksp_view");
 // Cadre fonctionnel local
 fespace Vh(Th, P1);
 
-// Probleme pour l'assemblage du second membre
-varf vPb(u, v) = int2d(Th)(dx(u)*dx(v) + dy(u)*dy(v)) + int2d(Th)(f*v) + on(1, u = 0.0);
-real[int] rhs = vPb(0, Vh);
+// Definition des formes variationnelles pour l'assemblage de A u = b
+varf a(u, v, solver=GMRES) = int2d(Th)( dx(u)*dx(v) + dy(u)*dy(v) ) + on(1, u = 0);
+
+varf l(u, v) = int2d(Th)( u*v ) + int2d(Th)( f*v ) + on(1, u=0);
+real[int] b = l(0, Vh);
 
 // Modification d'un parametre sur A
 set(Ah, sparams = "-ksp_view");
@@ -62,11 +64,11 @@ set(Ah, sparams = "-ksp_view");
 // Declaration de la solution locale
 Vh<real> u;
 
-Ah = vPb(Vh, Vh);
-u[] = Ah^-1 * rhs;
+Ah = a(Vh, Vh);
+u[] = Ah^(-1) * b;
 
 macro def(u)u//
-plotMPI(Th, u, P1, def, real, cmm="Global solution")
+plotMPI(Th, u, P1, def, real, cmm="Solution globale")
 
 /////////
 // FIN //

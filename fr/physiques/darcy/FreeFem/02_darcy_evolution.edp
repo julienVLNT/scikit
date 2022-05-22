@@ -9,7 +9,8 @@
     date   : 13 mai 2022
 
     execution dans un terminal externe
-    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\physiques\ecoulement_de_darcy\FreeFem\00_darcy.edp" -ns
+    ----------------------------------
+    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\physiques\darcy\FreeFem\03_darcy_evolution.edp" -ns
 
 */
 
@@ -20,8 +21,14 @@ mesh Th = square(10, 100, [largeur*x, hauteur*y]);
 plot(Th, cmm="cavite", wait=true);
 
 // Definition du cadre variationnel
-fespace Vh(Th, P1);
-Vh ph, qh, uh, vh, phih;
+fespace Qh(Th, P1);
+Qh ph, qh;
+
+fespace Vh(Th, P1b);
+Vh uh, vh;
+
+fespace Wh(Th, P2);
+Wh phih;
 
 /*
     Matériau homogène : mu est constant en espace
