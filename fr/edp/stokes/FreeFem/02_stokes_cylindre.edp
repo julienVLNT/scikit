@@ -1,0 +1,70 @@
+/*
+    auteur : Julien VALENTIN
+    date   : 22/05/2022
+
+    execution dans un terminal externe
+    ----------------------------------
+    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\edp\stokes\FreeFem\02_stokes_cylindre.edp" -ns 
+*/
+
+// Maillage du domaine
+real l = 2.2;
+real h = 0.41;
+
+real cx0 = 0.2;
+real cy0 = 0.2; 
+real r = 0.1;
+
+int nel = 15;
+
+border AB(t=0, l){
+    x=t;
+    y=0;
+    label=2;
+}
+
+border BC(t=0, h){
+    x = l;
+    y = t;
+    label = 3;
+}
+
+border CD(t=l, 0){
+    x = t;
+    y = h;
+    label = 2;
+}
+
+border DA(t=h, 0){
+    x = 0; 
+    y = t; 
+    label = 1;
+}
+
+border C(t=2*pi, 0){
+    x = cx0 + r*sin(t)/2; 
+    y = cy0 + r*cos(t)/2;
+    label = 2;
+}
+
+mesh Th = buildmesh(AB(5*nel) + BC(nel) + CD(5*nel) + DA(nel) + C(-nel*3));
+
+// Definition du cadre fonctionnel
+fespace Qh(Th, P1);
+Qh p, q;
+
+fespace Vh(Th, P1b);
+Vh vx, vy, wx, wy;
+
+// Resolution du probleme variationnel
+solve stokes([vx, vy, p], [wx, wy, q])
+    = int2d(Th)(  (dx(vx)*dx(wx) + dy(vx)*dy(wx))
+                + (dx(vy)*dx(wy) + dy(vy)*dy(wy))
+                +  dx(p)*wx
+                +  dy(p)*wy
+                + (dx(vx)+dy(vy))*q
+                - 1e-10*p*q )
+    + on(2, vx = 0, vy = 0)
+    + on(1, vx = 1, vy = 0);
+
+plot([vx, vy], p, value=true);

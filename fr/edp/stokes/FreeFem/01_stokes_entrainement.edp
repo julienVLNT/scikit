@@ -1,0 +1,46 @@
+/*
+    Implementation du systeme de Stokes en version couplage fort avec elements
+    [P1, P1b] pour la pression et la vitesse. On simule l'écoulement entraine
+    dans une cavite rectangulaire. L'entrainement a lieu sur la face superieure
+
+        Dans la formulation variationnelle, on penalise le produit de pressions
+    a un facteur 1e-10.
+
+    auteur : Julien VALENTIN
+    date   : 22/05/2022
+
+    execution dans un terminal externe
+    ----------------------------------
+    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\edp\stokes\FreeFem\01_stokes_entrainement.edp" -ns 
+*/
+
+// Maillage du domaine
+real l = 1;
+real h = 1;
+
+int nely = 32;
+int nelx = l/h*nely;
+
+int[int] lab = [2, 2, 1, 2];
+
+mesh Th = square(nelx, nely, [l*x, h*y], label=lab);
+
+// Definition du cadre fonctionnel
+fespace Qh(Th, P1);
+Qh p, q;
+
+fespace Vh(Th, P1b);
+Vh vx, vy, wx, wy;
+
+// Resolution du probleme de Stokes
+solve stokes([vx, vy, p], [wx, wy, q])
+    = int2d(Th)(  (dx(vx)*dx(wx) + dy(vx)*dy(wx))
+                + (dx(vy)*dx(wy) + dy(vy)*dy(wy))
+                +  dx(p)*wx
+                +  dy(p)*wy
+                + (dx(vx)+dy(vy))*q
+                - 1e-10*p*q )
+    + on(2, vx = 0, vy = 0)
+    + on(1, vx = 1, vy = 0);
+
+plot([vx, vy], p, value=true);
