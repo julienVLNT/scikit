@@ -85,6 +85,9 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - Problème de [Chaleur 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/01_chaleur2d_petsc.edp) distribué à l'aide de PETSc
 - Problème de [Transport](https://github.com/julienVLNT/scikit/tree/main/fredp/transport/transport.edp) par un champ de vecteurs 2D constant d'une fonction scalaire
 - Problème de [Transport](https://github.com/julienVLNT/scikit/tree/main/fr/edp/transport/transport_maillage.edp) d'un maillage par un champ de vecteurs 2D constant.
+- Problème de [Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/00_stokes_poiseuille.edp) pour l'écoulement de Poiseuille (conditions mixtes pression / vitesse) dans un canal, implémentation par couplage fort avec éléments **P1**, **P1b**.
+- Problème de [Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/01_stokes_entrainement.edp) pour l'écoulement *lid-driven* en cavité fermée (conditions de vitesse), couplage fort avec éléments **P1**, **P1b**
+- Problème de [Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/02_stokes_cylindre.edp) pour l'écoulement autour d'un obstacle cylindrique (conditions en vitesses / pressions à l'extérieur et vitesse sur le cylindre), couplage fort avec éléments **P1**, **P1b**.
 
 ### Langage
 
@@ -147,6 +150,9 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - [FreeFem : Chaleur 2D, intégration par Euler Implicite, parallélisation avec PETSc](https://github.com/julienVLNT/scikit/tree/main/fr/edp/chaleur/FreeFem/01_chaleur2d_petsc.edp)
 - [FreeFem : transport par un champ de vecteurs 2D d'une fonction scalaire](https://github.com/julienVLNT/scikit/tree/main/fr/edp/transport/transport.edp)
 - [FreeFem : transport par un champ de vecteurs 2D d'un maillage](https://github.com/julienVLNT/scikit/tree/main/fr/edp/transport/transport_maillage.edp)
+- [FreeFem : Stokes - Poiseuille](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/00_stokes_poiseuille.edp) par couplage fort, éléments **P1**, **P1b**
+- [FreeFem : Stokes - *lid-driven*](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/01_stokes_entrainement.edp) par couplage fort, éléments **P1**, **P1b**
+- [FreeFem : Stokes - cylindre](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/02_stokes_cylindre.edp) par couplage fort, éléments **P1**, **P1b**
 
 ## Implémentation et compilation d'une D.L.L
 
