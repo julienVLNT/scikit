@@ -1,4 +1,4 @@
-# Scikit
+# A propos
 
 **AUTEUR** : Julien VALENTIN
 
@@ -7,6 +7,8 @@
 **LICENCE** : 
 
 Ce dépôt synthétise ce que je sais des langages de programmation et des bonnes pratiques en ce qui concerne la programmation appliquée à la modélisation et à l'algorithmie. En particulier, on explore les langages de programmation `FreeFem`, `Julia`, `MATLAB` ou `Python3.x`. Ces langages sont tous des langages de haut niveau permettant de développer des méthodes d'analyse numérique, d'algèbre numérique, de mathématiques appliquées en général. On présente également quelques outils annexes tels que `Gmsh`, `Paraview`... Uniquement des outils libres articulés avec un ou plusieurs langages cités ci-dessus.
+
+Ici se trouve mon [C.V](a_propos/CV_2022-05-22_Julien_Valentin.pdf).
 
 # L'environnement
 
