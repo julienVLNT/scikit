@@ -3,17 +3,13 @@
     le problème est celui de l'imprégnation par un fluide d'un milieu poreux 
     initialement sec, rempli d'un fluide qui est l'air, de viscosité nulle.
 
-        A l'exécution, on observe que le front se bloque sur les bords.
-
     auteur : Julien VALENTIN
     date   : 13 mai 2022
 
     execution dans un terminal externe
     ----------------------------------
-    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\physiques\darcy\FreeFem\03_darcy_evolution.edp" -ns
-
+    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\physiques\darcy\FreeFem\02_darcy_evolution.edp" -ns
 */
-
 // Géométrie : cavité rectangulaire
 real largeur = 1;
 real hauteur = 5;
@@ -31,25 +27,22 @@ fespace Wh(Th, P2);
 Wh phih;
 
 /*
-    Matériau homogène : mu est constant en espace
-    Matériau isotrope : K = K Id et constant en espace
-
-    Pour cette démonstration, les coefficients sont normalisés.
+    Fluide non-homogene : mu = mu(x,y)
+    Matériau non-homogene anisotrope :
+        K = [ [ k11(x,y), k12(x,y) ],
+              [ k21(x,y), k22(x,y)] ] 
 */
-real mu = 1;
-real  K = 1;
+func mu  = 1;
+func k11 = 1;
+func k12 = 0;
+func k21 = 0;
+func k22 = 1;
 
 // Probleme variationnel
-macro grad(u)[dx(u), dy(u)]//
-solve darcy(ph, qh) = int2d(Th)( grad(ph)'*grad(qh) ) + on(3, ph=1) + on(1, ph=0);
+solve darcy(ph, qh) = int2d(Th)( 1/mu * (k11*dx(ph)+k12*dy(ph))*dx(qh) + (k21*dx(ph)+k22*dy(ph))*dy(qh) ) + on(1, ph=1) + on(3, ph=0);
 
-uh = K/mu*dx(ph);
-vh = K/mu*dy(ph);
-
-plot(ph, cmm="pression", value=true, wait=true);
-plot(uh, cmm="vitesse horizontale", value=true, wait=true);
-plot(vh, cmm="vitesse verticale", value=true, wait=true);
-plot([uh,vh], cmm="vitesse", value=true, wait=true);
+uh = -dx(ph);
+vh = -dy(ph);
 
 // Initialisation de la ligne de front
 func phi0 = y < hauteur/10 ? 1 : 0;
