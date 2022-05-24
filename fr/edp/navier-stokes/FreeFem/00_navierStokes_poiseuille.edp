@@ -1,0 +1,15 @@
+/*
+    auteur : Julien VALENTIN
+    date   : 22/05/2022
+
+    execution dans un terminal externe
+    ----------------------------------
+    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\edp\navier-stokes\FreeFem\00_navierStokes_poiseuille.edp" -ns
+*/
+
+// Maillage du domaine
+int nel = 64;
+
+mesh Th = square(3*nel, nel, [3*x, y]);
+plot(Th);
+

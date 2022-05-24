@@ -10,7 +10,7 @@
     ----------------------------------
     FreeFem++ "C:\Users\julien\Desktop\scikit\fr\physiques\darcy\FreeFem\02_darcy_evolution.edp" -ns
 */
-// Géométrie : cavité rectangulaire
+// Geometrie : cavité rectangulaire
 real largeur = 1;
 real hauteur = 5;
 mesh Th = square(10, 100, [largeur*x, hauteur*y]);
@@ -23,7 +23,7 @@ Qh ph, qh;
 fespace Vh(Th, P1b);
 Vh uh, vh;
 
-fespace Wh(Th, P2);
+fespace Wh(Th, P2dc);    // P1dc minimum.
 Wh phih;
 
 /*
