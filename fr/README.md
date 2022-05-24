@@ -104,6 +104,8 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - Problème de [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/00_darcy.edp) pour l'écoulement de Poiseuille en milieu poreux dans un matériau homogène isotrope
 - Problème de [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/01_darcy_nhani.edp) pour un écoulement en cavité, fluide non-homogène, milieu non-homogène anisotrope
 - Problème de [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/02_darcy_evolution.edp) pour l'imprégnation d'un poreux initialement plein d'air qui se remplit de fluide
+- Problème de [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/03_darcy_nhani_fort.edp) pour un fluide non-homogène s'écoulant dans un milieu non-homogène anisotrope, implémentation par couplage fort
+- Problème de [Lamé](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/lame/FreeFem/00_lame_nhani.edp) pour la déformation d'une pièce non-homogène anisotrope
 
 
 ## Julia
@@ -165,7 +167,11 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - [FreeFem : problème de Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/00_darcy.edp) pour l'écoulement de Poiseuille en cavité, milieu homogène et isotrope
 - [FreeFem : problème de Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/01_darcy_nhani.edp) pour un écoulement en cavité, fluide non-homogène, milieu non-homogène anisotrope
 - [FreeFem : problème de Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/02_darcy_evolution.edp) pour l'imprégnation d'un poreux initialement plein d'air qui se remplit de fluide
-- 
+- [FreeFem : problème de Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/03_darcy_nhani_fort.edp) pour un fluide non-homogène dans un milieu non-homogène anisotrope, implémentation par couplage fort
+
+### Elasticité
+
+- [FreeFem : problème de Lamé](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/lame/FreeFem/00_lame_nhani.edp) pour la déformation d'une pièce non-homogène et anisotrope
 
 
 ## Visualisation de données

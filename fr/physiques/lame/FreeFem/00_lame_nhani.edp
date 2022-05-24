@@ -1,0 +1,14 @@
+/*
+    Implementation d'un systeme de Lamé pour une piece anisotrope non
+    homogene. On suppose que la piece est fixee aux bords verticaux et qu'elle
+    subit son propre poids, vertical descendant dans le repere de l'experience.
+
+    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\physiques\darcy\FreeFem\03_darcy_nhani_fort.edp" -ns
+*/
+// Geometrie de la piece
+real l = 1;
+int nel = 64;
+
+mesh Th = square(nel, nel, [l*x, l*y])
+
+// Caracterisation de la piece
