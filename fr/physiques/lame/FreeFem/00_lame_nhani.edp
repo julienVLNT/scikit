@@ -12,7 +12,7 @@ int nel = 64;
 mesh Th = square(nel, nel, [l*x, l*y]);
 plot(Th, cmm="Piece initiale", wait=true);
 
-// Caracterisation de la piece
+// Caracterisation de la piece et de ses lois de deformation
 func E = 1;         // module d'Young
 func nu = 1;        // coefficient de Poisson
 
