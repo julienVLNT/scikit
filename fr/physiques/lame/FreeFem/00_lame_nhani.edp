@@ -13,15 +13,18 @@ mesh Th = square(nel, nel, [l*x, l*y]);
 plot(Th, cmm="Piece initiale", wait=true);
 
 // Caracterisation de la piece
-func Q1111 = 1;
-func Q1122 = 1;
-func Q1112 = 1;
-func Q2211 = 1;
-func Q2222 = 1;
-func Q2212 = 1;
-func Q1211 = 1;
-func Q1222 = 1;
-func Q1212 = 1;
+func E = 1;         // module d'Young
+func nu = 1;        // coefficient de Poisson
+
+func Q1111 = 1;     // dependent des coefficients ci-dessus
+func Q1122 = 1;     // |
+func Q1112 = 1;     // |
+func Q2211 = 1;     // |
+func Q2222 = 1;     // |
+func Q2212 = 1;     // |
+func Q1211 = 1;     // |
+func Q1222 = 1;     // |
+func Q1212 = 1;     // |
 
 // Definition du cadre fonctionnel
 fespace V(Th, P1);
