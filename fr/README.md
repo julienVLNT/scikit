@@ -88,6 +88,10 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - Problème de [Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/00_stokes_poiseuille.edp) pour l'écoulement de Poiseuille (conditions mixtes pression / vitesse) dans un canal, implémentation par couplage fort avec éléments **P1**, **P1b**.
 - Problème de [Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/01_stokes_entrainement.edp) pour l'écoulement *lid-driven* en cavité fermée (conditions de vitesse), couplage fort avec éléments **P1**, **P1b**
 - Problème de [Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/02_stokes_cylindre.edp) pour l'écoulement autour d'un obstacle cylindrique (conditions en vitesses / pressions à l'extérieur et vitesse sur le cylindre), couplage fort avec éléments **P1**, **P1b**.
+- [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/00_navierStokes_taylorGreen.edp) présentation de la solution de Taylor-Green
+- [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/01_navierStokes_chorin.edp) résolution du problème d'évolution pour Navier-Stokes avec conditions aux limites en vitesse par algorithme de projection - correction de Chorin
+- [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/02_navierStokes_chorin.edp) résolution d'un problème de Poiseuille à l'aide du code précédent ; pour l'instant ma solution diverge.
+- [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/03_navierStokesStationnaire_newton.edp) résolution du problème stationnaire pour l'écoulement de Poiseuille, approximation du problème d'Oseen à l'aide d'une méthode de Newton
 
 ### Langage
 
@@ -105,8 +109,7 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - Problème de [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/01_darcy_nhani.edp) pour un écoulement en cavité, fluide non-homogène, milieu non-homogène anisotrope
 - Problème de [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/02_darcy_evolution.edp) pour l'imprégnation d'un poreux initialement plein d'air qui se remplit de fluide
 - Problème de [Darcy](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/darcy/FreeFem/03_darcy_nhani_fort.edp) pour un fluide non-homogène s'écoulant dans un milieu non-homogène anisotrope, implémentation par couplage fort
-- Problème de [Lamé](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/lame/FreeFem/00_lame_nhani.edp) pour la déformation d'une pièce non-homogène anisotrope
-
+- Problème d'[élasticité](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/elasticite/FreeFem/00_lame_nhani.edp) pour la déformation d'une pièce non-homogène anisotrope
 
 ## Julia
 
@@ -155,6 +158,9 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - [FreeFem : Stokes - Poiseuille](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/00_stokes_poiseuille.edp) par couplage fort, éléments **P1**, **P1b**
 - [FreeFem : Stokes - *lid-driven*](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/01_stokes_entrainement.edp) par couplage fort, éléments **P1**, **P1b**
 - [FreeFem : Stokes - cylindre](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/02_stokes_cylindre.edp) par couplage fort, éléments **P1**, **P1b**
+- [FreeFem : Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/00_navierStokes_taylorGreen.edp) présentation de la solution de Taylor-Green
+- [FreeFem : Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/01_navierStokes_chorin.edp) résolution du problème d'évolution pour Navier-Stokes avec conditions aux limites en vitesse par algorithme de projection - correction de Chorin
+- [FreeFem : Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/02_navierStokes_chorin.edp) résolution d'un problème de Poiseuille à l'aide du code précédent ; pour l'instant ma solution diverge.
 
 ## Implémentation et compilation d'une D.L.L
 
@@ -171,7 +177,7 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 
 ### Elasticité
 
-- [FreeFem : problème de Lamé](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/lame/FreeFem/00_lame_nhani.edp) pour la déformation d'une pièce non-homogène et anisotrope
+- [FreeFem : problème de Lamé](https://github.com/julienVLNT/scikit/blob/main/fr/physiques/lame/FreeFem/00_lame_nhani.edp) statique pour la déformation d'une pièce non-homogène et anisotrope
 
 
 ## Visualisation de données

@@ -65,6 +65,7 @@ solve stokes([vx, vy, p], [wx, wy, q])
                 + (dx(vx)+dy(vy))*q
                 - 1e-10*p*q )
     + on(2, vx = 0, vy = 0)
-    + on(1, vx = 1, vy = 0);
+    + on(1, p = 10)
+    + on(3, p = 0);
 
 plot([vx, vy], p, value=true);

@@ -1,0 +1,50 @@
+/*
+    Affichage des lignes de champs pour Stokes - Poiseuille.
+
+    auteur : Julien VALENTIN
+    date   : 26/05/2022
+
+    execution dans un terminal externe
+    ----------------------------------
+    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\edp\stokes\FreeFem\03_stokes_streamlines.edp" -ns
+*/
+
+// Maillage du domaine
+real l = 3;
+real h = 1;
+
+int nely = 32;
+int nelx = l/h*nely;
+
+int[int] lab = [2, 3, 2, 1];
+
+mesh Th = square(nelx, nely, [l*x, h*y], label=lab);
+
+// Definition du cadre fonctionnel
+fespace Qh(Th, P1);
+Qh p, q;
+
+fespace Vh(Th, P1b);
+Vh phi, psi, vx, vy, wx, wy;
+
+// Resolution du probleme de Stokes
+solve stokes([vx, vy, p], [wx, wy, q])
+    = int2d(Th)(  (dx(vx)*dx(wx) + dy(vx)*dy(wx))
+                + (dx(vy)*dx(wy) + dy(vy)*dy(wy))
+                +  dx(p)*wx
+                +  dy(p)*wy
+                + (dx(vx)+dy(vy))*q
+                - 1e-10*p*q )
+    + on(2, vx = 0, vy = 0)
+    + on(1, p = 3)
+    + on(3, p = 0);
+
+plot([vx, vy], p, value=true);
+
+// Resolution du probleme du flot
+solve streamlines(psi, phi)
+    = int2d(Th)( dx(psi)*dx(phi) + dy(psi)*dy(phi) )
+    - int2d(Th)( phi*(dy(vx) - dx(vy)) )
+    + on(1, 2, 3, psi=0);
+
+plot([vx, vy], psi, wait=true);

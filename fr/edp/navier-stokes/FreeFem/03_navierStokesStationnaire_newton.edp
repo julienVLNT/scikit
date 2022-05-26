@@ -1,0 +1,14 @@
+/*
+    On souhaite approcher la solution de Taylor-Green pour un ecoulement 
+    stationnaire a l'aide de la methode de Newton. Le modele de Navier-
+    Stokes stationnaire s'ecrit 
+
+                                                   div(v) = 0
+                (v grad(v)) v - nu Laplacien(v) + grad(p) = 0
+
+    auteur : Julien VALENTIN
+    date   : 26/05/2022
+
+    execution
+    ---------
+    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\edp\navier-stokes\FreeFem\02_navierStokes_chorin.edp" -ns
