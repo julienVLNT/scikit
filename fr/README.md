@@ -104,6 +104,7 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - Problème de [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/02_navierStokes_chorin.edp) résolution d'un problème de Poiseuille à l'aide du code précédent ; pour l'instant ma solution diverge.
 - Problème de [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/03_navierStokesStationnaire_newton.edp) résolution du problème stationnaire pour l'écoulement de Taylor-Green, approximation du problème d'Oseen à l'aide d'une méthode de Newton
 - Problème de [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/04_navierStokesStationnaire_uzawaCahouetChabart.edp) : résolution du problème stationnaire par application de l'itération d'Uzawa et conditionnement par Cahouet-Chabart.
+- Problème de [Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/05_navierStokes_BDF2.edp) : schéma d'ordre 2 en temps pour le problème de Navier-Stokes, solution de Taylor-Green.
 
 ### Langage
 
@@ -179,6 +180,7 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - [FreeFem : Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/02_navierStokes_chorin.edp) résolution d'un problème de Poiseuille à l'aide du code précédent ; pour l'instant ma solution diverge.
 - [FreeFem : Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/03_navierStokesStationnaire_newton.edp) : résolution du problème d'Oseen pour l'écoulement de Taylor-Green avec méthode de Newton.
 - [FreeFem : Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/04_navierStokesStationnaire_uzawaCahouetChabart.edp) : résolution d'un problème stationnaire par itérations d'Uzawa avec préconditionnement de Cahouet-Chabart.
+- [FreeFem : Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/05_navierStokes_BDF2.edp) : schéma d'ordre 2 en temps pour le problème de Navier-Stokes, solution de Taylor-Green.
 
 ## Implémentation et compilation d'une D.L.L
 
