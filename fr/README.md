@@ -95,7 +95,8 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/00_navierStokes_taylorGreen.edp) présentation de la solution de Taylor-Green
 - [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/01_navierStokes_chorin.edp) résolution du problème d'évolution pour Navier-Stokes avec conditions aux limites en vitesse par algorithme de projection - correction de Chorin
 - [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/02_navierStokes_chorin.edp) résolution d'un problème de Poiseuille à l'aide du code précédent ; pour l'instant ma solution diverge.
-- [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/03_navierStokesStationnaire_newton.edp) résolution du problème stationnaire pour l'écoulement de Poiseuille, approximation du problème d'Oseen à l'aide d'une méthode de Newton
+- [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/03_navierStokesStationnaire_newton.edp) résolution du problème stationnaire pour l'écoulement de Taylor-Green, approximation du problème d'Oseen à l'aide d'une méthode de Newton
+- [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/04_navierStokesStationnaire_uzawaCahouetChabart.edp) : résolution du problème stationnaire par application de l'itération d'Uzawa et conditionnement par Cahouet-Chabart.
 
 ### Langage
 
@@ -163,8 +164,10 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - [FreeFem : Stokes - *lid-driven*](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/01_stokes_entrainement.edp) par couplage fort, éléments **P1**, **P1b**
 - [FreeFem : Stokes - cylindre](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/02_stokes_cylindre.edp) par couplage fort, éléments **P1**, **P1b**
 - [FreeFem : Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/00_navierStokes_taylorGreen.edp) présentation de la solution de Taylor-Green
-- [FreeFem : Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/01_navierStokes_chorin.edp) résolution du problème d'évolution pour Navier-Stokes avec conditions aux limites en vitesse par algorithme de projection - correction de Chorin
+- [FreeFem : Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/01_navierStokes_chorin.edp) résolution du problème d'évolution pour Navier-Stokes avec conditions aux limites en vitesse par algorithme de projection - correction de Chorin.
 - [FreeFem : Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/02_navierStokes_chorin.edp) résolution d'un problème de Poiseuille à l'aide du code précédent ; pour l'instant ma solution diverge.
+- [FreeFem : Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/03_navierStokesStationnaire_newton.edp) : résolution du problème d'Oseen pour l'écoulement de Taylor-Green avec méthode de Newton.
+- [FreeFem : Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/04_navierStokesStationnaire_uzawaCahouetChabart.edp) : résolution d'un problème stationnaire par itérations d'Uzawa avec préconditionnement de Cahouet-Chabart.
 
 ## Implémentation et compilation d'une D.L.L
 
