@@ -96,11 +96,14 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - Problème de [Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/00_stokes_poiseuille.edp) pour l'écoulement de Poiseuille (conditions mixtes pression / vitesse) dans un canal, implémentation par couplage fort avec éléments **P1**, **P1b**.
 - Problème de [Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/01_stokes_entrainement.edp) pour l'écoulement *lid-driven* en cavité fermée (conditions de vitesse), couplage fort avec éléments **P1**, **P1b**
 - Problème de [Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/02_stokes_cylindre.edp) pour l'écoulement autour d'un obstacle cylindrique (conditions en vitesses / pressions à l'extérieur et vitesse sur le cylindre), couplage fort avec éléments **P1**, **P1b**.
-- [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/00_navierStokes_taylorGreen.edp) présentation de la solution de Taylor-Green
-- [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/01_navierStokes_chorin.edp) résolution du problème d'évolution pour Navier-Stokes avec conditions aux limites en vitesse par algorithme de projection - correction de Chorin
-- [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/02_navierStokes_chorin.edp) résolution d'un problème de Poiseuille à l'aide du code précédent ; pour l'instant ma solution diverge.
-- [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/03_navierStokesStationnaire_newton.edp) résolution du problème stationnaire pour l'écoulement de Taylor-Green, approximation du problème d'Oseen à l'aide d'une méthode de Newton
-- [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/04_navierStokesStationnaire_uzawaCahouetChabart.edp) : résolution du problème stationnaire par application de l'itération d'Uzawa et conditionnement par Cahouet-Chabart.
+- Problème de [Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/03_stokes_streamlines.edp) avec recherche de la fonction de flot pour en déduire le vortex $\text{rot}(\psi)$
+- Problème de [Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/04_stokes_uzawa.edp) avec itérations d'Uzawa, conditions en vitesse
+- Problème de [Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/05_stokes_uzawa.edp) avec itérations d'Uzawa, conditions mixtes vitesse / pression.
+- Problème de [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/00_navierStokes_taylorGreen.edp) présentation de la solution de Taylor-Green
+- Problème de [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/01_navierStokes_chorin.edp) résolution du problème d'évolution pour Navier-Stokes avec conditions aux limites en vitesse par algorithme de projection - correction de Chorin
+- Problème de [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/02_navierStokes_chorin.edp) résolution d'un problème de Poiseuille à l'aide du code précédent ; pour l'instant ma solution diverge.
+- Problème de [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/03_navierStokesStationnaire_newton.edp) résolution du problème stationnaire pour l'écoulement de Taylor-Green, approximation du problème d'Oseen à l'aide d'une méthode de Newton
+- Problème de [Navier-Stokes 2D](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/04_navierStokesStationnaire_uzawaCahouetChabart.edp) : résolution du problème stationnaire par application de l'itération d'Uzawa et conditionnement par Cahouet-Chabart.
 
 ### Langage
 

@@ -1,0 +1,11 @@
+/*
+    Resolution du systeme de Stokes avec conditions mixtes pression - vitesse
+    grace aux iterations d'Uzawa effectuees par methode du gradient conjugue.
+
+    auteur : Julien Valentin
+    date : 27/05/2022
+
+    execution
+    ---------
+    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\edp\stokes\FreeFem\05_stokes_uzawa.edp" -ns
+*/

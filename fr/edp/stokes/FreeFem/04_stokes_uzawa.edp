@@ -1,0 +1,79 @@
+/*
+    Iteration d'Uzawa resolue par methode du gradient conjugue pour le systeme
+    de Stokes, le cas de l'ecoulement en cavite avec conditions aux limites en
+    vitesse (entrainement sur la face superieure.)
+
+    execution
+    ---------
+    FreeFem++ "C:\Users\julien\Desktop\scikit\fr\edp\stokes\FreeFem\04_stokes_uzawa.edp" -ns
+*/
+
+// Maillage du canal rectangulaire
+real l = 1;
+real h = 1;
+int nely = 16;
+int nelx = int(l/h) * nely;
+int[int] lab = [1, 1, 2, 1];
+
+mesh Th = square(nelx, nely, [l*x, h*y], label = lab);
+
+// Caracterisation du fluide
+real rho = 1;
+real nu = 1;
+
+// Definition du cadre fonctionnel
+fespace V(Th, P2b);
+V vx, vy, w;
+V b, bcx, bcy;
+
+fespace Q(Th, P1);
+Q p;
+Q ppp;
+
+// Definition des formes variationnelles
+varf bx(v, q) = int2d(Th)( -dx(v)*q );
+varf by(v, q) = int2d(Th)( -dy(v)*q );
+varf a(v, w) = int2d(Th)( dx(v)*dx(w) + dy(v)*dy(w) ) + on(2, v=1) + on(1, v=0);
+
+// Assemblage des blocs du systeme
+matrix A = a(V, V);
+matrix Bx = bx(V, Q);
+matrix By = by(V, Q);
+
+bcx[] = a(0, V);
+bcy[] = 0;
+
+// Fonction dont on cherche la racine
+func real[int] divup( real[int]& pp ){
+    
+    // Calcul de vx
+    b[] = Bx' * pp;
+    b[] *= -1;
+    b[] += bcx[];
+    vx[] = A^(-1)*b[];
+
+    // Calcul de vy
+    b[] = By' * pp;
+    b[] *= -1;
+    b[] += bcy[];
+    vy[] = A^(-1)*b[];
+
+    // v^n = (A^(-1)*Bx^T*p^n, By^T*p^n)^T
+    ppp[] = Bx*vx[];
+    ppp[] += By*vy[];
+
+    // Fin du calcul
+    return ppp[];
+}
+
+// Initialisation
+p=0;
+
+// Optimisation par algorithme de Gradient Conjugue
+LinearCG(divup, p[], eps=1.e-6, nbiter=50);
+
+// Calcul de la solution finale
+divup(p[]);
+
+// Affichage
+plot([vx, vy], p, coef=0.1, value=true, wait=1);
