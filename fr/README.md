@@ -170,6 +170,9 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 - [FreeFem : Stokes - Poiseuille](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/00_stokes_poiseuille.edp) par couplage fort, éléments **P1**, **P1b**
 - [FreeFem : Stokes - *lid-driven*](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/01_stokes_entrainement.edp) par couplage fort, éléments **P1**, **P1b**
 - [FreeFem : Stokes - cylindre](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/02_stokes_cylindre.edp) par couplage fort, éléments **P1**, **P1b**
+- [FreeFem : Stokes ](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/03_stokes_streamlines.edp) recherche de la fonction de flot
+- [FreeFem : Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/04_stokes_uzawa.edp) itérations d'Uzawa avec conditions aux limites sur la vitesse
+- [FreeFem : Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/stokes/FreeFem/05_stokes_uzawa.edp) itérations d'Uzawa avec conditions aux limites mixtes vitesse / pression
 - [FreeFem : Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/00_navierStokes_taylorGreen.edp) présentation de la solution de Taylor-Green
 - [FreeFem : Navier-Stokes](https://github.com/julienVLNT/scikit/tree/main/fr/edp/navier-stokes/FreeFem/01_navierStokes_chorin.edp) résolution du problème d'évolution pour Navier-Stokes avec conditions aux limites en vitesse par algorithme de projection - correction de Chorin.
 - 
