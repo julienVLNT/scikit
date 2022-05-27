@@ -37,6 +37,10 @@ J'utilise les extensions :
 
 On utilise les outils natifs de l'I.D.E [Visual Studio](). Pour les compilations de DLL à destination de [Nastran](https://www.mscsoftware.com/fr/product/msc-nastran), le logiciel certifie l'usage du compilateur [Intel oneAPI DPC++/C++ Compiler](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html#gs.0tnw5g), lequel s'intègre naturellement à Visual Studio. On ajoutera la bibliothèque [PETSc](https://petsc.org/release/).
 
+## L'environnement FEniCs
+
+L'environnement [FEniCs](https://fenicsproject.org/) dispose de plusieurs types d'installation. J'ai choisi l'intégration dans un conteneur [Docker](https://www.docker.com/), cette distribution intègre nativement l'environnement nécessaire à l'usage de FEniCs, son A.P.I Python3 ainsi que l'environnement de développement interactif [Jupyter](https://jupyter.org/), avec l'interface utilisateur Jupyterlab.
+
 ## Environnement FreeFem++
 
 On installe l'[interpréteur FreeFem++](https://freefem.org) dans une version compatible avec la parallélisation via MPI, PETSc, SLEPSc... Par exemple la 4.11. Le post-traitement des champs se fera à l'aide de [Paraview](https://www.paraview.org/).
