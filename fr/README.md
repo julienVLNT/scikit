@@ -10,6 +10,10 @@ Ce dépôt synthétise ce que je sais des langages de programmation et des bonne
 
 Ici se trouve mon [C.V](a_propos/CV_2022-05-22_Julien_Valentin.pdf).
 
+# La bibliographie ...
+
+... se trouve [ici](https://github.com/julienVLNT/scikit/tree/main/bibliographie).
+
 # L'environnement
 
 ## L'O.S
