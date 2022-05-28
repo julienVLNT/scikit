@@ -77,7 +77,7 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 
 ### Algèbre linéaire
 
-- [Transformations du plan](https://github.com/julienVLNT/scikit/tree/main/fr/algebre_lineaire/FreeFem/transformations_planes.edp)
+- [Transformations du plan](https://github.com/julienVLNT/scikit/tree/main/fr/algebre/FreeFem/transformations_planes.edp)
 
 ### Equations aux dérivées partielles (éléments finis)
 
@@ -128,7 +128,7 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 
 ### Algèbre linéaire
 
-- [calcul tensoriel](https://github.com/julienVLNT/scikit/tree/main/fr/algebre_lineaire/Julia/tenseurs.ipynb)
+- [calcul tensoriel](https://github.com/julienVLNT/scikit/tree/main/fr/algebre/Julia/tenseurs.ipynb)
 
 ### Langage
 
@@ -148,11 +148,11 @@ On installe l'[interpréteur SageMath](https://sagemath.org).
 
 # Index par thème
 
-## Algèbre linéaire
+## Algèbre
 
-- [FreeFem : transformations du plan](https://github.com/julienVLNT/scikit/tree/main/fr/algebre_lineaire/FreeFem/transformations_planes.edp)
-- [Julia : calcul tensoriel](https://github.com/julienVLNT/scikit/tree/main/fr/algebre_lineaire/Julia/tenseurs.ipynb)
-- [SageMath : modules libres de rang fini sur un anneau commutatif](https://github.com/julienVLNT/scikit/tree/main/fr/algebre_lineaire/SageMath/module_libre_de_rang_fini_sur_anneau_commutatif.ipynb)
+- [FreeFem : transformations du plan](https://github.com/julienVLNT/scikit/tree/main/fr/algebre/FreeFem/transformations_planes.edp)
+- [Julia : calcul tensoriel](https://github.com/julienVLNT/scikit/tree/main/fr/algebre/Julia/tenseurs.ipynb)
+- [SageMath : modules libres de rang fini sur un anneau commutatif](https://github.com/julienVLNT/scikit/tree/main/fr/algebre/SageMath/module_libre_de_rang_fini_sur_anneau_commutatif.ipynb)
 
 ## Equations aux dérivées partielles (éléments finis)
 
