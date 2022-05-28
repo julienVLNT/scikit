@@ -48,7 +48,7 @@ Q p;
 Q q;
 
 // Definition du probleme d'Oseen
-problem Oseen([vx, vy, p], [wx, wy, q])
+problem NS([vx, vy, p], [wx, wy, q])
     = int2d(Th)( 3*Re/(2*dt) * (vx*wx + vy*wy + 2* (dx(vx)*dx(wx) + dy(vx)*dy(wx) + dx(vy)*dx(wy) + dy(vy)*dy(wy))) )
     - int2d(Th)( (dx(wx) + dy(wy)) * p )
     - int2d(Th)( (dx(vx) + dy(vy)) * q )
@@ -67,7 +67,7 @@ p = pe;
 for(int i=0; i < tf/dt; i++){
     t = (i+1)*dt;
 
-    Oseen;
+    NS;
 
     plot([vx, vy], p, cmm="T = "+t, value=1, wait=debug);
 
