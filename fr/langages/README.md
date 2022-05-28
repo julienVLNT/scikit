@@ -132,7 +132,7 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
 
 | **Fonction**                                      | **FreeFem++**          |
 |---------------------------------------------------|-----------------------:|
-| Erreur $\text{erf}$                               | `erf`                  |
+| $\text{erf}$                                      | `erf`                  |
 | $1-\text{erf}$                                    | `erfc`                 |
 
 # Les maillages en dimension $d$
