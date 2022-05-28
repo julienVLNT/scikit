@@ -32,6 +32,7 @@ J'utilise les extensions :
 - [french language pack](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-fr)
 - [jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter)
 - [jupyter notebook renderers](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter-renderers)
+- [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
 - [pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance)
 - [python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
 - [remote-containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
@@ -47,7 +48,7 @@ L'environnement [FEniCs](https://fenicsproject.org/) dispose de plusieurs types 
 
 ## Environnement FreeFem++
 
-On installe l'[interpréteur FreeFem++](https://freefem.org) dans une version compatible avec la parallélisation via MPI, PETSc, SLEPSc... Par exemple la 4.11. Le post-traitement des champs se fera à l'aide de [Paraview](https://www.paraview.org/).
+On installe l'[interpréteur FreeFem++](https://freefem.org) dans une version compatible avec la parallélisation via [MPI](https://www.open-mpi.org/), [PETSc](https://petsc.org/release/), [SLEPc](https://slepc.upv.es/)... Par exemple la 4.11. Le post-traitement des champs se fera à l'aide de [Paraview](https://www.paraview.org/).
 
 ## Environnement Julia
 
@@ -60,10 +61,34 @@ Après installation du [compilateur Julia](https://julialang.org/), on installer
 - [Plots.jl](https://docs.juliaplots.org/stable/)
 - [Tensors.jl](https://docs.juliahub.com/Tensors/F7rKl/1.4.3/).
 
+## Environnement Python
+
+On installe le gestionnaire d'environnements et de paquets [Conda](https://docs.conda.io/en/latest/index.html), plus précisément la distribution [Miniconda](https://docs.conda.io/en/latest/miniconda.html), installation minimale autonome. Elle contient un interpréteur [Python](https://www.python.org/).
+
+On pourra installer à l'aide de `conda` les packages
+
+- [bokeh](http://docs.bokeh.org/en/latest/#)
+- [fipy](https://www.ctcms.nist.gov/fipy/)
+- [jupyterlab](https://jupyterlab.readthedocs.io/en/stable/)
+- [matplotlib](https://matplotlib.org/)
+- [mpi4py](https://mpi4py.readthedocs.io/en/stable/)
+- [numpy](https://numpy.org/)
+- [pandas](https://pandas.pydata.org/)
+- [petsc4py](https://www.mcs.anl.gov/petsc/petsc4py-current/docs/)
+- [plotly](https://plotly.com/)
+- [pypde](https://pypde.readthedocs.io/en/latest/)
+- [pytorch](https://pytorch.org/)
+- [tensorflow](https://www.tensorflow.org/)
+- [scikit-learn](https://scikit-learn.org/stable/#)
+- [scipy](https://scipy.org/)
+- [sympy](https://www.sympy.org/en/index.html)
+- [xarray](https://docs.xarray.dev/en/stable/)
+
+Pour l'analyse numérique des équations de conservation, on pourra installer le gestionnaire de paquets [pip](https://pypi.org/project/pip/) et l'utiliser pour obtenir [clawpack](http://www.clawpack.org/).
+
 ## Environnement SageMath
 
 On installe l'[interpréteur SageMath](https://sagemath.org).
-
 
 # Index par langage
 
