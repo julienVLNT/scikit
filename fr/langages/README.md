@@ -288,11 +288,11 @@ $$
 from dolfinx.fem import form
 from ufl import dx, grad, inner
 
-a = inner(grad(u), grad(v)) * dx
-a = form(lhs(a))
+eq  = inner(grad(u), grad(v)) * dx
+eq += inner(f, v) * dx
 
-l = inner(f, v) * dx
-l = form(rhs(l))
+a = form(lhs(eq))
+l = form(rhs(eq))
 ```
 
 L'intégrale sur le domaine est implicite, bien que marquée par le produit par `dx` - pour une intégrale surfacique, on utilise `ds`, c.f la section suivante ; on n'implémente que l'intégrande.
@@ -342,12 +342,12 @@ Une première implémentation est proposée avec `u` une instance de `V` un obje
 from dolfinx.fem import form
 from ufl import div, dx, inner, nabla_grad
 
-F  = inner( dot(u, nabla_grad(u)), v )*dx
-F += inner( nabla_grad(u), nabla_grad(v) )
-F -= p * div(v)
-F -= q * div(u)
+eq  = inner( dot(u, nabla_grad(u)), v )*dx
+eq += inner( nabla_grad(u), nabla_grad(v) )
+eq -= p * div(v)
+eq -= q * div(u)
 
-F  = form(lhs(F))
+F = form(lhs(F))
 ```
 
 On aurait pu proposer un triplet de fonctions scalaires et implémenter plutôt, avec les variables `(ux, uy, p)` et `(vx, vy, q)`, le problème
