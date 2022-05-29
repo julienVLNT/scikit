@@ -40,9 +40,12 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
     - [`FEniCs/Python3`](#fenicspython3)
     - [`FreeFem++`](#freefem-3)
     - [`Rheolef`](#rheolef)
-  - [Les conditions aux limites de Dirichlet et de Neumann](#les-conditions-aux-limites-de-dirichlet-et-de-neumann)
+  - [implémentation de $F(u, v) = 0$](#implémentation-de-fu-v--0)
     - [`FEniCs/Python3`](#fenicspython3-1)
     - [`FreeFem++`](#freefem-4)
+  - [Les conditions aux limites de Dirichlet et de Neumann](#les-conditions-aux-limites-de-dirichlet-et-de-neumann)
+    - [`FEniCs/Python3`](#fenicspython3-2)
+    - [`FreeFem++`](#freefem-5)
   - [Conditions aux limites de Dirichlet faible](#conditions-aux-limites-de-dirichlet-faible)
   - [Conditions aux limites de Robin](#conditions-aux-limites-de-robin)
   - [Remarques](#remarques-1)
@@ -199,14 +202,16 @@ En `FreeFem++`, les affectations des résultats de `m %= n` et `m ^= n` donnent 
 
 ## Trigonométrie hyperbolique
 
-| **Fonction**                                      | **FreeFem++**          |
-|---------------------------------------------------|-----------------------:|
-| $\cosh$                                           | `cosh`                 |
-| $\text{arccosh}$                                  | `acosh`                |
-| $\sinh$                                           | `sinh`                 |
-| $\text{arcsinh}$                                  | `asinh`                |
-| $\tanh$                                           | `tanh`                 |
-| $\text{arctanh}$                                  | `atanh`                |
+> **Définition** Les fonctions trigonométriques 
+
+| **Fonction**     | `FreeFem++` |
+|------------------|------------:|
+| $\cosh$          | `cosh`      |
+| $\text{arccosh}$ | `acosh`     |
+| $\sinh$          | `sinh`      |
+| $\text{arcsinh}$ | `asinh`     |
+| $\tanh$          | `tanh`      |
+| $\text{arctanh}$ | `atanh`     |
 
 ## Fonctions de Bessel
 
@@ -217,38 +222,45 @@ $$ x^2 \dfrac{d^2y}{dx^2}(x) + x \dfrac{dy}{dx}(x) + (x^2 - \alpha^2) y(x) = 0 $
 où $\alpha \in \mathbb{C}$. Les fonctions de Bessel se distinguent en deux espèces, la première espèce comportant les solutions définies en $0$ et de seconde espèce qui ne le sont pas mais qui y admettent une limite infinie.
 
 > **Définition**
-> Fonctions de Bessel de première espèce d'ordre entier $n \in \mathbb{N}$
+> Fonctions de Bessel de première espèce d'ordre entier $\alpha = n \in \mathbb{N}$
 > $$ J_n(x) := \sum_{p=0}^{\infty} \dfrac{(-1)^p}{p! (n+p)!} \left( \dfrac{x}{2} \right)^{2p+n} $$
 
 > **Définition**
-> Fonctions de Bessel de deuxième espèce d'ordre entier $n \in \mathbb{N}$
+> Fonctions de Bessel de deuxième espèce d'ordre entier $\alpha = n \in \mathbb{N}$
 > $$ Y_n(x) := \lim_{\lambda \rightarrow n} \dfrac{J_\lambda(x) \cos(\lambda \pi) - J_{-\lambda}(x)}{\sin(\lambda \pi)} $$
 
-| **Fonction**                        | **FreeFem++** |
-|-------------------------------------|--------------:|
-| $1^{\text{ère}}$ espèce d'ordre $0$ | `j0`          |
-| $1^{\text{ère}}$ espèce d'ordre $1$ | `j1`          |
-| $1^{\text{ère}}$ espèce d'ordre $n$ | `jn(n, x)`    |
-| $2^{\text{ème}}$ espèce d'ordre $0$ | `y0`          |
-| $2^{\text{ème}}$ espèce d'ordre $1$ | `y1`          |
-| $2^{\text{ème}}$ espèce d'ordre $n$ | `yn(n, x)`    |
+| **Fonction**                        | `FreeFem++` |
+|-------------------------------------|------------:|
+| $1^{\text{ère}}$ espèce d'ordre $0$ | `j0`        |
+| $1^{\text{ère}}$ espèce d'ordre $1$ | `j1`        |
+| $1^{\text{ère}}$ espèce d'ordre $n$ | `jn(n, x)`  |
+| $2^{\text{ème}}$ espèce d'ordre $0$ | `y0`        |
+| $2^{\text{ème}}$ espèce d'ordre $1$ | `y1`        |
+| $2^{\text{ème}}$ espèce d'ordre $n$ | `yn(n, x)`  |
 
 ## Fonction $\Gamma$ et variantes
 
-| **Fonction**                                      | **FreeFem++**          |
-|---------------------------------------------------|-----------------------:|
-| $\Gamma$                                          | `tgamma`               |
-| $\ln(\|\Gamma\|)$                                 | `lgamma`               |
+La fonction $\Gamma$ est une généralisation de la fonction factorielle définie sur $\mathbb{N}$ aux nombres complexes. Elle vérifie la relation fonctionnelle $\Gamma(z+1) = z \Gamma(z)$.
+
+> **Définition** $\forall z \in \mathbb{C} \setminus -\mathbb{N}$
+> $$ \Gamma(z) := \int_{0}^{+\infty} t^{z-1} e^{-t} dt $$
+
+Elle converge absolument sur le demi-plan $\{ \mathcal{Re}(z) > 0 \}$ et elle se prolonge de manière unique en une fonction méromorphe sur $\mathbb{C} \setminus -\mathbb{N}$, $-\mathbb{N}$ étant des pôles pour le prolongement.
+
+| **Fonction**      | `FreeFem++` |
+|:------------------|------------:|
+| $\Gamma$          | `tgamma`    |
+| $\ln(\|\Gamma\|)$ | `lgamma`    |
 
 ## Fonction erreur
 
 > **Définition** La fonction erreur est la fonction entière
 > $$ \text{erf}(x) := \dfrac{2}{\sqrt{\pi}} \int_0^x e^{-t^2}dt $$
 
-| **Fonction**                                      | **FreeFem++**          |
-|---------------------------------------------------|-----------------------:|
-| $\text{erf}$                                      | `erf`                  |
-| $1-\text{erf}$                                    | `erfc`                 |
+| `Fonction`     | `FreeFem++` |
+|----------------|------------:|
+| $\text{erf}$   | `erf`       |
+| $1-\text{erf}$ | `erfc`      |
 
 # Les maillages en dimension $d$
 
@@ -262,7 +274,7 @@ où $\alpha \in \mathbb{C}$. Les fonctions de Bessel se distinguent en deux esp�
 
 En général, une équation aux dérivées partielles peut s'étudier sous une forme variationnelle équivalente. Cette forme sera alors discrétisée à l'aide de la méthode de Galerkin et on aboutira à un système linéaire discret portant sur les degrés de libertés de l'interpolée de la solution dans un espace de dimension finie adapté.
 
-Dans les langages spécialisés pour les éléments finis, il est possible de déclarer ces formes en tant que type (ou objet) et de les manipuler. Par exemple, considérons
+Dans les langages spécialisés pour les éléments finis, il est possible de déclarer ces formes en tant que type (ou objet) et de les manipuler. Par exemple, considérons - à l'aide du théorème de Green -
 
 $$ - \int_\Omega \Delta u \cdot v d\mathbf{x} = \int_\Omega f \cdot v d\mathbf{x} \Longleftrightarrow \underbrace{\int_\Omega \nabla u^T \nabla v d\mathbf{x}}_{a(u, v)} - \int_{\partial \Omega} \partial_{\vec{n}} u \cdot v d\gamma = \underbrace{\int_{\Omega} f \cdot v d\mathbf{x}}_{l(v)} $$
 
@@ -271,10 +283,14 @@ $$ - \int_\Omega \Delta u \cdot v d\mathbf{x} = \int_\Omega f \cdot v d\mathbf{x
 ### `FEniCs/Python3`
 
 ```python
+from dolfinx.fem import form
 from ufl import dx, grad, inner
 
 a = inner(grad(u), grad(v)) * dx
+a = form(lhs(a))
+
 l = inner(f, v) * dx
+l = form(rhs(l))
 ```
 
 L'intégrale sur le domaine est implicite, bien que marquée par le produit par `dx` - pour une intégrale surfacique, on utilise `ds`, c.f la section suivante ; on n'implémente que l'intégrande.
@@ -298,6 +314,61 @@ field l = integrate( f(d)*v );
 ```
 
 Contrairement aux deux langages `FEniCs` ou `FreeFem++`, les deux formes ne partagent pas le même type (au sens large). Ici, le second membre est de type `field`, réservé pour les champs - ou fonctions - éléments finis.
+
+## implémentation de $F(u, v) = 0$
+
+On propose un autre exemple, non-linéaire. Soit à résoudre sur une région du plan $\Omega$ le système d'Oseen homogène
+
+$$
+\left\{
+\begin{array}{rl}
+\text{div}(\mathbf{u}) & = 0 \\
+\left( \mathbf{u} \cdot \nabla \right) \mathbf{u} - \Delta \mathbf{u} + \nabla p & = 0 
+\end{array}
+\right.
+$$
+
+$$ \Longrightarrow \underbrace{\int_\Omega \left[ \left( (\mathbf{u} \cdot \nabla)\mathbf{u} \right)^T \cdot \mathbf{v} + \nabla \mathbf{u} : \nabla \mathbf{v} + p \text{div}(\mathbf{v}) - q \text{div}(\mathbf{u}) \right] d\mathbf{x} }_{F(u,v)} = 0 $$
+
+où $\mathbf{u}, \mathbf{v} : \Omega \rightarrow \mathbb{R}^2$ ; $p, q : \Omega \rightarrow \mathbb{R}$.
+
+### `FEniCs/Python3`
+
+Une première implémentation est proposée avec `u` une instance de `V` un objet `dolfinx.fem.FunctionSpace` dont les éléments sont à valeurs vectorielles tandis que `Q` est un espace de fonctions à valeurs scalaires.
+
+```python
+from dolfinx.fem import form
+from ufl import div, dx, inner, nabla_grad
+
+F  = inner( dot(u, nabla_grad(u)), v )*dx
+F += inner( nabla_grad(u), nabla_grad(v) )
+F -= p * div(v)
+F -= q * div(u)
+
+F  = form(lhs(F))
+```
+
+On aurait pu proposer un triplet de fonctions scalaires et implémenter plutôt, avec les variables `(ux, uy, p)` et `(vx, vy, q)`, le problème
+
+```python
+# TO DO
+```
+
+### `FreeFem++`
+
+On décompose l'inconnue qui est un champ de vecteurs en les deux fonctions scalaires que sont ses coordonnées, ainsi $\mathbf{u} = \begin{pmatrix} u^x \\ u^y \end{pmatrix}$ et on traite les trois inconnues simultanément.
+
+```cpp
+varf F([ux, uy, p], [vx, vy, q])
+    = int2d(th)( ( ux*dx(ux) + uy*dy(ux) )*vx
+               + ( ux*dx(uy) + uy*dy(uy) )*vy 
+               + ( dx(ux)*dx(vx) + dy(ux)*dy(vx) + dx(uy)*dx(vy) + dy(uy)*dy(vy) ) 
+               - ( p * (dx(vx) + dy(vy)) )
+               - ( q * (dx(ux) + dy(uy)) )
+    );
+```
+
+Les deux premières lignes de l'intégrale représentent le terme $(\mathbf{u} \cdot \nabla)\mathbf{u}^T \mathbf{v}$, la troisième ligne représente la contraction totale $$ \nabla \mathbf{u} : \nabla \mathbf{v} = \sum_{i, j} \partial_i u^j \times \partial_i v^j $$ et enfin les quatrième et cinquième lignes représentent respectivement les expressions $- p \text{div}(\mathbf{v})$ et $- q \text{div}(\mathbf{u})$
 
 ## Les conditions aux limites de Dirichlet et de Neumann
 
