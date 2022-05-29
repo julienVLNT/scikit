@@ -29,7 +29,7 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
   - [Exponentielle et logarithmes](#exponentielle-et-logarithmes)
   - [Trigonométrie](#trigonométrie)
   - [Trigonométrie hyperbolique](#trigonométrie-hyperbolique)
-  - [Fonctions de Bessel de premier et de deuxième type](#fonctions-de-bessel-de-premier-et-de-deuxième-type)
+  - [Fonctions de Bessel](#fonctions-de-bessel)
   - [Fonction $\Gamma$ et variantes](#fonction-gamma-et-variantes)
   - [Fonction erreur](#fonction-erreur)
 - [Les maillages en dimension $d$](#les-maillages-en-dimension-d)
@@ -51,14 +51,14 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
 
 # Les booléens
 
-| **Booléen**   | **Symbole**    | `C++`        | `FreeFem++`   | `Julia`      | `Python3`   |
-|:--------------|:---------------|-------------:|--------------:|-------------:|------------:|
-| type ou objet | X              | `bool`       | `bool`        | `Bool`       | `bool`      |
-| vrai          | 1              | `true`       | `true`        | `true`       | `True`      |
-| faux          | 0              | `false`      | `false`       | `false`      | `False`     |
-| non           | $\neg b$       | `!b`         | `!b`          | `!b`         | `not(b)`    |
-| et            | $b1 \wedge b2$ | `b1 && b2`   | `b1 && b2`    | `b1 && b2`   | `b1 and b2` |
-| ou            | $b1 \vee b2$   | `b1 \|\| b2` | `b1 \|\| b2`  | `b1 \|\| b2` | `b1 or b2`  |
+| **Booléen**   | **Symbole**    | `C++`      | `FreeFem++` | `Julia`    | `Python3` |
+|:--------------|:---------------|-----------:|------------:|-----------:|----------:|
+| type ou objet | X              | `bool`     | `bool`      | `Bool`     | `bool`    |
+| vrai          | 1              | `true`     | `true`      | `true`     | `True`    |
+| faux          | 0              | `false`    | `false`     | `false`    | `False`   |
+| non           | $\neg$         | `!a`       | `!a`        | `!a`       | `not(a)`  |
+| et            | $\wedge$       | `a && b`   | `a && b`    | `a && b`   | `a and b` |
+| ou            | $\vee$         | `a \|\| b` | `a \|\| b`  | `a \|\| b` | `a or b`  |
 
 ## Egalité de booléens
 
@@ -208,16 +208,30 @@ En `FreeFem++`, les affectations des résultats de `m %= n` et `m ^= n` donnent 
 | $\tanh$                                           | `tanh`                 |
 | $\text{arctanh}$                                  | `atanh`                |
 
-## Fonctions de Bessel de premier et de deuxième type
+## Fonctions de Bessel
 
-| **Fonction**                                      | **FreeFem++**          |
-|---------------------------------------------------|-----------------------:|
-| type $1$ d'ordre $0$                              | `j0`                   |
-| type $1$ d'ordre $1$                              | `j1`                   |
-| type $1$ d'ordre $n$                              | `jn(n, x)`             |
-| type $2$ d'ordre $0$                              | `y0`                   |
-| type $2$ d'ordre $1$                              | `y1`                   |
-| type $2$ d'ordre $n$                              | `yn(n, x)`             |
+Les fonctions de Bessel sont des solutions canoniques de l'équation différentielle ordinaire
+
+$$ x^2 \dfrac{d^2y}{dx^2}(x) + x \dfrac{dy}{dx}(x) + (x^2 - \alpha^2) y(x) = 0 $$
+
+où $\alpha \in \mathbb{C}$. Les fonctions de Bessel se distinguent en deux espèces, la première espèce comportant les solutions définies en $0$ et de seconde espèce qui ne le sont pas mais qui y admettent une limite infinie.
+
+> **Définition**
+> Fonctions de Bessel de première espèce d'ordre entier $n \in \mathbb{N}$
+> $$ J_n(x) := \sum_{p=0}^{\infty} \dfrac{(-1)^p}{p! (n+p)!} \left( \dfrac{x}{2} \right)^{2p+n} $$
+
+> **Définition**
+> Fonctions de Bessel de deuxième espèce d'ordre entier $n \in \mathbb{N}$
+> $$ Y_n(x) := \lim_{\lambda \rightarrow n} \dfrac{J_\lambda(x) \cos(\lambda \pi) - J_{-\lambda}(x)}{\sin(\lambda \pi)} $$
+
+| **Fonction**                        | **FreeFem++** |
+|-------------------------------------|--------------:|
+| $1^{\text{ère}}$ espèce d'ordre $0$ | `j0`          |
+| $1^{\text{ère}}$ espèce d'ordre $1$ | `j1`          |
+| $1^{\text{ère}}$ espèce d'ordre $n$ | `jn(n, x)`    |
+| $2^{\text{ème}}$ espèce d'ordre $0$ | `y0`          |
+| $2^{\text{ème}}$ espèce d'ordre $1$ | `y1`          |
+| $2^{\text{ème}}$ espèce d'ordre $n$ | `yn(n, x)`    |
 
 ## Fonction $\Gamma$ et variantes
 
@@ -227,6 +241,9 @@ En `FreeFem++`, les affectations des résultats de `m %= n` et `m ^= n` donnent 
 | $\ln(\|\Gamma\|)$                                 | `lgamma`               |
 
 ## Fonction erreur
+
+> **Définition** La fonction erreur est la fonction entière
+> $$ \text{erf}(x) := \dfrac{2}{\sqrt{\pi}} \int_0^x e^{-t^2}dt $$
 
 | **Fonction**                                      | **FreeFem++**          |
 |---------------------------------------------------|-----------------------:|
