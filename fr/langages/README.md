@@ -11,7 +11,8 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
     - [`Python3`](#python3)
     - [`SageMath`](#sagemath)
 - [Les entiers relatifs, $\mathbb{Z}$](#les-entiers-relatifs-mathbbz)
-  - [Déclaration](#déclaration)
+  - [Types ou objets représentant les entiers](#types-ou-objets-représentant-les-entiers)
+    - [`FreeFem++`](#freefem-1)
   - [Relations d'ordre sur les entiers](#relations-dordre-sur-les-entiers)
   - [Opérateurs sur les entiers](#opérateurs-sur-les-entiers)
 - [Les nombres décimaux, $\mathbb{D}$](#les-nombres-décimaux-mathbbd)
@@ -32,16 +33,16 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
   - [Fonction $\Gamma$ et variantes](#fonction-gamma-et-variantes)
   - [Fonction erreur](#fonction-erreur)
 - [Les maillages en dimension $d$](#les-maillages-en-dimension-d)
-  - [`FreeFem++`](#freefem-1)
+  - [`FreeFem++`](#freefem-2)
 - [Les espaces d'interpolation](#les-espaces-dinterpolation)
 - [Les formulations variationnelles](#les-formulations-variationnelles)
   - [Implémentation des formes $a(\cdot, \cdot)$ et $l(\cdot)$](#implémentation-des-formes-acdot-cdot-et-lcdot)
     - [`FEniCs/Python3`](#fenicspython3)
-    - [`FreeFem++`](#freefem-2)
+    - [`FreeFem++`](#freefem-3)
     - [`Rheolef`](#rheolef)
   - [Les conditions aux limites de Dirichlet et de Neumann](#les-conditions-aux-limites-de-dirichlet-et-de-neumann)
     - [`FEniCs/Python3`](#fenicspython3-1)
-    - [`FreeFem++`](#freefem-3)
+    - [`FreeFem++`](#freefem-4)
   - [Conditions aux limites de Dirichlet faible](#conditions-aux-limites-de-dirichlet-faible)
   - [Conditions aux limites de Robin](#conditions-aux-limites-de-robin)
   - [Remarques](#remarques-1)
@@ -50,7 +51,7 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
 
 # Les booléens
 
-| **Booléen**   | **Symbole**    | **C++**      | **FreeFem++** | **Julia**    | **Python3** |
+| **Booléen**   | **Symbole**    | `C++`        | `FreeFem++`   | `Julia`      | `Python3`   |
 |:--------------|:---------------|-------------:|--------------:|-------------:|------------:|
 | type ou objet | X              | `bool`       | `bool`        | `Bool`       | `bool`      |
 | vrai          | 1              | `true`       | `true`        | `true`       | `True`      |
@@ -87,7 +88,23 @@ Les objets `bool` de `SageMath` correspondent exactement au modèle introduit pa
 
 # Les entiers relatifs, $\mathbb{Z}$
 
-## Déclaration
+## Types ou objets représentant les entiers
+
+
+
+### `FreeFem++`
+
+Le type utilisé par `FreeFem++` pour représenter les entiers est équivalent au type `long` en `C++`. Pour déclarer un entier, on utilise 
+
+```cpp
+int m;
+```
+
+auquel cas il est initialisé à $0$. On peut aussi lui affecter une valeur à la déclaration
+
+```cpp
+int m = 1;
+```
 
 ## Relations d'ordre sur les entiers
 
