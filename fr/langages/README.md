@@ -2,12 +2,19 @@
 
 Ce document est là pour porter un regard croisé sur la représentation de structures de données usuelles en mathématiques appliquées au travers de différents langages de programmation.
 
-- [Les chaînes de caractères](#les-chaînes-de-caractères)
-- [Les ensembles](#les-ensembles)
 - [Les booléens](#les-booléens)
-- [Les entiers naturels, $\mathbb{N}$](#les-entiers-naturels-mathbbn)
+  - [Egalité de booléens](#egalité-de-booléens)
+  - [Remarques](#remarques)
+    - [Opération logique != opération bit-à-bit](#opération-logique--opération-bit-à-bit)
+    - [`C`](#c)
+    - [`FreeFem++`](#freefem)
+    - [`Python3`](#python3)
+    - [`SageMath`](#sagemath)
 - [Les entiers relatifs, $\mathbb{Z}$](#les-entiers-relatifs-mathbbz)
-- [Les décimaux, $\mathbb{D}$](#les-décimaux-mathbbd)
+  - [Déclaration](#déclaration)
+  - [Relations d'ordre sur les entiers](#relations-dordre-sur-les-entiers)
+  - [Opérateurs sur les entiers](#opérateurs-sur-les-entiers)
+- [Les nombres décimaux, $\mathbb{D}$](#les-nombres-décimaux-mathbbd)
 - [Les nombres rationnels, $\mathbb{Q}$](#les-nombres-rationnels-mathbbq)
 - [Les nombres réels, $\mathbb{R}$](#les-nombres-réels-mathbbr)
 - [Les nombres complexes, $\mathbb{C}$](#les-nombres-complexes-mathbbc)
@@ -25,33 +32,114 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
   - [Fonction $\Gamma$ et variantes](#fonction-gamma-et-variantes)
   - [Fonction erreur](#fonction-erreur)
 - [Les maillages en dimension $d$](#les-maillages-en-dimension-d)
-  - [`FreeFem++`](#freefem)
+  - [`FreeFem++`](#freefem-1)
 - [Les espaces d'interpolation](#les-espaces-dinterpolation)
 - [Les formulations variationnelles](#les-formulations-variationnelles)
   - [Implémentation des formes $a(\cdot, \cdot)$ et $l(\cdot)$](#implémentation-des-formes-acdot-cdot-et-lcdot)
     - [`FEniCs/Python3`](#fenicspython3)
-    - [`FreeFem++`](#freefem-1)
+    - [`FreeFem++`](#freefem-2)
     - [`Rheolef`](#rheolef)
   - [Les conditions aux limites de Dirichlet et de Neumann](#les-conditions-aux-limites-de-dirichlet-et-de-neumann)
     - [`FEniCs/Python3`](#fenicspython3-1)
-    - [`FreeFem++`](#freefem-2)
-    - [Conditions aux limites de Dirichlet faible](#conditions-aux-limites-de-dirichlet-faible)
-    - [Conditions aux limites de Robin](#conditions-aux-limites-de-robin)
-  - [Remarques](#remarques)
     - [`FreeFem++`](#freefem-3)
+  - [Conditions aux limites de Dirichlet faible](#conditions-aux-limites-de-dirichlet-faible)
+  - [Conditions aux limites de Robin](#conditions-aux-limites-de-robin)
+  - [Remarques](#remarques-1)
+    - [`FreeFem++` : `problem` et `solve`](#freefem--problem-et-solve)
 - [Les structures algébriques abstraites](#les-structures-algébriques-abstraites)
-
-# Les chaînes de caractères
-
-# Les ensembles
 
 # Les booléens
 
-# Les entiers naturels, $\mathbb{N}$
+| **Booléen**   | **Symbole**    | **C++**      | **FreeFem++** | **Julia**    | **Python3** |
+|:--------------|:---------------|-------------:|--------------:|-------------:|------------:|
+| type ou objet | X              | `bool`       | `bool`        | `Bool`       | `bool`      |
+| vrai          | 1              | `true`       | `true`        | `true`       | `True`      |
+| faux          | 0              | `false`      | `false`       | `false`      | `False`     |
+| non           | $\neg b$       | `!b`         | `!b`          | `!b`         | `not(b)`    |
+| et            | $b1 \wedge b2$ | `b1 && b2`   | `b1 && b2`    | `b1 && b2`   | `b1 and b2` |
+| ou            | $b1 \vee b2$   | `b1 \|\| b2` | `b1 \|\| b2`  | `b1 \|\| b2` | `b1 or b2`  |
+
+## Egalité de booléens
+
+Dans tous les langages cités ci-dessus, l'opérateur binaire `==` teste l'égalité entre deux booléens.
+
+## Remarques
+
+### Opération logique != opération bit-à-bit
+
+Il faut différencier les opérations sur les booléens vus comme types des opérations logiques effectuées sur chaque bit de la représentation binaire d'un objet ou d'un type.
+
+### `C`
+
+Le type booléen n'est pas intrinsèquement implémenté dans le langage `C`, on peut les manipuler en tant que type grâce à la librairie `stdbool` ou définir un type *à la main* basé sur les entiers non-signés par exemple. Sinon on les manipule selon l'association `vrai` ~ `1`, `faux` ~ `0`.
+
+### `FreeFem++`
+
+Il est courant de trouver dans les codes la représentation entière du type booléen, avec `true` ~ `1` et `false` ~ `0`.
+
+### `Python3`
+
+Il y a énormément de manières de définir le **faux** : les objets `None` et `False`, certes, mais aussi le `0` de tous les types numériques ou les collections vides : `''`, `()`, `[]`, `set()`, `range(0)` ...
+
+### `SageMath`
+
+Les objets `bool` de `SageMath` correspondent exactement au modèle introduit par `Python3`.
 
 # Les entiers relatifs, $\mathbb{Z}$
 
-# Les décimaux, $\mathbb{D}$
+## Déclaration
+
+## Relations d'ordre sur les entiers
+
+Les opérateurs représentant les relations d'ordre renvoient un booléen. 
+
+| **Test logique**   | **Symbole** | `C++`    | `FreeFem++` | `Julia`  | `Python3` | `SageMath` |
+|:-------------------|:------------|---------:|------------:|---------:|----------:|-----------:|
+| Test d'égalité     | $=$         | `m == n` | `m == n`    | `m == n` | `m == n`  | `m == n`   |
+| Test de différence | $\neq$      | `m != n` | `m != n`    | `m != n` | `m != n`  | `m != n`   |
+| Inférieur ou égal  | $\leq$      | `m <= n` | `m <= n`    | `m <= n` | `m <= n`  | `m <= n`   |
+| Inférieur strict   | $<$         | `m < n`  | `m < n`     | `m < n`  | `m < n`   | `m < n`    |
+| Supérieur ou égal  | $\geq$      | `m >= n` | `m >= n`    | `m >= n` | `m >= n`  | `m >= n`   |
+| Supérieur strict   | $>$         | `m > n`  | `m > n`     | `m > n`  | `m > n`   | `m > n`    |
+
+## Opérateurs sur les entiers
+
+On ne cite ici que les opérations internes de $\mathbb{Z}$ i.e dont les résultats sont des entiers.
+
+| **Opérateur**    | **Symbole** | `C++` | `FreeFem++` | `Julia`  | `Python3` | `SageMath`    |
+|:-----------------|:------------|------:|------------:|---------:|----------:|--------------:|
+| identité         | $+$         | `+m`  | `+m`        | `+m`     | `+m`      | `+m`          |
+| opposé           | $-$         | `-m`  | `-m`        | `-m`     | `-m`      | `-m`          |
+| successeur       | X           | `m++` | `m++`       | X        | X         | X             |
+| successeur (2)   | X           | `++m` | `++m`       | X        | X         | X             |
+| prédecesseur     | X           | `m--` | `m--`       | X        | X         | X             |
+| prédecesseur (2) | X           | `--m` | `--m`       | X        | X         | X             |
+
+Les opérateurs successeur et prédecesseur sont des affectations : lorsqu'on invoque `m++`, l'entier `m` est évalué puis on lui affecte la valeur `m+1`. Dans `++m`, `m` reçoit la valeur `m+1` puis est évalué.
+
+| **Opérateur**    | **Symbole** | `C++` | `FreeFem++` | `Julia`  | `Python3` | `SageMath`    |
+|:-----------------|:------------|------:|------------:|---------:|----------:|--------------:|
+| addition         | $+$         | `m+n` | `m+n`       | `m+n`    | `m+n`     | `m+n`         |
+| soustraction     | $-$         | `m-n` | `m-n`       | `m-n`    | `m-n`     | `m-n`         |
+| multiplication   | $\times$    | `m*n` | `m*n`       | `m*n`    | `m*n`     | `m*n`         |
+| division         | $\div$      | ?     | `m/n`       | `m ÷ n`  | `m//n`    | `m//n`        |
+| modulo           | $\equiv$    | ?     | `m % n`     | `m % n`  | `m % n`   | `m % n`       |
+| exponentiation   | X           | ?     | `m^n`       | `m^n`    | `m**n`    | `m^n`, `m**n` |
+
+Il est parfois possible d'affecter au premier opérande le résultat de l'opération. 
+
+| **Opérateur**    | **Symbole** | `C++`     | `FreeFem++` | `Julia`  | `Python3` | `SageMath`    |
+|:-----------------|:------------|----------:|------------:|---------:|----------:|--------------:|
+| addition         | X           | `m += n ` | `m += n`    | `m += n` | `m += n`  | `m+n`         |
+| soustraction     | X           | `m -= n`  | `m -= n`    | `m -= n` | `m -= n`  | `m-n`         |
+| multiplication   | X           | `m *= n`  | `m *= n`    | `m *= n` | `m *= n`  | `m*n`         |
+| division         | X           | ?         | `m /= n`    | X        | `m //= n` | `m//n`        |
+| modulo           | X           | ?         | X           | `m %= n` | `m %= n`  | `m % n`       |
+| exponentiation   | X           | ?         | X           | `m ^= n` | `m **= n` | `m^n`, `m**n` |
+
+En `FreeFem++`, les affectations des résultats de `m %= n` et `m ^= n` donnent des erreurs à la compilation. En `Julia`, l'affectation du résultat pour la division donne systématiquement des nombres réels. C'est pourquoi on note un X dans la case correspondante.
+
+# Les nombres décimaux, $\mathbb{D}$
 
 # Les nombres rationnels, $\mathbb{Q}$
 
@@ -73,20 +161,13 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
 
 # Les fonctions numériques spéciales
 
-| **Fonction**                                      | **FreeFem++**          |
-|:--------------------------------------------------|-----------------------:|
-| $x \mapsto x^2$                                   | `square`               |
-| $(x,y) \mapsto x^y$                               | `pow`                  |  
-| $x \mapsto \sqrt{x}$                              | `sqrt`                 |
-| $x \mapsto \|x\|$                                 | `abs`                  |
-
 ## Exponentielle et logarithmes
 
 | **Fonction**                                      | **FreeFem++**          |
 |---------------------------------------------------|-----------------------:|
 | $e$                                               | `exp`                  |
 | $\ln$                                             | `ln`                   |
-| $\log : x \mapsto \frac{\ln(x)}{\ln(10)}$         | `log10`                |
+| $\log$                                            | `log10`                |
 
 ## Trigonométrie
 
@@ -197,6 +278,7 @@ from dolfinx.fem import dirichletbc, Function, locate_dofs_geometrical
 from numpy import isclose, logical_or
 
 def boundary_D(x):
+    "Détection du bord Dirichlet"
     return logical_or(np.isclose(x[0], 0), np.isclose(x[0],1))
 
 gh = Function(V)
@@ -237,16 +319,13 @@ varf neumann(unused, v) = int1d(th, N)( h*v );
 
 et $N$ est encore un entier, le label du bord portant la condition de Neumann.
 
-### Conditions aux limites de Dirichlet faible
+## Conditions aux limites de Dirichlet faible
 
-
-### Conditions aux limites de Robin
-
-
+## Conditions aux limites de Robin
 
 ## Remarques
 
-### `FreeFem++`
+### `FreeFem++` : `problem` et `solve`
 
 > Lorsqu'on ne souhaite pas travailler explicitement sur le système linéaire construit à partir de $a(\cdot, \cdot)$ et de $l(\cdot)$, on peut utiliser le mot-clef `problem` comme dans
 > ```cpp
