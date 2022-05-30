@@ -207,9 +207,19 @@ Le couple quotient et reste pour la division euclidienne s'obtient à l'aide de 
 | **Constante mathématique** | **Symbole** | `FreeFem++` |
 |:---------------------------|:------------|------------:|
 | Pi                         | $\pi$       | `pi`        |
+| Imaginaire pur             | $i$         | `1i`        |
 
 
 # Les vecteurs
+
+> **Définition** Le produit scalaire, ou intérieur, de deux vecteurs $u, v \in \mathbb{R}^m$ est le réel $r \in \mathbb{R}$
+> $$ r = \sum_{i=1}^m u_i v_i $$
+
+> **Définition** Le produit extérieur de deux vecteurs $u \in \mathbb{R}^m$ et $v \in \mathbb{R}^n$ est la matrice $A = [a_{ij}] \in \mathbb{R}^{m \times n}$
+> $$ a_{ij} = u_i v_j $$
+
+> **Définition** Le produit de Kronecker de deux vecteurs $u \in \mathbb{R}^m$ et $v \in \mathbb{R}^n$ est le vecteur $w \in \mathbb{R}^{m \times n}$ 
+> $$ w = \left[ u_1 v_1, u_1 v_2, \dots, u_1 v_n, u_2 v_1, u_2 v_2, \dots, u_2 v_n, \dots, u_m v_n \right]^T $$
 
 ## `FreeFem++`
 
@@ -253,11 +263,11 @@ u - v                              // différence de deux vecteurs
 
 r * v                              // multiplication par un scalaire [real r];
 
-u' * v                             // produit scalaire de deux vecteurs (type `real`)
+u' * v                             // produit scalaire de deux vecteurs
 
-u * v'                             // multiplication extérieur (ou tensoriel) de deux vecteurs (type `matrix`)
+u * v'                             // multiplication extérieur (ou tensoriel) de deux vecteurs
 
-u .* v                             // multiplication terme à terme (type `real[int]`)
+u .* v                             // multiplication terme à terme
 
 // Normes
 v.l1                               // norme 1
@@ -270,9 +280,9 @@ v.sort
 
 ## `Python3/Numpy`
 
-En `Python3`, les vecteurs sont implémentés par l'objet `numpy.ndarray` de la librairie `Numpy`. En fait, cet objet est un conteneur très général, un vecteur a en particulier un nombre de dimension égal à 1
+En `Python3`, les vecteurs sont implémentés par l'objet `numpy.ndarray` de la librairie `Numpy`. En fait, cet objet est un conteneur très général, un vecteur a en particulier un nombre de dimension égal à $1$.
 
-```python
+```Python
 import numpy as np
 
 # Déclaration et affectation
@@ -284,17 +294,30 @@ v = np.empty_like(u)               # déclare un vecteur de même taille que v d
 v = np.zeros_like(u)               # déclare un vecteur de même taille que v dont les composantes reçoivent 0
 v = np.ones_like(u)                # déclare un vecteur de même taille que v dont les composantes reçoivent 1
 
+# Attributs
+len(v)                             # nombre de composantes
+v.dtype                            # type de donné utilisé pour stocker les composantes de v
+v.nbytes                           # nombre d'octets nécessaires au stockage de v, dépend du dtype
+v.ndims                            # nombre d'axes du ndarray, toujours 1 pour un vecteur, ou nombre d'indices
+v.shape                            # tuple des nombres de composantes par axe (tuple d'un entier pour un vecteur)
+
 # Sélection dans les vecteurs
 v[m]                               # sélection de la m-ème composante (m commence à 0)
 v[m : m+n]                         # sélection des n composantes entre les indices m (inclus) et m+n (exclu)
+v[m : m+n : l]                     # sélection des n/l composantes entre les indices m (inclus) et m+n (exclu) par pas de l
 
 # Valeurs particulières et leur indice
+np.abs(v)                          # vecteur dont les composantes sont les valeurs absolues des composantes de v
 np.argmax(v)                       # indice de la valeur maximale de v
 np.max(v)                          # valeur maximale de v
 np.argmin(v)                       # indice de la plus petite composante de v
 np.min(v)                          # valeur minimale de v
+np.argwhere(v<0)                   # vecteur des indices pour lesquels v_i < 0
 np.where(v<0)                      # vecteur colonne des indices tels que v[i] < 0
-np.sum(v)                          # somme des valeurs de v
+np.sum(v)                          # somme des composantes de v
+np.prod(v)                         # produit des composantes de v
+np.mean(v)                         # moyenne arithmétique des composantes de v
+np.std(v)                          # standard-deviation des composantes de v
 
 # Algèbre
 +v                                 # identité
@@ -303,7 +326,7 @@ np.sum(v)                          # somme des valeurs de v
 u + v                              # addition
 u - v                              # différence
 
-r * v                              # multiplication par un scalaire [float r]
+r * v                              # multiplication par un scalaire
 
 u @ v                              # produit scalaire
 u.T @ v                            # produit scalaire
@@ -312,11 +335,11 @@ u.dot(v)                           # produit scalaire
 np.dot(u, v)                       # produit scalaire
 np.einseum('i, i -> ', u, v)       # produit scalaire
 np.inner(u, v)                     # produit scalaire
-np.tensordot(u, v, axes=1)         # produit scalaire [np.ndarray]
+np.tensordot(u, v, axes=1)         # produit scalaire
 
-np.einseum('i, j -> ij', u, v)     # produit extérieur (tensoriel)
-np.outer(u, v)                     # produit extérieur (tensoriel)
-np.tensordot(u, v, axis=0)         # produit extérieur (tensoriel)
+np.einseum('i, j -> ij', u, v)     # produit extérieur
+np.outer(u, v)                     # produit extérieur
+np.tensordot(u, v, axis=0)         # produit extérieur
 
 u * v                              # multiplication terme à terme
 np.einsum('i, i -> i', u, v)       # multiplication terme à terme
@@ -328,7 +351,30 @@ np.kron(u, v)                      # produit de Kronecker de u et v
 np.linalg.norm(v, 1)               # norme "1"
 np.linalg.norm(v)                  # norme "2" (euclidienne)
 np.linalg.norm(v, np.inf)          # norme infinie
-np.linalg.norm(v, r)               # norme r [float r]
+np.linalg.norm(v, r)               # norme r
+
+# Tests booléens
+u is v                             # test d'identité 
+np.all(u > 0)                      # True si u_i > 0 pour tout i
+np.allclose(u, v, atol, rtol)      # True si |u_i - v_i| < atol pour tout i
+np.any(u > 0)                      # True si u_i > 0 pour au moins un i
+
+u == v                             # vecteur booléen dont la composante i est True si |u_i - v_i| < 1e-16 (pour float64)
+u <= v                             # vecteur booléen dont la composante i est True si u_i <= v_i
+u <  v                             # vecteur booléen dont la composante i est True si u_i < v_i
+u >= v                             # vecteur booléen dont la composante i est True si u_i >= v_i
+u >  v                             # vecteur booléen dont la composante i est True si u_i > v_i
+np.isclose(u, v, rtol, atol)       # vecteur booléen dont les composantes sont True si |u_i - v_i| < atol False sinon
+
+# Concaténations
+w = np.concatenate([u, v], axis=0) # concaténation en ligne
+w = np.concatenate((u, v), axis=0) # concaténation en ligne
+w = np.hstack([u, v])              # concaténation en ligne
+w = np.hstack((u, v))              # concaténation en ligne
+w = np.concatenate([u, v], axis=1) # concaténation en colonne
+w = np.concatenate((u, v), axis=1) # concaténation en colonne
+w = np.vstack([u, v])              # concaténation en colonne
+w = np.vstack((u, v))              # concaténation en colonne
 ```
 
 # Les matrices denses
