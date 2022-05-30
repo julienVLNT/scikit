@@ -17,7 +17,6 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
   - [Relations d'ordre sur les entiers](#relations-dordre-sur-les-entiers)
   - [Opérateurs sur les entiers](#opérateurs-sur-les-entiers)
   - [Remarques](#remarques-1)
-    - [`C++`](#c-2)
     - [`FreeFem++`](#freefem-2)
     - [`Julia`](#julia)
     - [`Python3`](#python3-1)
@@ -25,8 +24,10 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
 - [Les nombres rationnels, $\mathbb{Q}$](#les-nombres-rationnels-mathbbq)
 - [Les nombres réels, $\mathbb{R}$](#les-nombres-réels-mathbbr)
 - [Les nombres complexes, $\mathbb{C}$](#les-nombres-complexes-mathbbc)
-- [Les constantes classiques](#les-constantes-classiques)
+- [Les constantes](#les-constantes)
 - [Les vecteurs](#les-vecteurs)
+  - [Déclaration et affectation](#déclaration-et-affectation)
+    - [`FreeFem++`](#freefem-3)
 - [Les matrices denses](#les-matrices-denses)
 - [Les matrices creuses](#les-matrices-creuses)
 - [Les tenseurs](#les-tenseurs)
@@ -39,24 +40,24 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
   - [Fonction $\Gamma$ et variantes](#fonction-gamma-et-variantes)
   - [Fonction erreur](#fonction-erreur)
 - [Les maillages en dimension $d$](#les-maillages-en-dimension-d)
-  - [`FreeFem++`](#freefem-3)
+  - [`FreeFem++`](#freefem-4)
 - [Les espaces d'interpolation](#les-espaces-dinterpolation)
 - [Les formulations variationnelles](#les-formulations-variationnelles)
   - [Implémentation des formes $a(\cdot, \cdot)$ et $l(\cdot)$](#implémentation-des-formes-acdot-cdot-et-lcdot)
     - [`FEniCs/Python3`](#fenicspython3)
-    - [`FreeFem++`](#freefem-4)
+    - [`FreeFem++`](#freefem-5)
     - [`Rheolef`](#rheolef)
   - [implémentation de $F(u, v) = 0$](#implémentation-de-fu-v--0)
     - [`FEniCs/Python3`](#fenicspython3-1)
-    - [`FreeFem++`](#freefem-5)
+    - [`FreeFem++`](#freefem-6)
   - [Les conditions aux limites de Dirichlet et de Neumann](#les-conditions-aux-limites-de-dirichlet-et-de-neumann)
     - [`FEniCs/Python3`](#fenicspython3-2)
-    - [`FreeFem++`](#freefem-6)
+    - [`FreeFem++`](#freefem-7)
   - [Conditions aux limites de Dirichlet faible](#conditions-aux-limites-de-dirichlet-faible)
   - [Conditions aux limites de Robin](#conditions-aux-limites-de-robin)
   - [Remarques](#remarques-2)
     - [`FreeFem++` : `problem` et `solve`](#freefem--problem-et-solve)
-- [Les structures algébriques abstraites](#les-structures-algébriques-abstraites)
+- [Les structures algébriques abstraites avec `SageMath`](#les-structures-algébriques-abstraites-avec-sagemath)
 
 # Les booléens
 
@@ -172,16 +173,14 @@ Il est parfois possible d'affecter au premier opérande le résultat de l'opéra
 
 | **Opérateur**    | **Symbole** | `C++`     | `FreeFem++` | `Julia`  | `Python3` | `SageMath`    |
 |:-----------------|:------------|----------:|------------:|---------:|----------:|--------------:|
-| addition         | X           | `m += n ` | `m += n`    | `m += n` | `m += n`  | `m+n`         |
-| soustraction     | X           | `m -= n`  | `m -= n`    | `m -= n` | `m -= n`  | `m-n`         |
-| multiplication   | X           | `m *= n`  | `m *= n`    | `m *= n` | `m *= n`  | `m*n`         |
-| division         | X           | ?         | `m /= n`    | X        | `m //= n` | `m//n`        |
-| modulo           | X           | ?         | X           | `m %= n` | `m %= n`  | `m % n`       |
+| addition         | X           | `m += n ` | `m += n`    | `m += n` | `m += n`  | `m += n`      |
+| soustraction     | X           | `m -= n`  | `m -= n`    | `m -= n` | `m -= n`  | `m -= n`      |
+| multiplication   | X           | `m *= n`  | `m *= n`    | `m *= n` | `m *= n`  | `m *= n`      |
+| division         | X           | ?         | `m /= n`    | X        | `m //= n` | `m //= n`     |
+| modulo           | X           | ?         | X           | `m %= n` | `m %= n`  | `m %= n`      |
 | exponentiation   | X           | ?         | X           | `m ^= n` | `m **= n` | `m^n`, `m**n` |
 
 ## Remarques
-
-### `C++`
 
 ### `FreeFem++`
 
@@ -203,9 +202,38 @@ Le couple quotient et reste pour la division euclidienne s'obtient à l'aide de 
 
 # Les nombres complexes, $\mathbb{C}$
 
-# Les constantes classiques
+# Les constantes
+
+| **Constante mathématique** | **Symbole** | `FreeFem++` |
+|:---------------------------|:------------|------------:|
+| Pi                         | $\pi$       | `pi`        |
+
 
 # Les vecteurs
+
+## Déclaration et affectation
+
+### `FreeFem++`
+
+Pour déclarer un vecteur de $\mathbb{R}^d$, dont les composantes sont indexées par un entier compris entre $0$ et $d$, on utilise
+
+```cpp
+int d;
+real[int] vec(d);
+```
+
+Le vecteur est initialisé à $0$. On peut affecter à toutes ses coordonnées une valeur constante, par exemple pour un vecteur de $d$ coordonnées dont chacune vaut $1$
+
+```cpp
+real[int] vec(d);
+vec = 1;
+```
+
+On peut lui affecter des valeurs dès la déclaration à l'aide de la syntaxe `[,]`. Par exemple, pour le vecteur $\begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}$
+
+```cpp
+real[int] vec = [1.0, 2.0, 3.0];
+```
 
 # Les matrices denses
 
@@ -480,4 +508,4 @@ et $N$ est encore un entier, le label du bord portant la condition de Neumann.
 > ```
 > L'instruction `solve Poisson(u, v) = ` résoud dès sa déclaration le problème en modifiant les degrés de liberté de `u`. Comme pour `problem`, `u` doit être déclarée comme fonction élément fini avant la déclaration du problème. Ces trois méthodes sont dans l'ordre décroissant de leur performance.
 
-# Les structures algébriques abstraites
+# Les structures algébriques abstraites avec `SageMath`
