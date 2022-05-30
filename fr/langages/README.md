@@ -27,6 +27,7 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
 - [Les constantes](#les-constantes)
 - [Les vecteurs](#les-vecteurs)
   - [`FreeFem++`](#freefem-3)
+  - [`Python3/Numpy`](#python3numpy)
 - [Les matrices denses](#les-matrices-denses)
 - [Les matrices creuses](#les-matrices-creuses)
 - [Les tenseurs](#les-tenseurs)
@@ -213,7 +214,7 @@ Le couple quotient et reste pour la division euclidienne s'obtient à l'aide de 
 ## `FreeFem++`
 
 ```cpp
-// Déclaration, affectation
+// Déclaration et affectation
 real[int] v(d);                    // déclare un vecteur de taille d et affecte à ses composantes la valeur 0
 real[int] v = 1.0;                 // déclare un vecteur de taille 1, et affecte à son unique composante la valeur 1
 
@@ -226,20 +227,20 @@ real[int] v = m : n;               // déclare un vecteur de taille (n-m) et aff
 real[int] v(m : k : n);            // déclare un vecteur de taille (n/k-m) et affecte à ses composantes les valeurs m, m+k, m+2k, ..., m+n/k*k
 
 // Sélection dans les vecteurs
-v(i)                               // sélection de la valeur en i
-v[i]                               // sélection de la valeur en i
-v(i:i+j)                           // sélection des j valeurs entre les indices i et i+j inclus
-v[i:i+j]                           // sélection des j valeurs entre les indices i et i+j inclus
-v(i:i+j:k)                         // sélection des int(j/k) valeurs entre les indices i et i+j inclus, par pas de k (i, i+k, i+2k ...)
-v[i:i+j:k]                         // sélection des int(j/k) valeurs entre les indices i et i+j inclus, par pas de k (i, i+k, i+2k ...)
+v(m)                               // sélection de la valeur en m
+v[m]                               // sélection de la valeur en m
+v(m : m+n)                         // sélection des n valeurs entre les indices m et m+n inclus
+v[m : m+n]                         // sélection des n valeurs entre les indices m et m+n inclus
+v(m : m+n : l)                     // sélection des int(n/l) valeurs entre les indices m et m+n inclus, par pas de l (m, m+l, m+2l ...)
+v[m : m+n : l]                     // sélection des int(n/l) valeurs entre les indices m et m+n inclus, par pas de l (m, m+l, m+2l ...)
 
 // Sélection par quantile
-v.quantile(q)                      // sélectionne la composante v[q * v.n], 0 < q < 1
+v.quantile(r)                      // sélectionne la composante v[r * v.n], 0 < r < 1
 
 // Taille d'un vecteur
 v.n
 
-// Valeurs particulières d'un vecteur et leur indice
+// Valeurs particulières et leur indice
 v.imax                             // indice de la composante maximale de v
 v.max                              // valeur maximale de v
 v.imin                             // indice de la composante minimale de v
@@ -249,17 +250,85 @@ v.sum                              // somme des valeurs des composantes de v
 // Algèbre
 u + v                              // addition de deux vecteurs
 u - v                              // différence de deux vecteurs
-r * v                              // multiplication par un scalaire [real r];
-u' * v                             // produit scalaire de deux vecteurs (type `real`)
-u * v'                             // produit extérieur (ou tensoriel) de deux vecteurs (type `matrix`)
 
-// Normes d'un vecteur
+r * v                              // multiplication par un scalaire [real r];
+
+u' * v                             // produit scalaire de deux vecteurs (type `real`)
+
+u * v'                             // multiplication extérieur (ou tensoriel) de deux vecteurs (type `matrix`)
+
+u .* v                             // multiplication terme à terme (type `real[int]`)
+
+// Normes
 v.l1                               // norme 1
 v.l2                               // norme 2 (euclidienne)
 v.linfty                           // norme infinie
 
 // Trier les valeurs d'un vecteur
 v.sort
+```
+
+## `Python3/Numpy`
+
+En `Python3`, les vecteurs sont implémentés par l'objet `numpy.ndarray` de la librairie `Numpy`. En fait, cet objet est un conteneur très général, un vecteur a en particulier un nombre de dimension égal à 1
+
+```python
+import numpy as np
+
+# Déclaration et affectation
+v = np.array([1., 2., 3.])         # déclare un vecteur de taille 3 et ses composantes sont affectées à 1, 2, 3 ...
+v = np.empty(d)                    # déclare un vecteur de taille d dont les composantes sont aléatoires
+v = np.zeros(d)                    # déclare un vecteur de taille d dont les composantes valent 0
+v = np.ones(d)                     # déclare un vecteur de taille d dont les composantes valent 1
+v = np.empty_like(u)               # déclare un vecteur de même taille que v dont les composantes sont aléatoires
+v = np.zeros_like(u)               # déclare un vecteur de même taille que v dont les composantes reçoivent 0
+v = np.ones_like(u)                # déclare un vecteur de même taille que v dont les composantes reçoivent 1
+
+# Sélection dans les vecteurs
+v[m]                               # sélection de la m-ème composante (m commence à 0)
+v[m : m+n]                         # sélection des n composantes entre les indices m (inclus) et m+n (exclu)
+
+# Valeurs particulières et leur indice
+np.argmax(v)                       # indice de la valeur maximale de v
+np.max(v)                          # valeur maximale de v
+np.argmin(v)                       # indice de la plus petite composante de v
+np.min(v)                          # valeur minimale de v
+np.where(v<0)                      # vecteur colonne des indices tels que v[i] < 0
+np.sum(v)                          # somme des valeurs de v
+
+# Algèbre
++v                                 # identité
+-v                                 # inverse
+
+u + v                              # addition
+u - v                              # différence
+
+r * v                              # multiplication par un scalaire [float r]
+
+u @ v                              # produit scalaire
+u.T @ v                            # produit scalaire
+u @ v.T                            # produit scalaire
+u.dot(v)                           # produit scalaire
+np.dot(u, v)                       # produit scalaire
+np.einseum('i, i -> ', u, v)       # produit scalaire
+np.inner(u, v)                     # produit scalaire
+np.tensordot(u, v, axes=1)         # produit scalaire [np.ndarray]
+
+np.einseum('i, j -> ij', u, v)     # produit extérieur (tensoriel)
+np.outer(u, v)                     # produit extérieur (tensoriel)
+np.tensordot(u, v, axis=0)         # produit extérieur (tensoriel)
+
+u * v                              # multiplication terme à terme
+np.einsum('i, i -> i', u, v)       # multiplication terme à terme
+u / v                              # division terme à terme
+
+np.kron(u, v)                      # produit de Kronecker de u et v
+
+# Normes
+np.linalg.norm(v, 1)               # norme "1"
+np.linalg.norm(v)                  # norme "2" (euclidienne)
+np.linalg.norm(v, np.inf)          # norme infinie
+np.linalg.norm(v, r)               # norme r [float r]
 ```
 
 # Les matrices denses
