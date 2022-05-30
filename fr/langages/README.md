@@ -437,7 +437,7 @@ w = np.vstack((u, v))              # concaténation en colonne
 Le langage `FreeFem++` contient les identificateurs globaux `x`, `y` et `z` pour désigner les variables d'espace. On peut aussi paramétrer une fonction par la méthode standard en `C++`.
 
 ```cpp
-// FOnction des variables d'espace à valeurs réelles
+// Fonction des variables d'espace à valeurs réelles
 func f = sqrt(x^2 + y^2 + z^2);
 
 // Fonction des variables d'espace à valeurs réelles paramétrée par t
