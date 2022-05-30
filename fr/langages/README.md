@@ -344,6 +344,8 @@ $$
 \int_\Omega - \Delta u \cdot v d\mathbf{x} = \int_\Omega f \cdot v d\mathbf{x} \Longleftrightarrow \underbrace{\int_\Omega \nabla u^T \nabla v d\mathbf{x}}_{a(u, v)} - \int_{\partial \Omega} \partial_{\vec{n}} u \cdot v d\gamma = \underbrace{\int_{\Omega} f \cdot v d\mathbf{x}}_{l(v)}
 $$
 
+Implémentons les formes $a(\cdot, \cdot)$ et $l(\cdot)$.
+
 ## Implémentation des formes $a(\cdot, \cdot)$ et $l(\cdot)$
 
 ### `FEniCs/Python3`
