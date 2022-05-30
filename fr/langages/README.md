@@ -215,7 +215,7 @@ Le couple quotient et reste pour la division euclidienne s'obtient à l'aide de 
 
 ### `FreeFem++`
 
-Pour déclarer un vecteur de $\mathbb{R}^d$, dont les composantes sont indexées par un entier compris entre $0$ et $d$, on utilise
+Pour déclarer un vecteur de $\mathbb{R}^d$, dont les composantes sont indexées par un entier compris entre $0$ et $d-1$, on utilise
 
 ```cpp
 int d;
@@ -247,7 +247,7 @@ real[int] vec = [1.0, 2.0, 3.0];
 
 ## Exponentielle et logarithmes
 
-| **Fonction**                                      | **FreeFem++**          |
+| **Fonction**                                      | `FreeFem++`          |
 |---------------------------------------------------|-----------------------:|
 | $e$                                               | `exp`                  |
 | $\ln$                                             | `ln`                   |
@@ -255,7 +255,7 @@ real[int] vec = [1.0, 2.0, 3.0];
 
 ## Trigonométrie
 
-| **Fonction**                                      | **FreeFem++**          |
+| **Fonction**                                      | `FreeFem++`          |
 |---------------------------------------------------|-----------------------:|
 | $\cos$                                            | `cos`                  |
 | $\arccos$                                         | `acos`                 |
@@ -265,8 +265,6 @@ real[int] vec = [1.0, 2.0, 3.0];
 | $\arctan$                                         | `atan`                 |
 
 ## Trigonométrie hyperbolique
-
-> **Définition** Les fonctions trigonométriques 
 
 | **Fonction**     | `FreeFem++` |
 |------------------|------------:|
@@ -338,7 +336,9 @@ Elle converge absolument sur le demi-plan $\{ \mathcal{Re}(z) > 0 \}$ et elle se
 
 En général, une équation aux dérivées partielles peut s'étudier sous une forme variationnelle équivalente. Cette forme sera alors discrétisée à l'aide de la méthode de Galerkin et on aboutira à un système linéaire discret portant sur les degrés de libertés de l'interpolée de la solution dans un espace de dimension finie adapté.
 
-Dans les langages spécialisés pour les éléments finis, il est possible de déclarer ces formes en tant que type (ou objet) et de les manipuler. Par exemple, considérons $$ \int_\Omega - \Delta u \cdot v d\mathbf{x} = \int_\Omega f \cdot v d\mathbf{x} \Longleftrightarrow \underbrace{\int_\Omega \nabla u^T \nabla v d\mathbf{x}}_{a(u, v)} - \int_{\partial \Omega} \partial_{\vec{n}} u \cdot v d\gamma = \underbrace{\int_{\Omega} f \cdot v d\mathbf{x}}_{l(v)} $$
+Dans les langages spécialisés pour les éléments finis, il est possible de déclarer ces formes en tant que type (ou objet) et de les manipuler. Par exemple, considérons 
+
+$$ \underbrace{\int_\Omega \nabla u^T \nabla v d\mathbf{x}}_{a(u, v)} - \int_{\partial \Omega} \partial_{\vec{n}} u \cdot v d\gamma = \underbrace{\int_{\Omega} f \cdot v d\mathbf{x}}_{l(v)} $$
 
 Implémentons les formes $a(\cdot, \cdot)$ et $l(\cdot)$.
 
