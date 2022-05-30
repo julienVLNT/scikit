@@ -12,9 +12,15 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
     - [`SageMath`](#sagemath)
 - [Les entiers relatifs, $\mathbb{Z}$](#les-entiers-relatifs-mathbbz)
   - [Types ou objets représentant les entiers](#types-ou-objets-représentant-les-entiers)
+    - [`C++`](#c-1)
     - [`FreeFem++`](#freefem-1)
   - [Relations d'ordre sur les entiers](#relations-dordre-sur-les-entiers)
   - [Opérateurs sur les entiers](#opérateurs-sur-les-entiers)
+  - [Remarques](#remarques-1)
+    - [`C++`](#c-2)
+    - [`FreeFem++`](#freefem-2)
+    - [`Julia`](#julia)
+    - [`Python3`](#python3-1)
 - [Les nombres décimaux, $\mathbb{D}$](#les-nombres-décimaux-mathbbd)
 - [Les nombres rationnels, $\mathbb{Q}$](#les-nombres-rationnels-mathbbq)
 - [Les nombres réels, $\mathbb{R}$](#les-nombres-réels-mathbbr)
@@ -33,22 +39,22 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
   - [Fonction $\Gamma$ et variantes](#fonction-gamma-et-variantes)
   - [Fonction erreur](#fonction-erreur)
 - [Les maillages en dimension $d$](#les-maillages-en-dimension-d)
-  - [`FreeFem++`](#freefem-2)
+  - [`FreeFem++`](#freefem-3)
 - [Les espaces d'interpolation](#les-espaces-dinterpolation)
 - [Les formulations variationnelles](#les-formulations-variationnelles)
   - [Implémentation des formes $a(\cdot, \cdot)$ et $l(\cdot)$](#implémentation-des-formes-acdot-cdot-et-lcdot)
     - [`FEniCs/Python3`](#fenicspython3)
-    - [`FreeFem++`](#freefem-3)
+    - [`FreeFem++`](#freefem-4)
     - [`Rheolef`](#rheolef)
   - [implémentation de $F(u, v) = 0$](#implémentation-de-fu-v--0)
     - [`FEniCs/Python3`](#fenicspython3-1)
-    - [`FreeFem++`](#freefem-4)
+    - [`FreeFem++`](#freefem-5)
   - [Les conditions aux limites de Dirichlet et de Neumann](#les-conditions-aux-limites-de-dirichlet-et-de-neumann)
     - [`FEniCs/Python3`](#fenicspython3-2)
-    - [`FreeFem++`](#freefem-5)
+    - [`FreeFem++`](#freefem-6)
   - [Conditions aux limites de Dirichlet faible](#conditions-aux-limites-de-dirichlet-faible)
   - [Conditions aux limites de Robin](#conditions-aux-limites-de-robin)
-  - [Remarques](#remarques-1)
+  - [Remarques](#remarques-2)
     - [`FreeFem++` : `problem` et `solve`](#freefem--problem-et-solve)
 - [Les structures algébriques abstraites](#les-structures-algébriques-abstraites)
 
@@ -93,7 +99,27 @@ Les objets `bool` de `SageMath` correspondent exactement au modèle introduit pa
 
 ## Types ou objets représentant les entiers
 
+### `C++`
 
+Les nombres entiers relatifs, entiers *signés*, se déclarent sous un des types suivants
+
+| **Type**               | **représentés sur $n$ bits** | **minimum**                      | **maximum**                 |
+|:-----------------------|-----------------------------:|---------------------------------:|----------------------------:|
+| `signed char`          | $n = 8$                      | $-128$                           | $127$                       |
+| `signed short int`     | $n = 16$                     | $-32,768$                        | $32,767$                    |
+| `signed long int`      | $n = 32$                     | $-2,147,483,647 - 1$             | $2,147,483,647$             |
+| `signed long long int` | $n = 64$                     | $-9,223,372,036,854,775,807 - 1$ | $9,223,372,036,854,775,807$ |
+
+Le type `int` par défaut dépend de la machine sur lequel se situe le compilateur. Les limites de chaques types sont des constantes de la librairie standard `limits`. Elles se nomment `CHAR_MIN`, `CHAR_MAX`, `SHRT_MIN`, `SHRT_MAX`, `INT_MIN`, `INT_MAX`, `LONG_MIN`, `LONG_MAX`, `LLONG_MIN`, `LLONG_MAX`. 
+
+Pour déclarer un entier en `C++`,
+
+```cpp
+int a;
+int b(1);     // "constructor initialization"
+int c{2};     // "uniform initialization"
+int d=3;
+```
 
 ### `FreeFem++`
 
@@ -103,11 +129,7 @@ Le type utilisé par `FreeFem++` pour représenter les entiers est équivalent a
 int m;
 ```
 
-auquel cas il est initialisé à $0$. On peut aussi lui affecter une valeur à la déclaration
-
-```cpp
-int m = 1;
-```
+auquel cas il se voit affecté la valeur $0$. 
 
 ## Relations d'ordre sur les entiers
 
@@ -157,7 +179,21 @@ Il est parfois possible d'affecter au premier opérande le résultat de l'opéra
 | modulo           | X           | ?         | X           | `m %= n` | `m %= n`  | `m % n`       |
 | exponentiation   | X           | ?         | X           | `m ^= n` | `m **= n` | `m^n`, `m**n` |
 
-En `FreeFem++`, les affectations des résultats de `m %= n` et `m ^= n` donnent des erreurs à la compilation. En `Julia`, l'affectation du résultat pour la division donne systématiquement des nombres réels. C'est pourquoi on note un X dans la case correspondante.
+## Remarques
+
+### `C++`
+
+### `FreeFem++`
+
+En `FreeFem++`, les affectations des résultats de `m % n` et `m ^ n` sous leur forme `m %= n` et `m ^ n` donnent des erreurs à la compilation. 
+
+### `Julia`
+
+En `Julia`, l'affectation du résultat pour la division donne systématiquement des nombres réels. C'est pourquoi on note un X dans la case correspondante.
+
+### `Python3`
+
+Le couple quotient et reste pour la division euclidienne s'obtient à l'aide de la fonction `divmod(m, n)`. L'élévation de `m` à la puissance `n` s'obtient à l'aide de `pow(m, n)`.
 
 # Les nombres décimaux, $\mathbb{D}$
 
