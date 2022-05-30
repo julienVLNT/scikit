@@ -26,8 +26,7 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
 - [Les nombres complexes, $\mathbb{C}$](#les-nombres-complexes-mathbbc)
 - [Les constantes](#les-constantes)
 - [Les vecteurs](#les-vecteurs)
-  - [Déclaration et affectation](#déclaration-et-affectation)
-    - [`FreeFem++`](#freefem-3)
+  - [`FreeFem++`](#freefem-3)
 - [Les matrices denses](#les-matrices-denses)
 - [Les matrices creuses](#les-matrices-creuses)
 - [Les tenseurs](#les-tenseurs)
@@ -211,28 +210,56 @@ Le couple quotient et reste pour la division euclidienne s'obtient à l'aide de 
 
 # Les vecteurs
 
-## Déclaration et affectation
-
-### `FreeFem++`
-
-Pour déclarer un vecteur de $\mathbb{R}^d$, dont les composantes sont indexées par un entier compris entre $0$ et $d-1$, on utilise
+## `FreeFem++`
 
 ```cpp
-int d;
-real[int] vec(d);
-```
+// Déclaration, affectation
+real[int] v(d);                    // déclare un vecteur de taille d et affecte à ses composantes la valeur 0
+real[int] v = 1.0;                 // déclare un vecteur de taille 1, et affecte à son unique composante la valeur 1
 
-Le vecteur est initialisé à $0$. On peut affecter à toutes ses coordonnées une valeur constante, par exemple pour un vecteur de $d$ coordonnées dont chacune vaut $1$
+real[int] v(d);                    // déclare un vecteur de taille d et affecte à toutes ses composantes la valeur -1 
+v = -1;
 
-```cpp
-real[int] vec(d);
-vec = 1;
-```
+real[int] v = [1.0, -1.0, 3.0];    // déclare un vecteur de taille 3 et affecte à ses composantes les valeurs 1, -1 et 3
+real[int] v(m : n);                // déclare un vecteur de taille (n-m) et affecte à ses composantes les valeurs m, m+1, m+2, ..., m+n
+real[int] v = m : n;               // déclare un vecteur de taille (n-m) et affecte à ses composantes les valeurs m, m+1, m+2, ..., m+n
+real[int] v(m : k : n);            // déclare un vecteur de taille (n/k-m) et affecte à ses composantes les valeurs m, m+k, m+2k, ..., m+n/k*k
 
-On peut lui affecter des valeurs dès la déclaration à l'aide de la syntaxe `[,]`. Par exemple, pour le vecteur $\begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}$
+// Sélection dans les vecteurs
+v(i)                               // sélection de la valeur en i
+v[i]                               // sélection de la valeur en i
+v(i:i+j)                           // sélection des j valeurs entre les indices i et i+j inclus
+v[i:i+j]                           // sélection des j valeurs entre les indices i et i+j inclus
+v(i:i+j:k)                         // sélection des int(j/k) valeurs entre les indices i et i+j inclus, par pas de k (i, i+k, i+2k ...)
+v[i:i+j:k]                         // sélection des int(j/k) valeurs entre les indices i et i+j inclus, par pas de k (i, i+k, i+2k ...)
 
-```cpp
-real[int] vec = [1.0, 2.0, 3.0];
+// Sélection par quantile
+v.quantile(q)                      // sélectionne la composante v[q * v.n], 0 < q < 1
+
+// Taille d'un vecteur
+v.n
+
+// Valeurs particulières d'un vecteur et leur indice
+v.imax                             // indice de la composante maximale de v
+v.max                              // valeur maximale de v
+v.imin                             // indice de la composante minimale de v
+v.min                              // valeur minimale de v
+v.sum                              // somme des valeurs des composantes de v
+
+// Algèbre
+u + v                              // addition de deux vecteurs
+u - v                              // différence de deux vecteurs
+r * v                              // multiplication par un scalaire [real r];
+u' * v                             // produit scalaire de deux vecteurs (type `real`)
+u * v'                             // produit extérieur (ou tensoriel) de deux vecteurs (type `matrix`)
+
+// Normes d'un vecteur
+v.l1                               // norme 1
+v.l2                               // norme 2 (euclidienne)
+v.linfty                           // norme infinie
+
+// Trier les valeurs d'un vecteur
+v.sort
 ```
 
 # Les matrices denses
@@ -338,9 +365,9 @@ En général, une équation aux dérivées partielles peut s'étudier sous une f
 
 Dans les langages spécialisés pour les éléments finis, il est possible de déclarer ces formes en tant que type (ou objet) et de les manipuler. Par exemple, considérons 
 
-$$ \underbrace{\int_\Omega \nabla u^T \nabla v d\mathbf{x}}_{a(u, v)} - \int_{\partial \Omega} \partial_{\vec{n}} u \cdot v d\gamma = \underbrace{\int_{\Omega} f \cdot v d\mathbf{x}}_{l(v)} $$
-
-Implémentons les formes $a(\cdot, \cdot)$ et $l(\cdot)$.
+$$
+\underbrace{\int_\Omega \nabla u^T \nabla v d\mathbf{x}}_{a(u, v)} - \int_{\partial \Omega} \partial_{\vec{n}} u \cdot v d\gamma = \underbrace{\int_{\Omega} f \cdot v d\mathbf{x}}_{l(v)}
+$$
 
 ## Implémentation des formes $a(\cdot, \cdot)$ et $l(\cdot)$
 
