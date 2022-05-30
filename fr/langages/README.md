@@ -28,10 +28,19 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
 - [Les vecteurs](#les-vecteurs)
   - [`FreeFem++`](#freefem-3)
   - [`Python3/Numpy`](#python3numpy)
-- [Les matrices denses](#les-matrices-denses)
-- [Les matrices creuses](#les-matrices-creuses)
+- [Les matrices](#les-matrices)
+    - [`Julia`](#julia-1)
+    - [`Python3/Numpy`](#python3numpy-1)
 - [Les tenseurs](#les-tenseurs)
-- [Les fonctions numériques](#les-fonctions-numériques)
+    - [`Julia/Tensors.jl`](#juliatensorsjl)
+    - [`Python/Numpy`](#pythonnumpy)
+- [Algèbre creuse](#algèbre-creuse)
+    - [`FreeFem++`](#freefem-4)
+    - [`Julia`](#julia-2)
+    - [`Python3/Scipy`](#python3scipy)
+- [Les fonctions (et macro ou lambda expressions...)](#les-fonctions-et-macro-ou-lambda-expressions)
+    - [`FreeFem++`](#freefem-5)
+    - [`Julia`](#julia-3)
 - [Les fonctions numériques spéciales](#les-fonctions-numériques-spéciales)
   - [Exponentielle et logarithmes](#exponentielle-et-logarithmes)
   - [Trigonométrie](#trigonométrie)
@@ -40,19 +49,19 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
   - [Fonction $\Gamma$ et variantes](#fonction-gamma-et-variantes)
   - [Fonction erreur](#fonction-erreur)
 - [Les maillages en dimension $d$](#les-maillages-en-dimension-d)
-  - [`FreeFem++`](#freefem-4)
+  - [`FreeFem++`](#freefem-6)
 - [Les espaces d'interpolation](#les-espaces-dinterpolation)
 - [Les formulations variationnelles](#les-formulations-variationnelles)
   - [Implémentation des formes $a(\cdot, \cdot)$ et $l(\cdot)$](#implémentation-des-formes-acdot-cdot-et-lcdot)
     - [`FEniCs/Python3`](#fenicspython3)
-    - [`FreeFem++`](#freefem-5)
+    - [`FreeFem++`](#freefem-7)
     - [`Rheolef`](#rheolef)
   - [implémentation de $F(u, v) = 0$](#implémentation-de-fu-v--0)
     - [`FEniCs/Python3`](#fenicspython3-1)
-    - [`FreeFem++`](#freefem-6)
+    - [`FreeFem++`](#freefem-8)
   - [Les conditions aux limites de Dirichlet et de Neumann](#les-conditions-aux-limites-de-dirichlet-et-de-neumann)
     - [`FEniCs/Python3`](#fenicspython3-2)
-    - [`FreeFem++`](#freefem-7)
+    - [`FreeFem++`](#freefem-9)
   - [Conditions aux limites de Dirichlet faible](#conditions-aux-limites-de-dirichlet-faible)
   - [Conditions aux limites de Robin](#conditions-aux-limites-de-robin)
   - [Remarques](#remarques-2)
@@ -377,23 +386,80 @@ w = np.vstack([u, v])              # concaténation en colonne
 w = np.vstack((u, v))              # concaténation en colonne
 ```
 
-# Les matrices denses
+# Les matrices
 
-# Les matrices creuses
+### `Julia`
+
+```julia
+
+```
+
+### `Python3/Numpy`
+
+```python
+
+```
 
 # Les tenseurs
 
-# Les fonctions numériques
+### `Julia/Tensors.jl`
+
+```julia
+
+```
+
+### `Python/Numpy`
+
+# Algèbre creuse
+
+### `FreeFem++`
+
+```cpp
+
+```
+
+### `Julia`
+
+```julia
+
+```
+
+### `Python3/Scipy`
+
+```python
+
+```
+
+# Les fonctions (et macro ou lambda expressions...)
+
+### `FreeFem++`
+
+Le langage `FreeFem++` contient les identificateurs globaux `x`, `y` et `z` pour désigner les variables d'espace. On peut aussi paramétrer une fonction par la méthode standard en `C++`.
+
+```cpp
+// FOnction des variables d'espace à valeurs réelles
+func f = sqrt(x^2 + y^2 + z^2);
+
+// Fonction des variables d'espace à valeurs réelles paramétrée par t
+func real f(real t){
+    return t * (1 - sqrt(x^2 + y^2 + z^2));
+}
+```
+
+### `Julia`
+
+
 
 # Les fonctions numériques spéciales
 
 ## Exponentielle et logarithmes
 
-| **Fonction**                                      | `FreeFem++`          |
-|---------------------------------------------------|-----------------------:|
-| $e$                                               | `exp`                  |
-| $\ln$                                             | `ln`                   |
-| $\log$                                            | `log10`                |
+| **Fonction**                                      | `FreeFem++` | `Python/Numpy` |
+|---------------------------------------------------|------------:|---------------:|
+| $e$                                               | `exp`       | `numpy.exp`    |
+| $\ln$                                             | `ln`        | `numpy.log`    |
+| $\ln_2$                                           | X           | `numpy.log2`   |
+| $\log$                                            | `log10`     | `numpy.log10`  |
 
 ## Trigonométrie
 
