@@ -340,9 +340,7 @@ En général, une équation aux dérivées partielles peut s'étudier sous une f
 
 Dans les langages spécialisés pour les éléments finis, il est possible de déclarer ces formes en tant que type (ou objet) et de les manipuler. Par exemple, considérons
 
-$$
-\int_\Omega - \Delta u \cdot v d\mathbf{x} = \int_\Omega f \cdot v d\mathbf{x} \Longleftrightarrow \underbrace{\int_\Omega \nabla u^T \nabla v d\mathbf{x}}_{a(u, v)} - \int_{\partial \Omega} \partial_{\vec{n}} u \cdot v d\gamma = \underbrace{\int_{\Omega} f \cdot v d\mathbf{x}}_{l(v)}
-$$
+$$ \int_\Omega - \Delta u \cdot v d\mathbf{x} = \int_\Omega f \cdot v d\mathbf{x} \Longleftrightarrow \underbrace{\int_\Omega \nabla u^T \nabla v d\mathbf{x}}_{a(u, v)} - \int_{\partial \Omega} \partial_{\vec{n}} u \cdot v d\gamma = \underbrace{\int_{\Omega} f \cdot v d\mathbf{x}}_{l(v)} $$
 
 Implémentons les formes $a(\cdot, \cdot)$ et $l(\cdot)$.
 
