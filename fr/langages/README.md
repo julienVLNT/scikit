@@ -556,8 +556,41 @@ func matrix f(){
 ### `Julia`
 
 ```julia
+# Déclaration, affectation
+(x -> 0)                           # déclaration de la fonction anonyme x |--> 0
+f(t,x,y) = t*(1-sqrt(x^2+y^2))     # déclaration de la fonction f sur une ligne
 
+@doc """
+Calcule le carré du nombre réel ``x``.
+"""
+function f(x::Float64)::Float64
+     return x^2
+end
+
+function g(args...)
+    for arg in args
+        println(arg)
+    end
+end
+
+function h(x, y, op=+)
+    op(x, y)
+end
+
+function i(x, y; op)
+    if op == nothing
+        x + y
+    else
+        op(x, y)
+    end
+end
+
+# Evaluation
+(t,x,y -> t * (1-sqrt(x^2+y^2)))(0)# évaluation d'une fonction anonyme de plusieurs variables
+f(-1)                              # évaluation de la fonction f
 ```
+
+Le langage est fortement typé : bien que la fonction carrée est définie sur $\mathbb{C}$, la définition de `f` impose que l'argument soit du type `Float64`, donc l'évaluation `f(1i)` lève une erreur. Dans la définition de `g`, on autorise un nombre variable d'arguments. `g(0)` ou `g('a', 1, -2i)` sont valides. Dans la définition de `h`, l'argument `op` est optionnel. Dans la définition de `i`, l'argument `op` est un mot-clef (on fait attention au point-virgule plutôt que la virgule).
 
 ### `Python3`
 
@@ -565,7 +598,7 @@ On commence par les `<function <lambda>` du langage `Python3`. Elles se déclare
 
 ```python
 # Déclaration
-f = lambda x : 0                   # déclaration de la fonction x |--> 0
+lambda x : 0                       # déclaration de la fonction anonyme x |--> 0
 f = lambda x, y : x + y            # fonction de plusieurs variables à valeurs scalaires
 f = lambda x, y : {x, y, (x+y)**2} # fonction de plusieurs variables à valeurs multiples (set)
 f = lambda x, y : (x, y, (x+y)**2) # fonction de plusieurs variables à valeurs multiples (tuple)
