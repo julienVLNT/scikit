@@ -17,7 +17,6 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
 - [Les fonctions numériques spéciales](#les-fonctions-numériques-spéciales)
 - [Les maillages](#les-maillages)
 - [Les espaces d'interpolation](#les-espaces-dinterpolation)
-  - [`FreeFem++`](#freefem)
 
 # Les booléens 
 
@@ -1014,7 +1013,15 @@ medit("Maillage", th);
 
 # Les espaces d'interpolation
 
-## `FreeFem++`
+## `FreeFem++` <!-- omit in toc -->
+
+Un espace d'interpolation est introduit par le mot-clef `fespace` pour *finite element space*. Etant donné un maillage `mesh th`, on construit la base d'interpolation $P_0$ sur le maillage avec
+
+```cpp
+fespace V(th, P0);
+```
+
+## `Python3/FEniCs` <!-- omit in toc -->
 
 
 
