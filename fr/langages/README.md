@@ -54,9 +54,11 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
   - [Fonctions erreur et variantes](#fonctions-erreur-et-variantes)
 - [Les maillages](#les-maillages)
   - [`FreeFem++`](#freefem-7)
+    - [Maillage d'un élément à une dimension plongé dans l'espace](#maillage-dun-élément-à-une-dimension-plongé-dans-lespace)
     - [Un rectangle en deux dimensions](#un-rectangle-en-deux-dimensions)
     - [Maillage d'une surface fermée par un contour paramétré](#maillage-dune-surface-fermée-par-un-contour-paramétré)
     - [Mailler un domaine privé d'un sous-domaine](#mailler-un-domaine-privé-dun-sous-domaine)
+    - [Maillage d'une surface plongée dans l'espace](#maillage-dune-surface-plongée-dans-lespace)
     - [Un rectangle en trois dimensions](#un-rectangle-en-trois-dimensions)
     - [Remarque](#remarque)
 - [Les espaces d'interpolation](#les-espaces-dinterpolation)
@@ -763,6 +765,20 @@ Elle converge absolument sur le demi-plan $\{ \mathcal{Re}(z) > 0 \}$ et elle se
 
 Le langage intègre le logiciel `bamg` pour créer ses maillages. On dispose de nombreuses manière pour produire des maillages déstructurés depuis les scripts.
 
+### Maillage d'un élément à une dimension plongé dans l'espace
+
+```cpp
+load "msh3"
+
+int nel = 128;
+
+func torex = cos(2*pi*y)*cos(2*pi*x);
+func torey = cos(2*pi*y)*sin(2*pi*x);
+func torez = sin(2*pi*y);
+
+meshL th = segment(nel, [torex, torey, torez], removeduplicate=true);
+```
+
 ### Un rectangle en deux dimensions
 
 On peut mailler le rectangle $[a, a+l] \times [b, b+h]$ avec le script suivant.
@@ -869,6 +885,22 @@ border c(t=0, 1){
 }
 
 mesh th = buildmesh(C(nel) + c(-nel/3));
+```
+
+### Maillage d'une surface plongée dans l'espace
+
+On prend l'exemple de la sphère de rayon $1$.
+
+```cpp
+load "msh3"
+
+int nel = 32;
+
+func torex = cos(2*pi*y)*cos(2*pi*x);
+func torey = cos(2*pi*y)*sin(2*pi*x);
+func torez = sin(2*pi*y);
+
+meshS th = square3(nel, nel, [torex, torey, torez]);
 ```
 
 ### Un rectangle en trois dimensions
