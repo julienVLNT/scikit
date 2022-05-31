@@ -30,6 +30,7 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
   - [`Julia`](#julia-1)
   - [`Python3/Numpy`](#python3numpy)
 - [Les matrices](#les-matrices)
+    - [`FreeFem++`](#freefem-4)
     - [`Julia`](#julia-2)
     - [`Python3/Numpy`](#python3numpy-1)
 - [Les tenseurs](#les-tenseurs)
@@ -37,12 +38,13 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
     - [`Python3/Numpy`](#python3numpy-2)
     - [`Tensorflow/Python3`](#tensorflowpython3)
 - [Algèbre creuse](#algèbre-creuse)
-    - [`FreeFem++`](#freefem-4)
+    - [`FreeFem++`](#freefem-5)
     - [`Julia`](#julia-3)
     - [`Python3/Scipy`](#python3scipy)
 - [Les fonctions (et macro ou lambda expressions...)](#les-fonctions-et-macro-ou-lambda-expressions)
-    - [`FreeFem++`](#freefem-5)
+    - [`FreeFem++`](#freefem-6)
     - [`Julia`](#julia-4)
+    - [`Python3`](#python3-2)
 - [Les fonctions numériques spéciales](#les-fonctions-numériques-spéciales)
   - [Exponentielle et logarithmes](#exponentielle-et-logarithmes)
   - [Trigonométrie](#trigonométrie)
@@ -51,19 +53,19 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
   - [Fonction $\Gamma$ et variantes](#fonction-gamma-et-variantes)
   - [Fonction erreur](#fonction-erreur)
 - [Les maillages en dimension $d$](#les-maillages-en-dimension-d)
-  - [`FreeFem++`](#freefem-6)
+  - [`FreeFem++`](#freefem-7)
 - [Les espaces d'interpolation](#les-espaces-dinterpolation)
 - [Les formulations variationnelles](#les-formulations-variationnelles)
   - [Implémentation des formes $a(\cdot, \cdot)$ et $l(\cdot)$](#implémentation-des-formes-acdot-cdot-et-lcdot)
     - [`FEniCs/Python3`](#fenicspython3)
-    - [`FreeFem++`](#freefem-7)
+    - [`FreeFem++`](#freefem-8)
     - [`Rheolef`](#rheolef)
   - [implémentation de $F(u, v) = 0$](#implémentation-de-fu-v--0)
     - [`FEniCs/Python3`](#fenicspython3-1)
-    - [`FreeFem++`](#freefem-8)
+    - [`FreeFem++`](#freefem-9)
   - [Les conditions aux limites de Dirichlet et de Neumann](#les-conditions-aux-limites-de-dirichlet-et-de-neumann)
     - [`FEniCs/Python3`](#fenicspython3-2)
-    - [`FreeFem++`](#freefem-9)
+    - [`FreeFem++`](#freefem-10)
   - [Conditions aux limites de Dirichlet faible](#conditions-aux-limites-de-dirichlet-faible)
   - [Conditions aux limites de Robin](#conditions-aux-limites-de-robin)
   - [Remarques](#remarques-2)
@@ -307,7 +309,7 @@ En `Python3`, les vecteurs sont implémentés par l'objet `numpy.ndarray` de la 
 import numpy as np
 
 # Déclaration et affectation
-v = np.array([1., 2., 3.])         # déclare un vecteur de taille 3 et ses composantes sont affectées à 1, 2, 3 ...
+v = np.array([x, y, z])            # déclare un vecteur de taille 3 et ses composantes sont affectées à x, y et z (des réels)
 v = np.empty(d)                    # déclare un vecteur de taille d dont les composantes sont aléatoires
 v = np.zeros(d)                    # déclare un vecteur de taille d dont les composantes valent 0
 v = np.ones(d)                     # déclare un vecteur de taille d dont les composantes valent 1
@@ -400,19 +402,13 @@ w = np.vstack((u, v))              # concaténation en colonne
 
 # Les matrices
 
-> **Définition** Le résultat de l'action d'une matrice $A \in \mathbb{R}^{n \times d}$ sur un vecteur $v \in \mathbb{R}^{d}$ est le vecteur $A \cdot v \in \mathbb{R}^{n}$
-> $$ A \cdot v := \sum_{i=1}^n \left( \sum_{j=1}^{d} A_{ij} v_j \right) e_i = \begin{bmatrix} \sum_{j=1}^d A_{1j} v_j \\ \sum_{j=1}^d A_{2j} v_j \\ \vdots \\ \sum_{j=1}^d A_{nj} v_j \end{bmatrix} $$
-> où on note $\left(e_i\right)_{1 \leqslant i \leqslant d}$ la base canonique de $\mathbb{R}^d$.
+### `FreeFem++`
 
-> **Définition** Le résultat de l'action d'une matrice $A \in \mathbb{R}^{m \times n}$ sur une matrice $B \in \mathbb{R}^{n \times p}$ est une matrice $A \cdot B \in \mathbb{R}^{m \times p}$ 
-> $$ A \cdot B := $$
+Les matrices denses ne sont pas implémentées dans ce langage. Les objets `real[int, int]` sont des vecteurs de vecteurs mais les opérations standards ne sont pas implémentées pour ces objets. On regardera l'objet `matrix` dans la section sur les [matrices creuses](#algèbre-creuse).
 
-> **Définition** Le produit intérieur de deux matrices $A \in \mathbb{R}^{m \times n}$ et $B \in \mathbb{R}^{m \times n}$ est $A:B \in \mathbb{R}$
-> $$ A:B := \sum_{i=1}^{m} \sum_{j=1}^{n} a_{ij} b_{ij} $$
+```cpp
 
-> **Définition** Le produit tensoriel de deux matrices $A \in \mathbb{R}^{m \times n}$ et $B \in \mathbb{R}^{p \times q}$ est la matrice $A \otimes B \in \mathbb{R}^{pm \times qn}$ définie par blocs
-> $$ A \otimes B = \begin{bmatrix} a_{11} B & a_{12} B & a_{13}B & \dots & a_{1n} B \\ a_{21} B & a_{22} B & a_{23} B & \dots & a_{2n} B \\ \vdots & \vdots & \ddots & & \vdots \\ a_{m1} B & a_{m2} B & a_{m3} B & \dots & a_{mn} B \end{bmatrix} $$ 
-
+```
 
 ### `Julia`
 
@@ -425,7 +421,68 @@ w = np.vstack((u, v))              # concaténation en colonne
 Les matrices denses sont encore implémentées à l'aide de l'objet `numpy.ndarray`, on les identifie aux instances telles que l'attribut `ndims` est égale à $2$.
 
 ```python
+import numpy as np
 
+# Déclaration et affectation
+A = np.array([[a11, a12], [a21, a22]])# déclare une matrice de taille 2x2 et ses composantes sont affectées à a11, a12, a21, a22 (des réels)
+A = np.empty((m,n))                # déclare une matrice de taille m x n dont les composantes sont aléatoires
+A = np.zeros((m,n))                # déclare une matrice de taille m x n dont les composantes valent 0
+A = np.ones((m,n))                 # déclare une matrice de taille m x n dont les composantes valent 1
+A = np.empty_like(B)               # déclare une matrice de même taille que B dont les composantes sont aléatoires
+A = np.zeros_like(B)               # déclare une matrice de même taille que B dont les composantes reçoivent 0
+A = np.ones_like(B)                # déclare une matrice de même taille que B dont les composantes reçoivent 1
+
+# Attributs
+len(A)                             # nombre de lignes dans A (m)
+len(A[0])                          # nombre de colonnes dans A (n)
+A.dtype                            # type de donné utilisé pour stocker les composantes de v
+A.nbytes                           # nombre d'octets nécessaires au stockage de v, dépend du dtype
+A.ndims                            # nombre d'axes du ndarray, toujours 2 pour une matrice, ou nombre d'indices
+A.shape                            # tuple des nombres de composantes par axe (tuple de deux entiers pour une matrice)
+
+# Sélection
+A[m, n]                            # sélection de la m-ème composante (m commence à 0)
+A[m, :]                            # sélection de la m-ième ligne
+A[:, n]                            # sélection de la n-ième colonne
+A[m : m+n, j]                      # sélection des n composantes entre les indices m (inclus) et m+n (exclu)
+A[m : m+n : l, j]                  # sélection des n/l composantes sur la colonne j
+A[i, m : m+n : l]                  # sélection des n/l composantes sur la ligne j
+
+# Algèbre
++A                                 # identité
+-A                                 # opposée
+
+A + B                              # addition
+A - B                              # soustraction
+
+r * A                              # multiplication par un scalaire r
+
+np.einsum('ij, ij ->', A, B)       # produit scalaire
+np.tensordot(A, B)                 # produit scalaire
+np.tensordot(A, B, axes=2)         # produit scalaire
+
+A @ v                              # action d'une matrice sur un vecteur
+A.dot(v)                           # action d'une matrice sur un vecteur
+np.dot(A, v)                       # action d'une matrice sur un vecteur
+np.einsum('ij, j -> i', A, v)      # action d'une matrice sur un vecteur
+np.tensordot(A, v, axes=1)         # action d'une matrice sur un vecteur
+
+A @ B                              # produit matriciel
+A.dot(B)                           # produit matriciel
+np.dot(A, B)                       # produit matriciel
+np.einsum('ij, jk -> ik', A, B)    # produit matriciel
+np.matmul(A, B)                    # produit matriciel
+np.tensordot(A, B, axes=1)         # produit matriciel
+np.linalg.multi_dot([A, B, C])     # composition de produits matriciels ( (A @ B) @ C)
+
+A @ B.T                            # produit intérieur
+np.inner(A, B)                     # produit intérieur
+
+np.kron(A, B)                      # produit extérieur
+np.outer(A, B)                     # produit extérieur
+
+np.einsum('ij, kl -> ijkl', A, B)  # produit tensoriel
+np.tensordot(A, B, axes=0)         # produit tensoriel
 ```
 
 # Les tenseurs
@@ -482,6 +539,18 @@ func f = sqrt(x^2 + y^2 + z^2);
 func real f(real t){
     return t * (1 - sqrt(x^2 + y^2 + z^2));
 }
+
+// Fonction des variables d'espace à valeurs vectorielles (réelles)
+func real[int] f() {
+    real[int] v(d);
+    return v;
+}
+
+// Fonction des variables d'espaces à valeurs matricielles
+func matrix f(){
+    matrix A(m, n);
+    return A;
+}
 ```
 
 ### `Julia`
@@ -489,6 +558,54 @@ func real f(real t){
 ```julia
 
 ```
+
+### `Python3`
+
+On commence par les `<function <lambda>` du langage `Python3`. Elles se déclarent en une ligne, très adaptées aux expressions très simples ou pour l'usage à la volée, sans déclaration, par exemple en paramètre d'une autre fonction.
+
+```python
+# Déclaration
+f = lambda x : 0                   # déclaration de la fonction x |--> 0
+f = lambda x, y : x + y            # fonction de plusieurs variables à valeurs scalaires
+f = lambda x, y : {x, y, (x+y)**2} # fonction de plusieurs variables à valeurs multiples (set)
+f = lambda x, y : (x, y, (x+y)**2) # fonction de plusieurs variables à valeurs multiples (tuple)
+f = lambda x, y : [x, y, (x+y)**2] # fonction de plusieurs variables à valeurs multiples (liste)
+f = lambda x : 0 if x < 0 else x   # fonction définie par une condition ("rectified linear" ici)
+
+# Evaluation
+f(-1)
+```
+
+La seconde manière de définir des fonctions est l'utilisation de la fonction `def`. La fonction carré s'écrit simplement
+
+```python
+def carre(x):
+    return x**2
+```
+
+En pratique, on lui préférera la définition *complète* suivante
+
+```python
+def carre(x: float) -> float:
+    
+    """ Calcul le carré du nombre x.
+    PARAMETRES:
+    -----------
+    x : float, valeur de l'argument
+
+    RETOURS:
+    --------
+    x**2 : float 
+
+    EXEMPLES:
+    ---------
+    >>> carre(-1)
+    1 """
+
+    return x**2
+```
+
+On note que x: float n'est qu'une indication, de même que -> float. Le programme s'exécute malgré la violation de ces "règles", qui n'en sont donc pas ; par exemple, carre(1j) renvoie -1, ce qui est mathématiquement juste, mais du point de vue de la documentation ne va pas. La seule contrainte est que l'opérateur ** soit défini pour l'argument prescrit. Ainsi déclarée, appeler la fonction help(carre) renvoie la chaîne de caractère proposée ainsi que le squelette de la fonction.
 
 # Les fonctions numériques spéciales
 
