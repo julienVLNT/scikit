@@ -184,14 +184,14 @@ Les opérateurs successeur et prédecesseur sont des affectations : lorsqu'on in
 
 Il est parfois possible d'affecter au premier opérande le résultat de l'opération. 
 
-| **Opérateur**    | **Symbole** | `C++`     | `FreeFem++` | `Julia`  | `Python3` | `SageMath`    |
-|:-----------------|:------------|----------:|------------:|---------:|----------:|--------------:|
-| addition         | X           | `m += n ` | `m += n`    | `m += n` | `m += n`  | `m += n`      |
-| soustraction     | X           | `m -= n`  | `m -= n`    | `m -= n` | `m -= n`  | `m -= n`      |
-| multiplication   | X           | `m *= n`  | `m *= n`    | `m *= n` | `m *= n`  | `m *= n`      |
-| division         | X           | ?         | `m /= n`    | X        | `m //= n` | `m //= n`     |
-| modulo           | X           | ?         | X           | `m %= n` | `m %= n`  | `m %= n`      |
-| exponentiation   | X           | ?         | X           | `m ^= n` | `m **= n` | `m^n`, `m**n` |
+| **Opérateur**    | **Symbole** | `C++`     | `FreeFem++` | `Julia`  | `Python3` | `SageMath`      |
+|:-----------------|:------------|----------:|------------:|---------:|----------:|----------------:|
+| addition         | X           | `m += n ` | `m += n`    | `m += n` | `m += n`  | `m += n`        |
+| soustraction     | X           | `m -= n`  | `m -= n`    | `m -= n` | `m -= n`  | `m -= n`        |
+| multiplication   | X           | `m *= n`  | `m *= n`    | `m *= n` | `m *= n`  | `m *= n`        |
+| division         | X           | ?         | `m /= n`    | X        | `m //= n` | `m //= n`       |
+| modulo           | X           | ?         | X           | `m %= n` | `m %= n`  | `m %= n`        |
+| exponentiation   | X           | ?         | X           | `m ^= n` | `m **= n` | `m^=n`, `m**=n` |
 
 ## Remarques
 
@@ -217,11 +217,18 @@ Le couple quotient et reste pour la division euclidienne s'obtient à l'aide de 
 
 # Les constantes
 
-| **Constante mathématique** | **Symbole** | `FreeFem++` |
-|:---------------------------|:------------|------------:|
-| Pi                         | $\pi$       | `pi`        |
-| Imaginaire pur             | $i$         | `1i`        |
-
+| **Constante mathématique** | **Symbole** | `FreeFem++` | `Julia` | `Python3` | `SageMath`     |
+|:---------------------------|:------------|------------:|--------:|----------:|---------------:|
+| Zéro                       | $0$         | `0`         | `0`     | `0`       | `0`            |
+| Un                         | $1$         | `1`         | `1`     | `1`       | `1`            |
+| Imaginaire pur             | $i$         | `1i`        | `1im`   | `1j`      |                |
+| Pi                         | $\pi$       | `pi`        | `π`     | X         | `pi`           |
+| e                          | $e$         | X           | X       | X         | `e`            |
+| logarithme de 2            | $\ln(2)$    | X           | X       | X         | `log2`         |
+| nombre d'or                | $\varphi$   | X           | X       | X         | `golden_ratio` |
+| constante d'Euler          |             | X           | X       | X         | `euler_gamma`  |
+| constante de Catalan       |             | X           | X       | X         | `catalan`      |
+| constante de Khinchin      |             | X           | X       | X         | `khinchin`     |
 
 # Les vecteurs
 
