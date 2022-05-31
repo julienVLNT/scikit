@@ -27,20 +27,22 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
 - [Les constantes](#les-constantes)
 - [Les vecteurs](#les-vecteurs)
   - [`FreeFem++`](#freefem-3)
+  - [`Julia`](#julia-1)
   - [`Python3/Numpy`](#python3numpy)
 - [Les matrices](#les-matrices)
-    - [`Julia`](#julia-1)
+    - [`Julia`](#julia-2)
     - [`Python3/Numpy`](#python3numpy-1)
 - [Les tenseurs](#les-tenseurs)
     - [`Julia/Tensors.jl`](#juliatensorsjl)
-    - [`Python/Numpy`](#pythonnumpy)
+    - [`Python3/Numpy`](#python3numpy-2)
+    - [`Tensorflow/Python3`](#tensorflowpython3)
 - [Algèbre creuse](#algèbre-creuse)
     - [`FreeFem++`](#freefem-4)
-    - [`Julia`](#julia-2)
+    - [`Julia`](#julia-3)
     - [`Python3/Scipy`](#python3scipy)
 - [Les fonctions (et macro ou lambda expressions...)](#les-fonctions-et-macro-ou-lambda-expressions)
     - [`FreeFem++`](#freefem-5)
-    - [`Julia`](#julia-3)
+    - [`Julia`](#julia-4)
 - [Les fonctions numériques spéciales](#les-fonctions-numériques-spéciales)
   - [Exponentielle et logarithmes](#exponentielle-et-logarithmes)
   - [Trigonométrie](#trigonométrie)
@@ -232,6 +234,8 @@ Le couple quotient et reste pour la division euclidienne s'obtient à l'aide de 
 
 ## `FreeFem++`
 
+On note ici les principaux attributs, les principales méthodes associées à la représentation des vecteurs. On rappelle également la syntaxe des opérations usuelles. La fiche est écrite pour les vecteurs construits sur $\mathbb{R]$, on peut aisément construire des vecteurs de nombres complexes à l'aide de `complex[int]`.
+
 ```cpp
 // Déclaration et affectation
 real[int] v(d);                    // déclare un vecteur de taille d et affecte à ses composantes la valeur 0
@@ -281,10 +285,18 @@ u .* v                             // multiplication terme à terme
 // Normes
 v.l1                               // norme 1
 v.l2                               // norme 2 (euclidienne)
-v.linfty                           // norme infinie
+v.linfty                           // norme max
 
 // Trier les valeurs d'un vecteur
 v.sort
+```
+
+Les vecteurs peuvent également être indexés par des objets de type `string`. 
+
+## `Julia`
+
+```julia
+
 ```
 
 ## `Python3/Numpy`
@@ -342,7 +354,7 @@ u.T @ v                            # produit scalaire
 u @ v.T                            # produit scalaire
 u.dot(v)                           # produit scalaire
 np.dot(u, v)                       # produit scalaire
-np.einseum('i, i -> ', u, v)       # produit scalaire
+np.einsum('i, i -> ', u, v)        # produit scalaire
 np.inner(u, v)                     # produit scalaire
 np.tensordot(u, v, axes=1)         # produit scalaire
 
@@ -388,6 +400,20 @@ w = np.vstack((u, v))              # concaténation en colonne
 
 # Les matrices
 
+> **Définition** Le résultat de l'action d'une matrice $A \in \mathbb{R}^{n \times d}$ sur un vecteur $v \in \mathbb{R}^{d}$ est le vecteur $A \cdot v \in \mathbb{R}^{n}$
+> $$ A \cdot v := \sum_{i=1}^n \left( \sum_{j=1}^{d} A_{ij} v_j \right) e_i = \begin{bmatrix} \sum_{j=1}^d A_{1j} v_j \\ \sum_{j=1}^d A_{2j} v_j \\ \vdots \\ \sum_{j=1}^d A_{nj} v_j \end{bmatrix} $$
+> où on note $\left(e_i\right)_{1 \leqslant i \leqslant d}$ la base canonique de $\mathbb{R}^d$.
+
+> **Définition** Le résultat de l'action d'une matrice $A \in \mathbb{R}^{m \times n}$ sur une matrice $B \in \mathbb{R}^{n \times p}$ est une matrice $A \cdot B \in \mathbb{R}^{m \times p}$ 
+> $$ A \cdot B := $$
+
+> **Définition** Le produit intérieur de deux matrices $A \in \mathbb{R}^{m \times n}$ et $B \in \mathbb{R}^{m \times n}$ est $A:B \in \mathbb{R}$
+> $$ A:B := \sum_{i=1}^{m} \sum_{j=1}^{n} a_{ij} b_{ij} $$
+
+> **Définition** Le produit tensoriel de deux matrices $A \in \mathbb{R}^{m \times n}$ et $B \in \mathbb{R}^{p \times q}$ est la matrice $A \otimes B \in \mathbb{R}^{pm \times qn}$ définie par blocs
+> $$ A \otimes B = \begin{bmatrix} a_{11} B & a_{12} B & a_{13}B & \dots & a_{1n} B \\ a_{21} B & a_{22} B & a_{23} B & \dots & a_{2n} B \\ \vdots & \vdots & \ddots & & \vdots \\ a_{m1} B & a_{m2} B & a_{m3} B & \dots & a_{mn} B \end{bmatrix} $$ 
+
+
 ### `Julia`
 
 ```julia
@@ -395,6 +421,8 @@ w = np.vstack((u, v))              # concaténation en colonne
 ```
 
 ### `Python3/Numpy`
+
+Les matrices denses sont encore implémentées à l'aide de l'objet `numpy.ndarray`, on les identifie aux instances telles que l'attribut `ndims` est égale à $2$.
 
 ```python
 
@@ -408,7 +436,17 @@ w = np.vstack((u, v))              # concaténation en colonne
 
 ```
 
-### `Python/Numpy`
+### `Python3/Numpy`
+
+```python
+
+```
+
+### `Tensorflow/Python3`
+
+```python
+
+```
 
 # Algèbre creuse
 
@@ -448,7 +486,9 @@ func real f(real t){
 
 ### `Julia`
 
+```julia
 
+```
 
 # Les fonctions numériques spéciales
 
