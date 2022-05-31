@@ -832,6 +832,9 @@ mesh th = buildmesh(C(nelC));
 Dans le cas où le contour est une concaténation de chemins, il faut parcourir ce chemin de sorte à respecter l'orientation. Par exemple, reprenons le maillage du rectangle précédent en définissant son contour.
 
 ```cpp
+real a = 1.0;    // absisse du point inférieur gauche
+real b = 1.0;    // ordonnee du point inférieur gauche
+
 real l = 5.0;    // longueur du rectangle
 real h = 1.0;    // hauteur du rectangle
 
@@ -839,23 +842,23 @@ int nely = 5;           // nombre d'éléments sur un bord vertical
 int nelx = l/h*nely;    // nombre d'éléments sur un bord horizontal
 
 border ab(t=0, 1){    // bord inférieur du rectangle
-    x = t*l;
-    y = 0;
+    x = a + t*l;
+    y = b;
 }
 
 border bc(t=0, 1){    // bord droit du rectangle
-    x = l;
-    y = t*h;
+    x = a + l;
+    y = b + t*h;
 }
 
 border cd(t=0, 1){    // bord supérieur du rectangle
-    x = (1-t)*l;
-    y = h;
+    x = a + (1-t)*l;
+    y = b + h;
 }
 
 border da(t=0, 1){    // bord gauche du rectangle
-    x = 0;
-    y = (1-t)*h;
+    x = a;
+    y = b + (1-t)*h;
 }
 
 mesh th = buildmesh(ab(nelx) + bc(nely) + cd(nelx) + da(nely));
