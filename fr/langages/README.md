@@ -34,26 +34,30 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
     - [`Julia`](#julia-2)
     - [`Python3/Numpy`](#python3numpy-1)
 - [Les tenseurs](#les-tenseurs)
-    - [`Julia/Tensors.jl`](#juliatensorsjl)
-    - [`Python3/Numpy`](#python3numpy-2)
-    - [`Tensorflow/Python3`](#tensorflowpython3)
+  - [`Julia/Tensors.jl`](#juliatensorsjl)
+  - [`Python3/Numpy`](#python3numpy-2)
+  - [`Tensorflow/Python3`](#tensorflowpython3)
 - [Algèbre creuse](#algèbre-creuse)
-    - [`FreeFem++`](#freefem-5)
-    - [`Julia`](#julia-3)
-    - [`Python3/Scipy`](#python3scipy)
+  - [`FreeFem++`](#freefem-5)
+  - [`Julia`](#julia-3)
+  - [`Python3/Scipy`](#python3scipy)
 - [Les fonctions (et macro ou lambda expressions...)](#les-fonctions-et-macro-ou-lambda-expressions)
-    - [`FreeFem++`](#freefem-6)
-    - [`Julia`](#julia-4)
-    - [`Python3`](#python3-2)
+  - [`FreeFem++`](#freefem-6)
+  - [`Julia`](#julia-4)
+  - [`Python3`](#python3-2)
 - [Les fonctions numériques spéciales](#les-fonctions-numériques-spéciales)
   - [Exponentielle et logarithmes](#exponentielle-et-logarithmes)
   - [Trigonométrie](#trigonométrie)
   - [Trigonométrie hyperbolique](#trigonométrie-hyperbolique)
   - [Fonctions de Bessel](#fonctions-de-bessel)
   - [Fonction $\Gamma$ et variantes](#fonction-gamma-et-variantes)
-  - [Fonction erreur](#fonction-erreur)
-- [Les maillages en dimension $d$](#les-maillages-en-dimension-d)
+  - [Fonctions erreur et variantes](#fonctions-erreur-et-variantes)
+- [Les maillages](#les-maillages)
   - [`FreeFem++`](#freefem-7)
+    - [Un rectangle en deux dimensions](#un-rectangle-en-deux-dimensions)
+    - [Maillage d'une surface fermée par un contour paramétré](#maillage-dune-surface-fermée-par-un-contour-paramétré)
+    - [Un rectangle en trois dimensions](#un-rectangle-en-trois-dimensions)
+    - [Remarque](#remarque)
 - [Les espaces d'interpolation](#les-espaces-dinterpolation)
 - [Les formulations variationnelles](#les-formulations-variationnelles)
   - [Implémentation des formes $a(\cdot, \cdot)$ et $l(\cdot)$](#implémentation-des-formes-acdot-cdot-et-lcdot)
@@ -217,29 +221,26 @@ Le couple quotient et reste pour la division euclidienne s'obtient à l'aide de 
 
 # Les constantes
 
-| **Constante mathématique** | **Symbole** | `FreeFem++` | `Julia` | `Python3` | `SageMath`     |
-|:---------------------------|:------------|------------:|--------:|----------:|---------------:|
-| Zéro                       | $0$         | `0`         | `0`     | `0`       | `0`            |
-| Un                         | $1$         | `1`         | `1`     | `1`       | `1`            |
-| Imaginaire pur             | $i$         | `1i`        | `1im`   | `1j`      |                |
-| Pi                         | $\pi$       | `pi`        | `π`     | X         | `pi`           |
-| e                          | $e$         | X           | X       | X         | `e`            |
-| logarithme de 2            | $\ln(2)$    | X           | X       | X         | `log2`         |
-| nombre d'or                | $\varphi$   | X           | X       | X         | `golden_ratio` |
-| constante d'Euler          |             | X           | X       | X         | `euler_gamma`  |
-| constante de Catalan       |             | X           | X       | X         | `catalan`      |
-| constante de Khinchin      |             | X           | X       | X         | `khinchin`     |
+| **Constante mathématique** | **Symbole** | `FreeFem++` | `Julia`   | `Python3/Scipy` | `SageMath`     |
+|:---------------------------|:------------|------------:|----------:|----------------:|---------------:|
+| Zéro                       | $0$         | `0`         | `0`       | `0`             | `0`            |
+| Un                         | $1$         | `1`         | `1`       | `1`             | `1`            |
+| Imaginaire pur             | $i$         | `1i`        | `1im`     | `1j`            |                |
+| Pi                         | $\pi$       | `pi`        | `π`       | X               | `pi`           |
+| e                          | $e$         | X           | `ℯ`       | X               | `e`            |
+| logarithme de 2            | $\ln(2)$    | X           | X         | X               | `log2`         |
+| nombre d'or                | $\varphi$   | X           | `φ`       | X               | `golden_ratio` |
+| constante d'Euler          |             | X           | `γ`       | X               | `euler_gamma`  |
+| constante de Catalan       |             | X           | `catalan` | X               | `catalan`      |
+| constante de Khinchin      |             | X           | X         | X               | `khinchin`     |
+
+| **Constante physique** | **Symbole** |
+|:-----------------------|:------------|
+|                        |             |
 
 # Les vecteurs
 
-> **Définition** Le produit scalaire, ou intérieur, de deux vecteurs $u, v \in \mathbb{R}^m$ est le réel $r \in \mathbb{R}$
-> $$ r = \sum_{i=1}^m u_i v_i $$
-
-> **Définition** Le produit extérieur de deux vecteurs $u \in \mathbb{R}^m$ et $v \in \mathbb{R}^n$ est la matrice $A = [a_{ij}] \in \mathbb{R}^{m \times n}$
-> $$ a_{ij} = u_i v_j $$
-
-> **Définition** Le produit de Kronecker de deux vecteurs $u \in \mathbb{R}^m$ et $v \in \mathbb{R}^n$ est le vecteur $w \in \mathbb{R}^{m \times n}$ 
-> $$ w = \left[ u_1 v_1, u_1 v_2, \dots, u_1 v_n, u_2 v_1, u_2 v_2, \dots, u_2 v_n, \dots, u_m v_n \right]^T $$
+Dans cette section, on s'intéresse aux vecteurs construits sur le corps des nombres réels. L'extension aux $\mathbb{C}$-espaces vectoriels est plutôt aisée.
 
 ## `FreeFem++`
 
@@ -494,19 +495,19 @@ np.tensordot(A, B, axes=0)         # produit tensoriel
 
 # Les tenseurs
 
-### `Julia/Tensors.jl`
+## `Julia/Tensors.jl`
 
 ```julia
 
 ```
 
-### `Python3/Numpy`
+## `Python3/Numpy`
 
 ```python
 
 ```
 
-### `Tensorflow/Python3`
+## `Tensorflow/Python3`
 
 ```python
 
@@ -514,19 +515,19 @@ np.tensordot(A, B, axes=0)         # produit tensoriel
 
 # Algèbre creuse
 
-### `FreeFem++`
+## `FreeFem++`
 
 ```cpp
 
 ```
 
-### `Julia`
+## `Julia`
 
 ```julia
 
 ```
 
-### `Python3/Scipy`
+## `Python3/Scipy`
 
 ```python
 
@@ -534,7 +535,7 @@ np.tensordot(A, B, axes=0)         # produit tensoriel
 
 # Les fonctions (et macro ou lambda expressions...)
 
-### `FreeFem++`
+## `FreeFem++`
 
 Le langage `FreeFem++` contient les identificateurs globaux `x`, `y` et `z` pour désigner les variables d'espace. On peut aussi paramétrer une fonction par la méthode standard en `C++`.
 
@@ -560,7 +561,7 @@ func matrix f(){
 }
 ```
 
-### `Julia`
+## `Julia`
 
 ```julia
 # Déclaration, affectation
@@ -599,7 +600,7 @@ f(-1)                              # évaluation de la fonction f
 
 Le langage est fortement typé : bien que la fonction carrée est définie sur $\mathbb{C}$, la définition de `f` impose que l'argument soit du type `Float64`, donc l'évaluation `f(1i)` lève une erreur. Dans la définition de `g`, on autorise un nombre variable d'arguments. `g(0)` ou `g('a', 1, -2i)` sont valides. Dans la définition de `h`, l'argument `op` est optionnel. Dans la définition de `i`, l'argument `op` est un mot-clef (on fait attention au point-virgule plutôt que la virgule).
 
-### `Python3`
+## `Python3`
 
 On commence par les `<function <lambda>` du langage `Python3`. Elles se déclarent en une ligne, très adaptées aux expressions très simples ou pour l'usage à la volée, sans déclaration, par exemple en paramètre d'une autre fonction.
 
@@ -651,12 +652,12 @@ On note que x: float n'est qu'une indication, de même que -> float. Le programm
 
 ## Exponentielle et logarithmes
 
-| **Fonction**                                      | `FreeFem++` | `Python/Numpy` |
-|---------------------------------------------------|------------:|---------------:|
-| $e$                                               | `exp`       | `numpy.exp`    |
-| $\ln$                                             | `ln`        | `numpy.log`    |
-| $\ln_2$                                           | X           | `numpy.log2`   |
-| $\log$                                            | `log10`     | `numpy.log10`  |
+| **Fonction**                                      | `FreeFem++` | `Julia` | `Python/Numpy` |
+|---------------------------------------------------|------------:|--------:|---------------:|
+| $e$                                               | `exp`       |  | `numpy.exp`    |
+| $\ln$                                             | `ln`        | | `numpy.log`    |
+| $\ln_2$                                           | X           | | `numpy.log2`   |
+| $\log$                                            | `log10`     | | `numpy.log10`  |
 
 ## Trigonométrie
 
@@ -719,21 +720,144 @@ Elle converge absolument sur le demi-plan $\{ \mathcal{Re}(z) > 0 \}$ et elle se
 | $\Gamma$          | `tgamma`    |
 | $\ln(\|\Gamma\|)$ | `lgamma`    |
 
-## Fonction erreur
+## Fonctions erreur et variantes
 
-> **Définition** La fonction erreur est la fonction entière
+> **Définition** La fonction erreur `erf` est la fonction entière
 > $$ \text{erf}(x) := \dfrac{2}{\sqrt{\pi}} \int_0^x e^{-t^2}dt $$
 
-| `Fonction`     | `FreeFem++` |
-|----------------|------------:|
-| $\text{erf}$   | `erf`       |
-| $1-\text{erf}$ | `erfc`      |
+> **Définition** La fonction $\text{erfc}$ est définie par
+> $$ \text{erfc}(x) := 1 - \text{erf}(x) $$
 
-# Les maillages en dimension $d$
+> **Définition** La fonction $\text{erfcx}$ est 
+> $$ \text{erfcx}(x) := e^{x^2} \text{erfc}(x) $$
+
+> **Définition** La fonction $\text{logerfc}$ est
+> $$ \text{logerfc}(x) := \ln(\text{erfc})(x) $$
+
+> **Définition** La fonction $\text{logerfcx}$ est
+> $$ \text{logerfcx}(x) := \ln(erfcx)(x) $$
+
+> **Définition** La fonction $\text{erfi}$ est 
+> $$ \text{erfi}(x) := -i \text{erf}(ix) $$
+
+> **Définition** La fonction $\text{dawson}$ est
+> $$ \text{dawson}(x) := \dfrac{\sqrt{\pi}}{2} e^{-x^2} \text{erfi}(x) $$
+
+| **Fonction**       | `FreeFem++` | `Julia/SpecialFunctions.jl` |
+|:-------------------|------------:|----------------------------:|
+| $\text{erf}$       | `erf`       | `erf`                       | 
+| $\text{erfc}$      | `erfc`      | `erfc`                      |
+| $\text{erfcx}$     | X           | `erfcx`                     |
+| $\text{logerfc}$   | X           | `logerfc`                   | 
+| $\text{logerfcx}$  | X           | `logerfcx`                  |
+| $\text{erfi}$      | X           | `erfi`                      |
+| $\text{dawson}$    | X           | `dawson`                    |
+| $\text{erf}^{-1}$  | X           | `erfinv`                    |
+| $\text{erfc}^{-1}$ | X           | `erfcinv`                   |    
+
+# Les maillages
 
 ## `FreeFem++`
 
-`FreeFem++` intègre des fonctions permettant de construire des maillages déstructurés. On notera le maillage $\mathcal{T}_h$ associé à un domaine $\Omega$ par l'identificateur `th`. Le type `mesh` permet de représenter $\mathcal{T}_h$.
+Le langage intègre le logiciel `bamg` pour créer ses maillages. On dispose de nombreuses manière pour produire des maillages déstructurés depuis les scripts.
+
+### Un rectangle en deux dimensions
+
+On peut mailler le rectangle $[a, a+l] \times [b, b+h]$ avec le script suivant.
+
+```cpp
+real a = 1.0;    // absisse du coin inférieur gauche
+real b = 1.0;    // ordonnée du coin inférieur gauche
+real l = 1.0;    // longueur du rectangle
+real h = 1.0;    // largeur du rectangle
+
+int nelx = 10;    // nombre d'éléments sur un bord horizontal
+int nely = 10;    // nombre d'éléments sur un bord vertical
+
+/*
+    Flags : paramètre de construction des arêtes
+        0 : (x-y) constante
+        1 : alternance de (x-y) et (x+y) constantes (Union Jack)
+        2 : (x+y) constante
+        3 : (x-y) constante sauf pour deux angles où (x+y) constante
+        4 : (x+y) constante sauf pour deux angles où (x-y) constante
+*/
+int fla = 1;
+int[int] lab = [1, 2, 3, 4];    // commence par le bord inférieur puis rotation dans le sens trigonométrique
+int reg = 1;                    // label du rectangle, utile pour les indicatrices
+
+mesh th = square(nelx, nely, [a + l*x, b + h*y], flags=fla, label=lab, region=reg);
+```
+
+### Maillage d'une surface fermée par un contour paramétré
+
+On prend pour exemple le disque de rayon $r = 1$ centré en le point $\begin{bmatrix} 1 \\ 1 \end{bmatrix}$.
+
+```cpp
+real r = 2.0;                // rayon du cercle
+real[int] c = [1.0, 1.0];    // coordonnées du centre du cercle
+
+int nelC = 128;    // nombre d'éléments sur le cercle
+
+int labC = 1;    // label du bord du cercle
+
+
+border C(t=0, 1){
+    x = c[0] + r*cos(2*pi*t);
+    y = c[1] + r*sin(2*pi*t);
+    label = labC;
+}
+
+mesh th = buildmesh(C(nelC));
+```
+
+### Un rectangle en trois dimensions
+
+De même, on maille le rectangle $[a, a+L] \times [b, b+l] \times [c, c+h]$ à l'aide du script
+
+```cpp
+load "msh3"
+
+real a = 1.0;    // absisse
+real b = 1.0;    // ordonnée
+real c = 1.0;    // cote 
+real L = 1.0;    // longueur du rectangle
+real l = 1.0;    // largeur du rectangle
+real h = 1.0;    // profondeur du rectangle
+
+int nelx = 10;    // nombre d'éléments sur un bord horizontal
+int nely = 10;    // nombre d'éléments sur un bord vertical
+int nelz = 10;    // nombre d'éléments sur un bord en profondeur
+
+/*
+    Flags : paramètre de construction des arêtes
+        0 : (x-y) constante
+        1 : alternance de (x-y) et (x+y) constantes (Union Jack)
+        2 : (x+y) constante
+        3 : (x-y) constante sauf pour deux angles où (x+y) constante
+        4 : (x+y) constante sauf pour deux angles où (x-y) constante
+*/
+int fla = 1;
+int[int] lab = [1, 2, 3, 4, 5, 6];    // commence par le bord inférieur puis rotation dans le sens trigonométrique
+int reg = 1;                          // label du rectangle, utile identifier le domaine
+
+mesh3 th = cube(nelx, nely, nelz, [a + L*x, b + l*y, c + h*z], flags=fla, label=lab, region=reg);
+```
+
+### Remarque
+
+Les maillages peuvent être affichés par la fonction `plot()`
+
+```cpp
+plot(th, cmm="Maillage Th");
+```
+
+mais aussi par `medit()`
+
+```cpp
+load "medit"
+medit("Maillage", th);
+```
 
 # Les espaces d'interpolation
 
