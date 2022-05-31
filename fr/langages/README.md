@@ -3,84 +3,23 @@
 Ce document est là pour porter un regard croisé sur la représentation de structures de données usuelles en mathématiques appliquées au travers de différents langages de programmation.
 
 - [Les booléens](#les-booléens)
-  - [Egalité de booléens](#egalité-de-booléens)
-  - [Remarques](#remarques)
-    - [Opération logique != opération bit-à-bit](#opération-logique--opération-bit-à-bit)
-    - [`C`](#c)
-    - [`FreeFem++`](#freefem)
-    - [`Python3`](#python3)
-    - [`SageMath`](#sagemath)
-- [Les entiers relatifs, $\mathbb{Z}$](#les-entiers-relatifs-mathbbz)
-  - [Types ou objets représentant les entiers](#types-ou-objets-représentant-les-entiers)
-    - [`C++`](#c-1)
-    - [`FreeFem++`](#freefem-1)
-  - [Relations d'ordre sur les entiers](#relations-dordre-sur-les-entiers)
-  - [Opérateurs sur les entiers](#opérateurs-sur-les-entiers)
-  - [Remarques](#remarques-1)
-    - [`FreeFem++`](#freefem-2)
-    - [`Julia`](#julia)
-    - [`Python3`](#python3-1)
-- [Les nombres décimaux, $\mathbb{D}$](#les-nombres-décimaux-mathbbd)
-- [Les nombres rationnels, $\mathbb{Q}$](#les-nombres-rationnels-mathbbq)
-- [Les nombres réels, $\mathbb{R}$](#les-nombres-réels-mathbbr)
-- [Les nombres complexes, $\mathbb{C}$](#les-nombres-complexes-mathbbc)
+- [Les entiers relatifs](#les-entiers-relatifs)
+- [Les nombres décimaux](#les-nombres-décimaux)
+- [Les nombres rationnels](#les-nombres-rationnels)
+- [Les nombres réels](#les-nombres-réels)
+- [Les nombres complexes](#les-nombres-complexes)
 - [Les constantes](#les-constantes)
 - [Les vecteurs](#les-vecteurs)
-  - [`FreeFem++`](#freefem-3)
-  - [`Julia`](#julia-1)
-  - [`Python3/Numpy`](#python3numpy)
 - [Les matrices](#les-matrices)
-    - [`FreeFem++`](#freefem-4)
-    - [`Julia`](#julia-2)
-    - [`Python3/Numpy`](#python3numpy-1)
 - [Les tenseurs](#les-tenseurs)
-  - [`Julia/Tensors.jl`](#juliatensorsjl)
-  - [`Python3/Numpy`](#python3numpy-2)
-  - [`Tensorflow/Python3`](#tensorflowpython3)
 - [Algèbre creuse](#algèbre-creuse)
-  - [`FreeFem++`](#freefem-5)
-  - [`Julia`](#julia-3)
-  - [`Python3/Scipy`](#python3scipy)
 - [Les fonctions (et macro ou lambda expressions...)](#les-fonctions-et-macro-ou-lambda-expressions)
-  - [`FreeFem++`](#freefem-6)
-  - [`Julia`](#julia-4)
-  - [`Python3`](#python3-2)
 - [Les fonctions numériques spéciales](#les-fonctions-numériques-spéciales)
-  - [Exponentielle et logarithmes](#exponentielle-et-logarithmes)
-  - [Trigonométrie](#trigonométrie)
-  - [Trigonométrie hyperbolique](#trigonométrie-hyperbolique)
-  - [Fonctions de Bessel](#fonctions-de-bessel)
-  - [Fonction $\Gamma$ et variantes](#fonction-gamma-et-variantes)
-  - [Fonctions erreur et variantes](#fonctions-erreur-et-variantes)
 - [Les maillages](#les-maillages)
-  - [`FreeFem++`](#freefem-7)
-    - [Maillage d'un élément à une dimension plongé dans l'espace](#maillage-dun-élément-à-une-dimension-plongé-dans-lespace)
-    - [Un rectangle en deux dimensions](#un-rectangle-en-deux-dimensions)
-    - [Maillage d'une surface fermée par un contour paramétré](#maillage-dune-surface-fermée-par-un-contour-paramétré)
-    - [Mailler un domaine privé d'un sous-domaine](#mailler-un-domaine-privé-dun-sous-domaine)
-    - [Maillage d'une surface plongée dans l'espace](#maillage-dune-surface-plongée-dans-lespace)
-    - [Un rectangle en trois dimensions](#un-rectangle-en-trois-dimensions)
-    - [Remarque](#remarque)
 - [Les espaces d'interpolation](#les-espaces-dinterpolation)
-  - [`FreeFem++`](#freefem-8)
-- [Les formulations variationnelles](#les-formulations-variationnelles)
-  - [Implémentation des formes $a(\cdot, \cdot)$ et $l(\cdot)$](#implémentation-des-formes-acdot-cdot-et-lcdot)
-    - [`FEniCs/Python3`](#fenicspython3)
-    - [`FreeFem++`](#freefem-9)
-    - [`Rheolef`](#rheolef)
-  - [implémentation de $F(u, v) = 0$](#implémentation-de-fu-v--0)
-    - [`FEniCs/Python3`](#fenicspython3-1)
-    - [`FreeFem++`](#freefem-10)
-  - [Les conditions aux limites de Dirichlet et de Neumann](#les-conditions-aux-limites-de-dirichlet-et-de-neumann)
-    - [`FEniCs/Python3`](#fenicspython3-2)
-    - [`FreeFem++`](#freefem-11)
-  - [Conditions aux limites de Dirichlet faible](#conditions-aux-limites-de-dirichlet-faible)
-  - [Conditions aux limites de Robin](#conditions-aux-limites-de-robin)
-  - [Remarques](#remarques-2)
-    - [`FreeFem++` : `problem` et `solve`](#freefem--problem-et-solve)
-- [Les structures algébriques abstraites avec `SageMath`](#les-structures-algébriques-abstraites-avec-sagemath)
+  - [`FreeFem++`](#freefem)
 
-# Les booléens
+# Les booléens 
 
 | **Booléen**   | **Symbole**    | `C++`      | `FreeFem++` | `Julia`    | `Python3` |
 |:--------------|:---------------|-----------:|------------:|-----------:|----------:|
@@ -91,37 +30,37 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
 | et            | $\wedge$       | `a && b`   | `a && b`    | `a && b`   | `a and b` |
 | ou            | $\vee$         | `a \|\| b` | `a \|\| b`  | `a \|\| b` | `a or b`  |
 
-## Egalité de booléens
+## Egalité de booléens <!-- omit in toc -->
 
 Dans tous les langages cités ci-dessus, l'opérateur binaire `==` teste l'égalité entre deux booléens.
 
-## Remarques
+## Remarques <!-- omit in toc -->
 
-### Opération logique != opération bit-à-bit
+### Opération logique != opération bit-à-bit <!-- omit in toc -->
 
 Il faut différencier les opérations sur les booléens vus comme types des opérations logiques effectuées sur chaque bit de la représentation binaire d'un objet ou d'un type.
 
-### `C`
+### `C` <!-- omit in toc -->
 
 Le type booléen n'est pas intrinsèquement implémenté dans le langage `C`, on peut les manipuler en tant que type grâce à la librairie `stdbool` ou définir un type *à la main* basé sur les entiers non-signés par exemple. Sinon on les manipule selon l'association `vrai` ~ `1`, `faux` ~ `0`.
 
-### `FreeFem++`
+### `FreeFem++` <!-- omit in toc -->
 
 Il est courant de trouver dans les codes la représentation entière du type booléen, avec `true` ~ `1` et `false` ~ `0`.
 
-### `Python3`
+### `Python3` <!-- omit in toc -->
 
 Il y a énormément de manières de définir le **faux** : les objets `None` et `False`, certes, mais aussi le `0` de tous les types numériques ou les collections vides : `''`, `()`, `[]`, `set()`, `range(0)` ...
 
-### `SageMath`
+### `SageMath` <!-- omit in toc -->
 
 Les objets `bool` de `SageMath` correspondent exactement au modèle introduit par `Python3`.
 
-# Les entiers relatifs, $\mathbb{Z}$
+# Les entiers relatifs
 
-## Types ou objets représentant les entiers
+## Types ou objets représentant les entiers <!-- omit in toc -->
 
-### `C++`
+### `C++` <!-- omit in toc -->
 
 Les nombres entiers relatifs, entiers *signés*, se déclarent sous un des types suivants
 
@@ -143,7 +82,7 @@ int c{2};     // "uniform initialization"
 int d=3;
 ```
 
-### `FreeFem++`
+### `FreeFem++` <!-- omit in toc -->
 
 Le type utilisé par `FreeFem++` pour représenter les entiers est équivalent au type `long` en `C++`. Pour déclarer un entier, on utilise 
 
@@ -153,7 +92,7 @@ int m;
 
 auquel cas il se voit affecté la valeur $0$. 
 
-## Relations d'ordre sur les entiers
+## Relations d'ordre sur les entiers <!-- omit in toc -->
 
 Les opérateurs représentant les relations d'ordre renvoient un booléen. 
 
@@ -166,7 +105,7 @@ Les opérateurs représentant les relations d'ordre renvoient un booléen.
 | Supérieur ou égal  | $\geq$      | `m >= n` | `m >= n`    | `m >= n` | `m >= n`  | `m >= n`   |
 | Supérieur strict   | $>$         | `m > n`  | `m > n`     | `m > n`  | `m > n`   | `m > n`    |
 
-## Opérateurs sur les entiers
+## Opérateurs sur les entiers <!-- omit in toc -->
 
 On ne cite ici que les opérations internes de $\mathbb{Z}$ i.e dont les résultats sont des entiers.
 
@@ -201,27 +140,146 @@ Il est parfois possible d'affecter au premier opérande le résultat de l'opéra
 | modulo           | X           | ?         | X           | `m %= n` | `m %= n`  | `m %= n`        |
 | exponentiation   | X           | ?         | X           | `m ^= n` | `m **= n` | `m^=n`, `m**=n` |
 
-## Remarques
+## Remarques <!-- omit in toc -->
 
-### `FreeFem++`
+### `FreeFem++` <!-- omit in toc -->
 
-En `FreeFem++`, les affectations des résultats de `m % n` et `m ^ n` sous leur forme `m %= n` et `m ^ n` donnent des erreurs à la compilation. 
+En `FreeFem++`, les affectations des résultats de `m % n` et `m ^ n` sous leur forme `m %= n` et `m ^= n` donnent des erreurs à la compilation. 
 
-### `Julia`
+### `Julia` <!-- omit in toc -->
 
 En `Julia`, l'affectation du résultat pour la division donne systématiquement des nombres réels. C'est pourquoi on note un X dans la case correspondante.
 
-### `Python3`
+### `Python3` <!-- omit in toc -->
 
 Le couple quotient et reste pour la division euclidienne s'obtient à l'aide de la fonction `divmod(m, n)`. L'élévation de `m` à la puissance `n` s'obtient à l'aide de `pow(m, n)`.
 
-# Les nombres décimaux, $\mathbb{D}$
+# Les nombres décimaux
 
-# Les nombres rationnels, $\mathbb{Q}$
+## `Python3/Decimal` <!-- omit in toc -->
 
-# Les nombres réels, $\mathbb{R}$
+```python
+d = decimal.Decimal()              # déclaration et affectation à Decimal('0')
+d = decimal.Decimal('1.23456')     # déclaration et affectation à Decimal('1.23456')
+d = decimal.Decimal('3.1415')      # déclaration et affectation
 
-# Les nombres complexes, $\mathbb{C}$
++d                                 # identité
+-d                                 # opposé
+abs(d)                             # valeur absolue
+
+d1 + d2                            # addition
+d1 - d2                            # soustraction
+d1 * d2                            # multiplication
+d1 / d2                            # division réelle
+d1 // d2                           # quotient de la division euclidienne étendue
+d1 % d2                            # reste de la division euclidienne étendue
+d1 ** d2                           # exponentiation
+
+d1 == d2                           # test d'égalité
+d1 <= d2                           # test inférieur ou égal à
+d1 < d2                            # test strictement inférieur à
+d1 >= d2                           # test supérieur ou égal à
+d1 > d2                            # test strictement supérieur à
+
+d.exp()                            # composition par l'exponentielle
+d.ln()                             # composition par le logarithme naturel
+d.log10()                          # composition par le logarithme de base 10
+d.logb()                           # exposant ajusté de l'argument
+d.sqrt()                           # composition par la racine carrée
+
+decimal.getcontext()               # paramètres globaux du module decimal
+decimal.getcontext().prec = 3      # édition d'un paramètre de l'objet Context
+```
+
+# Les nombres rationnels
+
+## `Python3/Fraction` <!-- omit in toc -->
+
+```python
+import fractions
+p = fractions.Fraction()           # déclaration et affectation à Fraction(0, 1)
+p = fractions.Fraction(2,3)        # déclaration et affectation à Fraction(2,3) i.e 2/3
+
++p                                 # identité
+-p                                 # opposé
+abs(p)                             # valeur absolue
+
+r + s                              # addition
+r - s                              # soustraction
+r * s                              # multiplication interne
+r / s                              # division rationnelle
+r // s                             # quotient de la division euclidienne étendue
+r % s                              # reste de la division euclidienne étendue
+r ** s                             # exponentiation
+
+r == s                             # test d'égalité
+r <= s                             # test inférieur ou égal à
+r < s                              # test strictement inférieur à
+r >= s                             # test supérieur ou égal à
+r > s                              # test strictement supérieur à
+```
+
+# Les nombres réels
+
+## `Python3` <!-- omit in toc -->
+
+```python
+x = float()                        # déclaration et affectation à 0.0
+x = float(1.1)                     # déclaration et affectation à 1.1
+x = float(2*3.1)                   # déclaration et affectation à 6.2
+x = -1.                            # déclaration et affectation à -1.0
+x, y = 1.4, 3.1                    # déclaration et affectation multiple
+
++x                                 # identité
+-x                                 # opposé
+abs(x)                             # valeur absolue
+
+x + y                              # addition
+x - y                              # soustraction
+x * y                              # multiplication
+x / y                              # division réelle
+x // y                             # quotient de la division euclidienne étendue
+x % y                              # reste de la division euclidienne étendue
+x ** y                             # exponentiation
+
+x is y                             # test d'identité
+x == y                             # test d'égalité
+x <= y                             # test inférieur ou égal à
+x < y                              # test strictement inférieur à
+x >= y                             # test supérieur ou égal à
+x > y                              # test strictement supérieur à
+x.is_integer()                     # test d'appartenance à l'ensemble des entiers
+```
+
+# Les nombres complexes
+
+## `Python3` <!-- omit in toc -->
+
+```python
+z = complex()                      # déclaration et affectation à 0 complexe
+z = complex(1.+1.j)                # déclaration et affectation à 1 + i
+z = complex(1.+1j)                 # déclaration et affectation à 1 + i
+z = complex(1+1.j)                 # déclaration et affectation à 1 + i
+z = complex(1+1j)                  # déclaration et affectation à 1 + i
+z = 1 + 3j                         # déclaration et affectation à 1 + 3i
+w, z = 1+1j, 1.-1j                 # déclaration et affectation multiple
+
++z                                 # identité
+-z                                 # opposé
+abs(z)                             # module
+z.real                             # partie réelle
+z.imag                             # partie imaginaire
+z.conjugate()                      # complexe conjugué
+
+w + z                              # addition
+w - z                              # soustraction
+w * z                              # multiplication
+w / z                              # division complexe
+w ** z                             # exponentiation
+
+w is z                             # test d'identité
+w == z                             # test d'égalité
+```
 
 # Les constantes
 
@@ -246,9 +304,9 @@ Le couple quotient et reste pour la division euclidienne s'obtient à l'aide de 
 
 Dans cette section, on s'intéresse aux vecteurs construits sur le corps des nombres réels. L'extension aux $\mathbb{C}$-espaces vectoriels est plutôt aisée.
 
-## `FreeFem++`
+## `FreeFem++` <!-- omit in toc -->
 
-On note ici les principaux attributs, les principales méthodes associées à la représentation des vecteurs. On rappelle également la syntaxe des opérations usuelles. La fiche est écrite pour les vecteurs construits sur $\mathbb{R]$, on peut aisément construire des vecteurs de nombres complexes à l'aide de `complex[int]`.
+On note ici les principaux attributs, les principales méthodes associées à la représentation des vecteurs. On rappelle également la syntaxe des opérations usuelles. La fiche est écrite pour les vecteurs construits sur $\mathbb{R}$, on peut aisément construire des vecteurs de nombres complexes à l'aide de `complex[int]`.
 
 ```cpp
 // Déclaration et affectation
@@ -307,13 +365,13 @@ v.sort
 
 Les vecteurs peuvent également être indexés par des objets de type `string`. 
 
-## `Julia`
+## `Julia` <!-- omit in toc -->
 
 ```julia
 
 ```
 
-## `Python3/Numpy`
+## `Python3/Numpy` <!-- omit in toc -->
 
 En `Python3`, les vecteurs sont implémentés par l'objet `numpy.ndarray` de la librairie `Numpy`. En fait, cet objet est un conteneur très général, un vecteur a en particulier un nombre de dimension égal à $1$.
 
@@ -414,7 +472,7 @@ w = np.vstack((u, v))              # concaténation en colonne
 
 # Les matrices
 
-### `FreeFem++`
+### `FreeFem++` <!-- omit in toc -->
 
 Les matrices denses ne sont pas implémentées dans ce langage. Les objets `real[int, int]` sont des vecteurs de vecteurs mais les opérations standards ne sont pas implémentées pour ces objets. On regardera l'objet `matrix` dans la section sur les [matrices creuses](#algèbre-creuse).
 
@@ -422,13 +480,13 @@ Les matrices denses ne sont pas implémentées dans ce langage. Les objets `real
 
 ```
 
-### `Julia`
+### `Julia` <!-- omit in toc -->
 
 ```julia
 
 ```
 
-### `Python3/Numpy`
+### `Python3/Numpy` <!-- omit in toc -->
 
 Les matrices denses sont encore implémentées à l'aide de l'objet `numpy.ndarray`, on les identifie aux instances telles que l'attribut `ndims` est égale à $2$.
 
@@ -499,19 +557,19 @@ np.tensordot(A, B, axes=0)         # produit tensoriel
 
 # Les tenseurs
 
-## `Julia/Tensors.jl`
+## `Julia/Tensors.jl` <!-- omit in toc -->
 
 ```julia
 
 ```
 
-## `Python3/Numpy`
+## `Python3/Numpy` <!-- omit in toc -->
 
 ```python
 
 ```
 
-## `Tensorflow/Python3`
+## `Tensorflow/Python3` <!-- omit in toc -->
 
 ```python
 
@@ -519,19 +577,19 @@ np.tensordot(A, B, axes=0)         # produit tensoriel
 
 # Algèbre creuse
 
-## `FreeFem++`
+## `FreeFem++` <!-- omit in toc -->
 
 ```cpp
 
 ```
 
-## `Julia`
+## `Julia` <!-- omit in toc -->
 
 ```julia
 
 ```
 
-## `Python3/Scipy`
+## `Python3/Scipy` <!-- omit in toc -->
 
 ```python
 
@@ -539,7 +597,7 @@ np.tensordot(A, B, axes=0)         # produit tensoriel
 
 # Les fonctions (et macro ou lambda expressions...)
 
-## `FreeFem++`
+## `FreeFem++` <!-- omit in toc -->
 
 Le langage `FreeFem++` contient les identificateurs globaux `x`, `y` et `z` pour désigner les variables d'espace. On peut aussi paramétrer une fonction par la méthode standard en `C++`.
 
@@ -565,7 +623,7 @@ func matrix f(){
 }
 ```
 
-## `Julia`
+## `Julia` <!-- omit in toc -->
 
 ```julia
 # Déclaration, affectation
@@ -604,7 +662,7 @@ f(-1)                              # évaluation de la fonction f
 
 Le langage est fortement typé : bien que la fonction carrée est définie sur $\mathbb{C}$, la définition de `f` impose que l'argument soit du type `Float64`, donc l'évaluation `f(1i)` lève une erreur. Dans la définition de `g`, on autorise un nombre variable d'arguments. `g(0)` ou `g('a', 1, -2i)` sont valides. Dans la définition de `h`, l'argument `op` est optionnel. Dans la définition de `i`, l'argument `op` est un mot-clef (on fait attention au point-virgule plutôt que la virgule).
 
-## `Python3`
+## `Python3` <!-- omit in toc -->
 
 On commence par les `<function <lambda>` du langage `Python3`. Elles se déclarent en une ligne, très adaptées aux expressions très simples ou pour l'usage à la volée, sans déclaration, par exemple en paramètre d'une autre fonction.
 
@@ -654,7 +712,7 @@ On note que x: float n'est qu'une indication, de même que -> float. Le programm
 
 # Les fonctions numériques spéciales
 
-## Exponentielle et logarithmes
+## Exponentielle et logarithmes <!-- omit in toc -->
 
 | **Fonction**                                      | `FreeFem++` | `Julia` | `Python/Numpy` |
 |---------------------------------------------------|------------:|--------:|---------------:|
@@ -663,7 +721,7 @@ On note que x: float n'est qu'une indication, de même que -> float. Le programm
 | $\ln_2$                                           | X           | | `numpy.log2`   |
 | $\log$                                            | `log10`     | | `numpy.log10`  |
 
-## Trigonométrie
+## Trigonométrie <!-- omit in toc -->
 
 | **Fonction**                                      | `FreeFem++`          |
 |---------------------------------------------------|-----------------------:|
@@ -674,7 +732,7 @@ On note que x: float n'est qu'une indication, de même que -> float. Le programm
 | $\tan$                                            | `tan`                  |
 | $\arctan$                                         | `atan`                 |
 
-## Trigonométrie hyperbolique
+## Trigonométrie hyperbolique <!-- omit in toc -->
 
 | **Fonction**     | `FreeFem++` |
 |------------------|------------:|
@@ -685,7 +743,7 @@ On note que x: float n'est qu'une indication, de même que -> float. Le programm
 | $\tanh$          | `tanh`      |
 | $\text{arctanh}$ | `atanh`     |
 
-## Fonctions de Bessel
+## Fonctions de Bessel <!-- omit in toc -->
 
 Les fonctions de Bessel sont des solutions canoniques de l'équation différentielle ordinaire
 
@@ -710,7 +768,7 @@ où $\alpha \in \mathbb{C}$. Les fonctions de Bessel se distinguent en deux esp�
 | $2^{\text{ème}}$ espèce d'ordre $1$ | `y1`        |
 | $2^{\text{ème}}$ espèce d'ordre $n$ | `yn(n, x)`  |
 
-## Fonction $\Gamma$ et variantes
+## Fonction $\Gamma$ et variantes <!-- omit in toc -->
 
 La fonction $\Gamma$ est une généralisation de la fonction factorielle définie sur $\mathbb{N}$ aux nombres complexes. Elle vérifie la relation fonctionnelle $\Gamma(z+1) = z \Gamma(z)$.
 
@@ -724,7 +782,7 @@ Elle converge absolument sur le demi-plan $\{ \mathcal{Re}(z) > 0 \}$ et elle se
 | $\Gamma$          | `tgamma`    |
 | $\ln(\|\Gamma\|)$ | `lgamma`    |
 
-## Fonctions erreur et variantes
+## Fonctions erreur et variantes <!-- omit in toc -->
 
 > **Définition** La fonction erreur `erf` est la fonction entière
 > $$ \text{erf}(x) := \dfrac{2}{\sqrt{\pi}} \int_0^x e^{-t^2}dt $$
@@ -761,11 +819,11 @@ Elle converge absolument sur le demi-plan $\{ \mathcal{Re}(z) > 0 \}$ et elle se
 
 # Les maillages
 
-## `FreeFem++`
+## `FreeFem++` <!-- omit in toc -->
 
 Le langage intègre le logiciel `bamg` pour créer ses maillages. On dispose de nombreuses manière pour produire des maillages déstructurés depuis les scripts.
 
-### Maillage d'un élément à une dimension plongé dans l'espace
+### Maillage d'un élément à une dimension plongé dans l'espace <!-- omit in toc -->
 
 ```cpp
 load "msh3"
@@ -779,7 +837,7 @@ func torez = sin(2*pi*y);
 meshL th = segment(nel, [torex, torey, torez], removeduplicate=true);
 ```
 
-### Un rectangle en deux dimensions
+### Un rectangle en deux dimensions <!-- omit in toc -->
 
 On peut mailler le rectangle $[a, a+l] \times [b, b+h]$ avec le script suivant.
 
@@ -807,7 +865,7 @@ int reg = 1;                    // label du rectangle, utile pour les indicatric
 mesh th = square(nelx, nely, [a + l*x, b + h*y], flags=fla, label=lab, region=reg);
 ```
 
-### Maillage d'une surface fermée par un contour paramétré
+### Maillage d'une surface fermée par un contour paramétré <!-- omit in toc -->
 
 On prend pour exemple le disque de rayon $r = 1$ centré en le point $\begin{bmatrix} 1 \\ 1 \end{bmatrix}$.
 
@@ -864,7 +922,7 @@ border da(t=0, 1){    // bord gauche du rectangle
 mesh th = buildmesh(ab(nelx) + bc(nely) + cd(nelx) + da(nely));
 ```
 
-### Mailler un domaine privé d'un sous-domaine
+### Mailler un domaine privé d'un sous-domaine <!-- omit in toc -->
 
 On prend l'exemple du disque de rayon $r_1 = 3$ centré en $0$ auquel on retire le disque centré en $\begin{bmatrix} 1 \\ 1 \end{bmatrix}$ de rayon $r_0 = 1$.
 
@@ -890,7 +948,7 @@ border c(t=0, 1){
 mesh th = buildmesh(C(nel) + c(-nel/3));
 ```
 
-### Maillage d'une surface plongée dans l'espace
+### Maillage d'une surface plongée dans l'espace <!-- omit in toc -->
 
 On prend l'exemple de la sphère de rayon $1$.
 
@@ -906,7 +964,7 @@ func torez = sin(2*pi*y);
 meshS th = square3(nel, nel, [torex, torey, torez]);
 ```
 
-### Un rectangle en trois dimensions
+### Un rectangle en trois dimensions <!-- omit in toc -->
 
 De même, on maille le rectangle $[a, a+L] \times [b, b+l] \times [c, c+h]$ à l'aide du script
 
@@ -939,7 +997,7 @@ int reg = 1;                          // label du rectangle, utile identifier le
 mesh3 th = cube(nelx, nely, nelz, [a + L*x, b + l*y, c + h*z], flags=fla, label=lab, region=reg);
 ```
 
-### Remarque
+### Remarque <!-- omit in toc -->
 
 Les maillages peuvent être affichés par la fonction `plot()`
 
@@ -960,7 +1018,7 @@ medit("Maillage", th);
 
 
 
-# Les formulations variationnelles
+# Les formulations variationnelles <!-- omit in toc -->
 
 En général, une équation aux dérivées partielles peut s'étudier sous une forme variationnelle équivalente. Cette forme sera alors discrétisée à l'aide de la méthode de Galerkin et on aboutira à un système linéaire discret portant sur les degrés de libertés de l'interpolée de la solution dans un espace de dimension finie adapté.
 
@@ -970,9 +1028,9 @@ $$
 \underbrace{\int_\Omega \nabla u^T \nabla v d\mathbf{x}}_{a(u, v)} - \int_{\partial \Omega} \partial_{\vec{n}} u \cdot v d\gamma = \underbrace{\int_{\Omega} f \cdot v d\mathbf{x}}_{l(v)}
 $$
 
-## Implémentation des formes $a(\cdot, \cdot)$ et $l(\cdot)$
+## Implémentation des formes $a(\cdot, \cdot)$ et $l(\cdot)$ <!-- omit in toc -->
 
-### `FEniCs/Python3`
+### `FEniCs/Python3` <!-- omit in toc -->
 
 ```python
 from dolfinx.fem import form
@@ -987,7 +1045,7 @@ l = form(rhs(eq))
 
 L'intégrale sur le domaine est implicite, bien que marquée par le produit par `dx` - pour une intégrale surfacique, on utilise `ds`, c.f la section suivante ; on n'implémente que l'intégrande.
 
-### `FreeFem++`
+### `FreeFem++` <!-- omit in toc -->
 
 La déclaration d'une forme variationnelle par le mot-clef `varf` n'impose pas de déclarer au préalable les champs éléments finis notés comme arguments. A ce stade, ils ne sont que des symboles abstraits.
 
@@ -998,7 +1056,7 @@ varf l(unused, v) = int2d(th)( f*v );
 
 Contrairement à l'écriture dans `FEniCs/Python`, on spécifie explicitement que l'intégrale se prend sur le maillage `th` représentant $\Omega$. 
 
-### `Rheolef`
+### `Rheolef` <!-- omit in toc -->
 
 ```cpp
 form a = integrate( dot( grad_h(u), grad_h(v) ) );
@@ -1007,7 +1065,7 @@ field l = integrate( f(d)*v );
 
 Contrairement aux deux langages `FEniCs` ou `FreeFem++`, les deux formes ne partagent pas le même type (au sens large). Ici, le second membre est de type `field`, réservé pour les champs - ou fonctions - éléments finis.
 
-## implémentation de $F(u, v) = 0$
+## implémentation de $F(u, v) = 0$ <!-- omit in toc -->
 
 On propose un autre exemple, non-linéaire. Soit à résoudre sur une région du plan $\Omega$ le système d'Oseen homogène
 
@@ -1024,7 +1082,7 @@ $$ \Longrightarrow \underbrace{\int_\Omega \left[ \left( (\mathbf{u} \cdot \nabl
 
 où $\mathbf{u}, \mathbf{v} : \Omega \rightarrow \mathbb{R}^2$ ; $p, q : \Omega \rightarrow \mathbb{R}$.
 
-### `FEniCs/Python3`
+### `FEniCs/Python3` <!-- omit in toc -->
 
 Une première implémentation est proposée avec `u` une instance de `V` un objet `dolfinx.fem.FunctionSpace` dont les éléments sont à valeurs vectorielles tandis que `Q` est un espace de fonctions à valeurs scalaires.
 
@@ -1046,7 +1104,7 @@ On aurait pu proposer un triplet de fonctions scalaires et implémenter plutôt,
 # TO DO
 ```
 
-### `FreeFem++`
+### `FreeFem++` <!-- omit in toc -->
 
 On décompose l'inconnue qui est un champ de vecteurs en les deux fonctions scalaires que sont ses coordonnées, ainsi $\mathbf{u} = \begin{pmatrix} u^x \\ u^y \end{pmatrix}$ et on traite les trois inconnues simultanément.
 
@@ -1062,11 +1120,11 @@ varf F([ux, uy, p], [vx, vy, q])
 
 Les deux premières lignes de l'intégrale représentent le terme $(\mathbf{u} \cdot \nabla)\mathbf{u}^T \mathbf{v}$, la troisième ligne représente la contraction totale $$ \nabla \mathbf{u} : \nabla \mathbf{v} = \sum_{i, j} \partial_i u^j \times \partial_i v^j $$ et enfin les quatrième et cinquième lignes représentent respectivement les expressions $- p \text{div}(\mathbf{v})$ et $- q \text{div}(\mathbf{u})$
 
-## Les conditions aux limites de Dirichlet et de Neumann
+## Les conditions aux limites de Dirichlet et de Neumann <!-- omit in toc -->
 
 Supposons que $\partial \Omega = \Gamma_D \cup \Gamma_N$, union disjointe. On impose une condition de Dirichlet $u \equiv g$ sur $\Gamma_D$ et une condition de Neumann $\partial_{\vec{n}}u \equiv h$ sur $\Gamma_N$.
 
-### `FEniCs/Python3`
+### `FEniCs/Python3` <!-- omit in toc -->
 
 La condition de Dirichlet sur `u` s'écrit
 
@@ -1100,7 +1158,7 @@ bcn = h * v * ds
 
 La fonction numérique `h` utilise la variable `x` construite à l'aide de `SpatialCoordinate` et `FEniCs` construit alors la mesure surfacique `ds`. Etant donné que $v$ est nulle sur $\partial \Omega_D$, intégrer sur $\partial \Omega$ en entier n'a pas de conséquence.
 
-### `FreeFem++`
+### `FreeFem++` <!-- omit in toc -->
 
 La condition de Dirichlet sur `u` s'écrit
 
@@ -1116,13 +1174,13 @@ varf neumann(unused, v) = int1d(th, N)( h*v );
 
 et $N$ est encore un entier, le label du bord portant la condition de Neumann.
 
-## Conditions aux limites de Dirichlet faible
+## Conditions aux limites de Dirichlet faible <!-- omit in toc -->
 
-## Conditions aux limites de Robin
+## Conditions aux limites de Robin <!-- omit in toc -->
 
-## Remarques
+## Remarques <!-- omit in toc -->
 
-### `FreeFem++` : `problem` et `solve`
+### `FreeFem++` : `problem` et `solve` <!-- omit in toc -->
 
 > Lorsqu'on ne souhaite pas travailler explicitement sur le système linéaire construit à partir de $a(\cdot, \cdot)$ et de $l(\cdot)$, on peut utiliser le mot-clef `problem` comme dans
 > ```cpp
@@ -1134,4 +1192,4 @@ et $N$ est encore un entier, le label du bord portant la condition de Neumann.
 > ```
 > L'instruction `solve Poisson(u, v) = ` résoud dès sa déclaration le problème en modifiant les degrés de liberté de `u`. Comme pour `problem`, `u` doit être déclarée comme fonction élément fini avant la déclaration du problème. Ces trois méthodes sont dans l'ordre décroissant de leur performance.
 
-# Les structures algébriques abstraites avec `SageMath`
+# Les structures algébriques abstraites avec `SageMath` <!-- omit in toc -->
