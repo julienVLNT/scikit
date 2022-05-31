@@ -56,20 +56,22 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
   - [`FreeFem++`](#freefem-7)
     - [Un rectangle en deux dimensions](#un-rectangle-en-deux-dimensions)
     - [Maillage d'une surface fermée par un contour paramétré](#maillage-dune-surface-fermée-par-un-contour-paramétré)
+    - [Mailler un domaine privé d'un sous-domaine](#mailler-un-domaine-privé-dun-sous-domaine)
     - [Un rectangle en trois dimensions](#un-rectangle-en-trois-dimensions)
     - [Remarque](#remarque)
 - [Les espaces d'interpolation](#les-espaces-dinterpolation)
+  - [`FreeFem++`](#freefem-8)
 - [Les formulations variationnelles](#les-formulations-variationnelles)
   - [Implémentation des formes $a(\cdot, \cdot)$ et $l(\cdot)$](#implémentation-des-formes-acdot-cdot-et-lcdot)
     - [`FEniCs/Python3`](#fenicspython3)
-    - [`FreeFem++`](#freefem-8)
+    - [`FreeFem++`](#freefem-9)
     - [`Rheolef`](#rheolef)
   - [implémentation de $F(u, v) = 0$](#implémentation-de-fu-v--0)
     - [`FEniCs/Python3`](#fenicspython3-1)
-    - [`FreeFem++`](#freefem-9)
+    - [`FreeFem++`](#freefem-10)
   - [Les conditions aux limites de Dirichlet et de Neumann](#les-conditions-aux-limites-de-dirichlet-et-de-neumann)
     - [`FEniCs/Python3`](#fenicspython3-2)
-    - [`FreeFem++`](#freefem-10)
+    - [`FreeFem++`](#freefem-11)
   - [Conditions aux limites de Dirichlet faible](#conditions-aux-limites-de-dirichlet-faible)
   - [Conditions aux limites de Robin](#conditions-aux-limites-de-robin)
   - [Remarques](#remarques-2)
@@ -811,6 +813,64 @@ border C(t=0, 1){
 mesh th = buildmesh(C(nelC));
 ```
 
+Dans le cas où le contour est une concaténation de chemins, il faut parcourir ce chemin de sorte à respecter l'orientation. Par exemple, reprenons le maillage du rectangle précédent en définissant son contour.
+
+```cpp
+real l = 5.0;    // longueur du rectangle
+real h = 1.0;    // hauteur du rectangle
+
+int nely = 5;           // nombre d'éléments sur un bord vertical
+int nelx = l/h*nely;    // nombre d'éléments sur un bord horizontal
+
+border ab(t=0, 1){    // bord inférieur du rectangle
+    x = t*l;
+    y = 0;
+}
+
+border bc(t=0, 1){    // bord droit du rectangle
+    x = l;
+    y = t*h;
+}
+
+border cd(t=0, 1){    // bord supérieur du rectangle
+    x = (1-t)*l;
+    y = h;
+}
+
+border da(t=0, 1){    // bord gauche du rectangle
+    x = 0;
+    y = (1-t)*h;
+}
+
+mesh th = buildmesh(ab(nelx) + bc(nely) + cd(nelx) + da(nely));
+```
+
+### Mailler un domaine privé d'un sous-domaine
+
+On prend l'exemple du disque de rayon $r_1 = 3$ centré en $0$ auquel on retire le disque centré en $\begin{bmatrix} 1 \\ 1 \end{bmatrix}$ de rayon $r_0 = 1$.
+
+```cpp
+real x0 = 1.0;
+real y0 = 1.0;
+real r0 = 1.0;
+
+real r1 = 3.0;
+
+int nel  = 64;
+
+border C(t=0, 1){
+    x = r1 * cos(2*pi*t);
+    y = r1 * sin(2*pi*t);
+}
+
+border c(t=0, 1){
+    x = x0 + r0*cos(2*pi*t);
+    y = y0 + r0*sin(2*pi*t);
+}
+
+mesh th = buildmesh(C(nel) + c(-nel/3));
+```
+
 ### Un rectangle en trois dimensions
 
 De même, on maille le rectangle $[a, a+L] \times [b, b+l] \times [c, c+h]$ à l'aide du script
@@ -860,6 +920,10 @@ medit("Maillage", th);
 ```
 
 # Les espaces d'interpolation
+
+## `FreeFem++`
+
+
 
 # Les formulations variationnelles
 
