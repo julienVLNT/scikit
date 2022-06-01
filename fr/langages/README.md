@@ -735,110 +735,17 @@ On note que x: float n'est qu'une indication, de même que -> float. Le programm
 
 # Les fonctions numériques spéciales
 
-## Exponentielle et logarithmes <!-- omit in toc -->
+## `FreeFem++` <!-- omit in toc -->
 
-| **Fonction**                                      | `FreeFem++` | `Julia` | `Python/Numpy` |
-|---------------------------------------------------|------------:|--------:|---------------:|
-| $e$                                               | `exp`       |  | `numpy.exp`    |
-| $\ln$                                             | `ln`        | | `numpy.log`    |
-| $\ln_2$                                           | X           | | `numpy.log2`   |
-| $\log$                                            | `log10`     | | `numpy.log10`  |
+De nombreuses fonctions spéciales sont implémentées dans le langage. On les trouve listées dans la documentation.
 
-## Trigonométrie <!-- omit in toc -->
+## `Julia` <!-- omit in toc -->
 
-| **Fonction**                                      | `FreeFem++`          |
-|---------------------------------------------------|-----------------------:|
-| $\cos$                                            | `cos`                  |
-| $\arccos$                                         | `acos`                 |
-| $\sin$                                            | `sin`                  |
-| $\arcsin$                                         | `asin`                 |
-| $\tan$                                            | `tan`                  |
-| $\arctan$                                         | `atan`                 |
+La librairie `Julia/SpecialFunctions.jl` contient un certain nombre de fonctions spéciales
 
-## Trigonométrie hyperbolique <!-- omit in toc -->
+## `Python3` <!-- omit in toc -->
 
-| **Fonction**     | `FreeFem++` |
-|------------------|------------:|
-| $\cosh$          | `cosh`      |
-| $\text{arccosh}$ | `acosh`     |
-| $\sinh$          | `sinh`      |
-| $\text{arcsinh}$ | `asinh`     |
-| $\tanh$          | `tanh`      |
-| $\text{arctanh}$ | `atanh`     |
-
-## Fonctions de Bessel <!-- omit in toc -->
-
-Les fonctions de Bessel sont des solutions canoniques de l'équation différentielle ordinaire
-
-$$ x^2 \dfrac{d^2y}{dx^2}(x) + x \dfrac{dy}{dx}(x) + (x^2 - \alpha^2) y(x) = 0 $$
-
-où $\alpha \in \mathbb{C}$. Les fonctions de Bessel se distinguent en deux espèces, la première espèce comportant les solutions définies en $0$ et de seconde espèce qui ne le sont pas mais qui y admettent une limite infinie.
-
-> **Définition**
-> Fonctions de Bessel de première espèce d'ordre entier $\alpha = n \in \mathbb{N}$
-> $$ J_n(x) := \sum_{p=0}^{\infty} \dfrac{(-1)^p}{p! (n+p)!} \left( \dfrac{x}{2} \right)^{2p+n} $$
-
-> **Définition**
-> Fonctions de Bessel de deuxième espèce d'ordre entier $\alpha = n \in \mathbb{N}$
-> $$ Y_n(x) := \lim_{\lambda \rightarrow n} \dfrac{J_\lambda(x) \cos(\lambda \pi) - J_{-\lambda}(x)}{\sin(\lambda \pi)} $$
-
-| **Fonction**                        | `FreeFem++` |
-|-------------------------------------|------------:|
-| $1^{\text{ère}}$ espèce d'ordre $0$ | `j0`        |
-| $1^{\text{ère}}$ espèce d'ordre $1$ | `j1`        |
-| $1^{\text{ère}}$ espèce d'ordre $n$ | `jn(n, x)`  |
-| $2^{\text{ème}}$ espèce d'ordre $0$ | `y0`        |
-| $2^{\text{ème}}$ espèce d'ordre $1$ | `y1`        |
-| $2^{\text{ème}}$ espèce d'ordre $n$ | `yn(n, x)`  |
-
-## Fonction $\Gamma$ et variantes <!-- omit in toc -->
-
-La fonction $\Gamma$ est une généralisation de la fonction factorielle définie sur $\mathbb{N}$ aux nombres complexes. Elle vérifie la relation fonctionnelle $\Gamma(z+1) = z \Gamma(z)$.
-
-> **Définition** $\forall z \in \mathbb{C} \setminus -\mathbb{N}$
-> $$ \Gamma(z) := \int_{0}^{+\infty} t^{z-1} e^{-t} dt $$
-
-Elle converge absolument sur le demi-plan $\{ \mathcal{Re}(z) > 0 \}$ et elle se prolonge de manière unique en une fonction méromorphe sur $\mathbb{C} \setminus -\mathbb{N}$, $-\mathbb{N}$ étant des pôles pour le prolongement.
-
-| **Fonction**      | `FreeFem++` |
-|:------------------|------------:|
-| $\Gamma$          | `tgamma`    |
-| $\ln(\|\Gamma\|)$ | `lgamma`    |
-
-## Fonctions erreur et variantes <!-- omit in toc -->
-
-> **Définition** La fonction erreur `erf` est la fonction entière
-> $$ \text{erf}(x) := \dfrac{2}{\sqrt{\pi}} \int_0^x e^{-t^2}dt $$
-
-> **Définition** La fonction $\text{erfc}$ est définie par
-> $$ \text{erfc}(x) := 1 - \text{erf}(x) $$
-
-> **Définition** La fonction $\text{erfcx}$ est 
-> $$ \text{erfcx}(x) := e^{x^2} \text{erfc}(x) $$
-
-> **Définition** La fonction $\text{logerfc}$ est
-> $$ \text{logerfc}(x) := \ln(\text{erfc})(x) $$
-
-> **Définition** La fonction $\text{logerfcx}$ est
-> $$ \text{logerfcx}(x) := \ln(erfcx)(x) $$
-
-> **Définition** La fonction $\text{erfi}$ est 
-> $$ \text{erfi}(x) := -i \text{erf}(ix) $$
-
-> **Définition** La fonction $\text{dawson}$ est
-> $$ \text{dawson}(x) := \dfrac{\sqrt{\pi}}{2} e^{-x^2} \text{erfi}(x) $$
-
-| **Fonction**       | `FreeFem++` | `Julia/SpecialFunctions.jl` |
-|:-------------------|------------:|----------------------------:|
-| $\text{erf}$       | `erf`       | `erf`                       | 
-| $\text{erfc}$      | `erfc`      | `erfc`                      |
-| $\text{erfcx}$     | X           | `erfcx`                     |
-| $\text{logerfc}$   | X           | `logerfc`                   | 
-| $\text{logerfcx}$  | X           | `logerfcx`                  |
-| $\text{erfi}$      | X           | `erfi`                      |
-| $\text{dawson}$    | X           | `dawson`                    |
-| $\text{erf}^{-1}$  | X           | `erfinv`                    |
-| $\text{erfc}^{-1}$ | X           | `erfcinv`                   |    
+De très nombreuses fonctions spéciales sont implémentées en langage Python dans les différentes librairies de calcul scientifique. `Numpy` contient une excellente base de ces fonctions, `Scipy` en contient également, les librairies de statistiques...
 
 # Les maillages
 
