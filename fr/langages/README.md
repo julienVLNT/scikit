@@ -8,14 +8,17 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
 - [Les nombres rationnels](#les-nombres-rationnels)
 - [Les nombres réels](#les-nombres-réels)
 - [Les nombres complexes](#les-nombres-complexes)
+- [Synthèse sur les types numériques](#synthèse-sur-les-types-numériques)
 - [Les constantes](#les-constantes)
 - [Les vecteurs](#les-vecteurs)
 - [Les matrices](#les-matrices)
 - [Les tenseurs](#les-tenseurs)
-- [Algèbre creuse](#algèbre-creuse)
+- [Objets pour l'algèbre linéaire creuse](#objets-pour-lalgèbre-linéaire-creuse)
+- [Synthèse de l'algèbre linéaire](#synthèse-de-lalgèbre-linéaire)
 - [Les fonctions (et macro ou lambda expressions...)](#les-fonctions-et-macro-ou-lambda-expressions)
 - [Les fonctions numériques spéciales](#les-fonctions-numériques-spéciales)
 - [Les maillages](#les-maillages)
+- [Attributs et méthodes pour les maillages](#attributs-et-méthodes-pour-les-maillages)
 - [Les espaces d'interpolation](#les-espaces-dinterpolation)
 
 # Les booléens 
@@ -279,6 +282,8 @@ w ** z                             # exponentiation
 w is z                             # test d'identité
 w == z                             # test d'égalité
 ```
+
+# Synthèse sur les types numériques
 
 # Les constantes
 
@@ -556,7 +561,13 @@ np.tensordot(A, B, axes=0)         # produit tensoriel
 
 # Les tenseurs
 
+## Généralités... <!-- omit in toc -->
+
+
+
 ## `Julia/Tensors.jl` <!-- omit in toc -->
+
+La librairie `Tensors.jl` a pour but d'assembler et de manipuler uniquement les tenseurs usuels qu'on trouve en physique et en ingénierie. On traite les tenseurs, symétriques ou non, de rang $2$ ou $4$ construits sur les espaces $\mathbb{R}^2$ ou $\mathbb{R}^3$.
 
 ```julia
 
@@ -568,13 +579,19 @@ np.tensordot(A, B, axes=0)         # produit tensoriel
 
 ```
 
+## `SageMath` <!-- omit in toc -->
+
+```python
+
+```
+
 ## `Tensorflow/Python3` <!-- omit in toc -->
 
 ```python
 
 ```
 
-# Algèbre creuse
+# Objets pour l'algèbre linéaire creuse
 
 ## `FreeFem++` <!-- omit in toc -->
 
@@ -588,11 +605,15 @@ np.tensordot(A, B, axes=0)         # produit tensoriel
 
 ```
 
-## `Python3/Scipy` <!-- omit in toc -->
+## `Python3/Scipy.sparse` <!-- omit in toc -->
 
 ```python
 
 ```
+
+# Synthèse de l'algèbre linéaire
+
+
 
 # Les fonctions (et macro ou lambda expressions...)
 
@@ -1011,6 +1032,30 @@ load "medit"
 medit("Maillage", th);
 ```
 
+# Attributs et méthodes pour les maillages
+
+| **Attributs et méthodes usuels**                  | `FreeFem++`             |
+|:--------------------------------------------------|------------------------:|
+| Aire du maillage                                  | `Th.area`               |
+| Périmètre du maillage                             | `Th.bordermeasure`      |
+| Nombre de triangles                               | `Th.nt`                 |
+| Nombre d'arêtes                                   | `Th.nv`                 |
+| Nombre d'éléments au bord                         | `Th.nbe`                | 
+|---------------------------------------------------|-------------------------|
+| Triangle `k` du maillage                          | `Th[k]`                 |
+| Sommet `i` du triangle `k`                        | `Th[k][i]`              |
+| Sommet `i` du maillage                            | `Th(i)`                 |
+| Indice du triangle contenant `(x,y)`              | `Th(x, y).nuTriangle`   |
+| Indice de la région contenant `(x,y)`             | `Th(x, y).region`       |
+|---------------------------------------------------|-------------------------|
+| Aire du triangle `k`                              | `Th[k].area`            |
+| Région du triangle `k`                            | `Th[k].region`          |
+| Triangle adjacent au triangle `k` par l'arête `e` | `Th[k].adj(e)`          |
+|---------------------------------------------------|-------------------------|
+| Arête `l` de l'élément sur le bord `k`            | `Th.be(k)[l]`           |
+| Triangle de l'élément sur le bord `k`             | `Th.be(k).Element`      |
+| Arête du triangle de l'élément sur le bord `k`    | `Th.be(k).whoinElement` |
+
 # Les espaces d'interpolation
 
 ## `FreeFem++` <!-- omit in toc -->
@@ -1022,8 +1067,6 @@ fespace V(th, P0);
 ```
 
 ## `Python3/FEniCs` <!-- omit in toc -->
-
-
 
 # Les formulations variationnelles <!-- omit in toc -->
 
