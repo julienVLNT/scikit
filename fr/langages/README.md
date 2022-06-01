@@ -19,7 +19,10 @@ Ce document est là pour porter un regard croisé sur la représentation de stru
 - [Les fonctions numériques spéciales](#les-fonctions-numériques-spéciales)
 - [Les maillages](#les-maillages)
 - [Attributs et méthodes pour les maillages](#attributs-et-méthodes-pour-les-maillages)
-- [Les espaces d'interpolation](#les-espaces-dinterpolation)
+- [L'interpolation : espaces et champs](#linterpolation--espaces-et-champs)
+- [Implémentation des formes linéaires et résolution](#implémentation-des-formes-linéaires-et-résolution)
+  - [`FreeFem++`](#freefem)
+- [Les conditions aux limites dans les éléments finis](#les-conditions-aux-limites-dans-les-éléments-finis)
 
 # Les booléens 
 
@@ -1017,6 +1020,12 @@ int reg = 1;                          // label du rectangle, utile identifier le
 mesh3 th = cube(nelx, nely, nelz, [a + L*x, b + l*y, c + h*z], flags=fla, label=lab, region=reg);
 ```
 
+### Maillage par *isolines* et application au maillage issu d'une photographie <!-- omit in toc -->
+
+```cpp
+
+```
+
 ### Remarque <!-- omit in toc -->
 
 Les maillages peuvent être affichés par la fonction `plot()`
@@ -1056,190 +1065,109 @@ medit("Maillage", th);
 | Triangle de l'élément sur le bord `k`             | `Th.be(k).Element`      |
 | Arête du triangle de l'élément sur le bord `k`    | `Th.be(k).whoinElement` |
 
-# Les espaces d'interpolation
+# L'interpolation : espaces et champs
 
 ## `FreeFem++` <!-- omit in toc -->
 
-Un espace d'interpolation est introduit par le mot-clef `fespace` pour *finite element space*. Etant donné un maillage `mesh th`, on construit la base d'interpolation $P_0$ sur le maillage avec
+Un espace d'interpolation est introduit par le mot-clef `fespace` pour *finite element space*. A la déclaration, on renseigne le maillage ainsi qu'une base d'interpolation.
 
 ```cpp
-fespace V(th, P0);
+fespace Vh(Th, Ph);
 ```
 
-## `Python3/FEniCs` <!-- omit in toc -->
-
-# Les formulations variationnelles <!-- omit in toc -->
-
-En général, une équation aux dérivées partielles peut s'étudier sous une forme variationnelle équivalente. Cette forme sera alors discrétisée à l'aide de la méthode de Galerkin et on aboutira à un système linéaire discret portant sur les degrés de libertés de l'interpolée de la solution dans un espace de dimension finie adapté.
-
-Dans les langages spécialisés pour les éléments finis, il est possible de déclarer ces formes en tant que type (ou objet) et de les manipuler. Par exemple, considérons 
-
-$$
-\underbrace{\int_\Omega \nabla u^T \nabla v d\mathbf{x}}_{a(u, v)} - \int_{\partial \Omega} \partial_{\vec{n}} u \cdot v d\gamma = \underbrace{\int_{\Omega} f \cdot v d\mathbf{x}}_{l(v)}
-$$
-
-## Implémentation des formes $a(\cdot, \cdot)$ et $l(\cdot)$ <!-- omit in toc -->
-
-### `FEniCs/Python3` <!-- omit in toc -->
-
-```python
-from dolfinx.fem import form
-from ufl import dx, grad, inner
-
-eq  = inner(grad(u), grad(v)) * dx
-eq += inner(f, v) * dx
-
-a = form(lhs(eq))
-l = form(rhs(eq))
-```
-
-L'intégrale sur le domaine est implicite, bien que marquée par le produit par `dx` - pour une intégrale surfacique, on utilise `ds`, c.f la section suivante ; on n'implémente que l'intégrande.
-
-### `FreeFem++` <!-- omit in toc -->
-
-La déclaration d'une forme variationnelle par le mot-clef `varf` n'impose pas de déclarer au préalable les champs éléments finis notés comme arguments. A ce stade, ils ne sont que des symboles abstraits.
+où on a un maillage `Th` et une base d'interpolation `Ph` . On déclare un champ élément fini à l'aide de
 
 ```cpp
-varf a(u, v) = int2d(th)( dx(u)*dx(v) + dy(u)*dy(v) );
-varf l(unused, v) = int2d(th)( f*v );
+Vh u;
 ```
 
-Contrairement à l'écriture dans `FEniCs/Python`, on spécifie explicitement que l'intégrale se prend sur le maillage `th` représentant $\Omega$. 
+## Synthèse sur les espaces d'interpolation et les champs éléments finis <!-- omit in toc -->
 
-### `Rheolef` <!-- omit in toc -->
+# Implémentation des formes linéaires et résolution
 
-```cpp
-form a = integrate( dot( grad_h(u), grad_h(v) ) );
-field l = integrate( f(d)*v );
-```
+La construction d'un cadre adapté à l'analyse par éléments finis d'une équation aux dérivées partielles implique de commencer par la recherche d'une formulation variationnelle équivalente à la formulation forte d'une équation. La détermination d'une telle forme utilise le théorème de Green et ses corollaires :
 
-Contrairement aux deux langages `FEniCs` ou `FreeFem++`, les deux formes ne partagent pas le même type (au sens large). Ici, le second membre est de type `field`, réservé pour les champs - ou fonctions - éléments finis.
+> **Théorème (Green)** $\forall u, v \in \text{H}^1(\Omega)$,
+> $$ \int_\Omega (\Delta u) \, v \; d\mathbf{x} + \int_\Omega \nabla u^T \, \nabla v \; d\mathbf{x} = \int_{\partial \Omega} v \; (\nabla u^T \, \mathbf{n}) \; d\gamma(\mathbf{x}) $$
 
-## implémentation de $F(u, v) = 0$ <!-- omit in toc -->
-
-On propose un autre exemple, non-linéaire. Soit à résoudre sur une région du plan $\Omega$ le système d'Oseen homogène
+Par exemple, on considère l'équation de Poisson posée sur $\text{H}^1(\Omega)$. Soit $f \in L^2(\Omega)$,
 
 $$
 \left\{
-\begin{array}{rl}
-\text{div}(\mathbf{u}) & = 0 \\
-\left( \mathbf{u} \cdot \nabla \right) \mathbf{u} - \Delta \mathbf{u} + \nabla p & = 0 
-\end{array}
+    \begin{array}{rr}
+        - \Delta u = f & \Omega \\
+        u_{|\partial \Omega} = 0
+    \end{array}
 \right.
 $$
 
-$$ \Longrightarrow \underbrace{\int_\Omega \left[ \left( (\mathbf{u} \cdot \nabla)\mathbf{u} \right)^T \cdot \mathbf{v} + \nabla \mathbf{u} : \nabla \mathbf{v} + p \text{div}(\mathbf{v}) - q \text{div}(\mathbf{u}) \right] d\mathbf{x} }_{F(u,v)} = 0 $$
+sur un ouvert connexe régulier $\Omega$. Soit $v \in \text{H}_0^1(\Omega)$, on intègre l'équation de Poisson sur le domaine après l'avoir multipliée par $v$.
 
-où $\mathbf{u}, \mathbf{v} : \Omega \rightarrow \mathbb{R}^2$ ; $p, q : \Omega \rightarrow \mathbb{R}$.
+$$ - \int_\Omega (\Delta u) \, v \; \mathbf{dx} = \int_\Omega f \, v \; d\mathbf{x} $$
 
-### `FEniCs/Python3` <!-- omit in toc -->
+L'application du théorème de Green nous donne la forme variationnelle de Poisson 
 
-Une première implémentation est proposée avec `u` une instance de `V` un objet `dolfinx.fem.FunctionSpace` dont les éléments sont à valeurs vectorielles tandis que `Q` est un espace de fonctions à valeurs scalaires.
+$$ \int_\Omega (\nabla u)^T \, \nabla v \; d\mathbf{x} - \int_{\partial \Omega} v \; (\nabla u^T \, \mathbf{n}) \; d\gamma(\mathbf{x}) = \int_\Omega f \, v \; d\mathbf{x} $$
 
-```python
-from dolfinx.fem import form
-from ufl import div, dx, inner, nabla_grad
+Par définition, $v = 0$ sur le bord $\partial \Omega$, d'où
 
-eq  = inner( dot(u, nabla_grad(u)), v )*dx
-eq += inner( nabla_grad(u), nabla_grad(v) )
-eq -= p * div(v)
-eq -= q * div(u)
+$$ \boxed{ \int_\Omega (\nabla u)^T \, \nabla v \; d\mathbf{x} = \int_\Omega f \, v \; d\mathbf{x} } $$
 
-F = form(lhs(F))
+## `FreeFem++`
+
+Une première manière de le résoudre est de construire les deux formes $a(\cdot, \cdot)$ et $l(\cdot)$ définies comme étant les membre de gauche et de droite respectivement de l'équation encadrée. Les conditions aux limites s'ajoutent dans la forme bilinéaire $a(\cdot, \cdot)$. On suppose construit un maillage en deux dimensions `mesh Th` et un espace élément fini `fespace Vh`.
+
+```
+// Déclaration de la fonction second membre
+func f = 1 - x^2 - y^2;
+
+// Macro gradient d'un champ scalaire
+macro grad(u) [dx(u), dy(u)] //
+
+// Implémentation des formes a(.,.) et l(.)
+varf a(u, v) = int2d(Th)( grad(u)' * grad(v) ) + on(1, 2, 3, 4, u=0);
+
+varf l(unused, v) = int2d(Th)( f * v );
+
+// Assemblage du système linéaire associé la formulation variationnelle
+matrix A = a(Vh, Vh);
+real[int] b = l(0, Vh);
+
+// Résolution du problème
+Vh u = A^(-1)*b;
 ```
 
-On aurait pu proposer un triplet de fonctions scalaires et implémenter plutôt, avec les variables `(ux, uy, p)` et `(vx, vy, q)`, le problème
+Les fonctions données dans un problème, telles que le second membre $f$, des conditions aux limites non-homogènes, des fonctions paramètres, et à valeurs scalaires, se déclarent en tant que fonctions `func f`. On rappelle que les identificateurs `x`, `y`, `z` sont globaux. D'autre part, toute transformation sur les fonctions éléments finis, comme `grad(u)`, s'implémentent sous la forme de macro. Il en va de même des paramètres à valeurs vectorielles ou matricielles. Le système linéaire est paramétrable, on se réfère à la section sur les [matrices](#objets-pour-lalgèbre-linéaire-creuse).
 
-```python
-# TO DO
+D'autres implémentations du même problème existent. Une seconde manière de résoudre le même problème utilise le mot-clef `problem`.
+
+```
+func f = 1 - x^2 - y^2;
+
+Vh u, v;
+
+macro grad(u) [dx(u), dy(u)] //
+
+problem Poisson(u, v) = int2d(Th)( grad(u)' * grad(v) ) - int2d(Th)( f * v ) + on(1, 2, 3, 4, u=0);
+
+Poisson;
 ```
 
-### `FreeFem++` <!-- omit in toc -->
+L'instruction `Poisson;` modifie la fonction `u` (ses degrés de liberté) de sorte qu'elle stocke la solution. On note que contrairement à l'usage du mot-clef `varf`, il faut explicitement déclarer les fonctions élément fini `u` et `v` avant l'appel. Une troisième méthode implique le mot-clef `solve`, comme dans
 
-On décompose l'inconnue qui est un champ de vecteurs en les deux fonctions scalaires que sont ses coordonnées, ainsi $\mathbf{u} = \begin{pmatrix} u^x \\ u^y \end{pmatrix}$ et on traite les trois inconnues simultanément.
+```
+func f = 1 - x^2 - y^2;
 
-```cpp
-varf F([ux, uy, p], [vx, vy, q])
-    = int2d(th)( ( ux*dx(ux) + uy*dy(ux) )*vx
-               + ( ux*dx(uy) + uy*dy(uy) )*vy 
-               + ( dx(ux)*dx(vx) + dy(ux)*dy(vx) + dx(uy)*dx(vy) + dy(uy)*dy(vy) ) 
-               - ( p * (dx(vx) + dy(vy)) )
-               - ( q * (dx(ux) + dy(uy)) )
-    );
+Vh u, v;
+
+macro grad(u) [dx(u), dy(u)] //
+
+solve Poisson(u, v) = int2d(Th)( grad(u)' * grad(v) ) - int2d(Th)( f * v ) + on(1, 2, 3, 4, u=0);
 ```
 
-Les deux premières lignes de l'intégrale représentent le terme $(\mathbf{u} \cdot \nabla)\mathbf{u}^T \mathbf{v}$, la troisième ligne représente la contraction totale $$ \nabla \mathbf{u} : \nabla \mathbf{v} = \sum_{i, j} \partial_i u^j \times \partial_i v^j $$ et enfin les quatrième et cinquième lignes représentent respectivement les expressions $- p \text{div}(\mathbf{v})$ et $- q \text{div}(\mathbf{u})$
+Cette fois, le problème est résolu à sa déclaration. De nouveau, on déclare explicitement les champs `u` et `v` avant la résolution.
 
-## Les conditions aux limites de Dirichlet et de Neumann <!-- omit in toc -->
+---
 
-Supposons que $\partial \Omega = \Gamma_D \cup \Gamma_N$, union disjointe. On impose une condition de Dirichlet $u \equiv g$ sur $\Gamma_D$ et une condition de Neumann $\partial_{\vec{n}}u \equiv h$ sur $\Gamma_N$.
+# Les conditions aux limites dans les éléments finis
 
-### `FEniCs/Python3` <!-- omit in toc -->
-
-La condition de Dirichlet sur `u` s'écrit
-
-```python
-from dolfinx.fem import dirichletbc, Function, locate_dofs_geometrical
-from numpy import isclose, logical_or
-
-def boundary_D(x):
-    "Détection du bord Dirichlet"
-    return logical_or(np.isclose(x[0], 0), np.isclose(x[0],1))
-
-gh = Function(V)
-gh.interpolate(g)
-
-bcd = dirichletbc(gh, locate_dofs_geometrical(V, boundary_D))
-```
-
-Ici, `g` est une fonction numérique implémentée en `Python` et `V` est un objet `dolfinx.fem.FunctionSpace`, un espace d'interpolation par éléments finis. On note qu'on construit "à la main" une fonction qui décrit la proximité entre un point et le bord : un point appartient au bord à une précision près, celle de `numpy.isclose()`. Une condition de type Neumann s'écrit
-
-```python
-from ufl import SpatialCoordinate
-
-x = SpatialCoordinate(mesh)
-
-def h(x):
-    "Expression de la fonction h"
-    return h(x)
-
-bcn = h * v * ds
-```
-
-La fonction numérique `h` utilise la variable `x` construite à l'aide de `SpatialCoordinate` et `FEniCs` construit alors la mesure surfacique `ds`. Etant donné que $v$ est nulle sur $\partial \Omega_D$, intégrer sur $\partial \Omega$ en entier n'a pas de conséquence.
-
-### `FreeFem++` <!-- omit in toc -->
-
-La condition de Dirichlet sur `u` s'écrit
-
-```cpp
-varf dirichlet(u, unused) = on(D, u=g);
-```
-
-où $D$ est un entier, le label associé au bord de Dirichlet. La condition de Neumann s'écrit
-
-```cpp
-varf neumann(unused, v) = int1d(th, N)( h*v );
-```
-
-et $N$ est encore un entier, le label du bord portant la condition de Neumann.
-
-## Conditions aux limites de Dirichlet faible <!-- omit in toc -->
-
-## Conditions aux limites de Robin <!-- omit in toc -->
-
-## Remarques <!-- omit in toc -->
-
-### `FreeFem++` : `problem` et `solve` <!-- omit in toc -->
-
-> Lorsqu'on ne souhaite pas travailler explicitement sur le système linéaire construit à partir de $a(\cdot, \cdot)$ et de $l(\cdot)$, on peut utiliser le mot-clef `problem` comme dans
-> ```cpp
-> problem Poisson(u, v) = int2d(th)( dx(u)*dx(v) + dy(u)*dy(v) ) - int1d(th, N)( h*v ) - int2d(th)( f*v ) + on(D, u=g);
-> ```
-> L'instruction `Poisson;` calcule la solution du problème variationnel et modifie `u` de sorte que ses degrés de libertés soient la solution du système linéaire associé à `Poisson`. Ce système dépend de la base d'interpolation choisie, il est donc nécessaire que `u` soit déclarée comme fonction élément fini avant la déclaration du problème. On note également qu'on est obligé de renseigner les conditions aux limites. C'est utile lorsqu'on appelle plusieurs fois la résolution du problème, comme dans un problème d'évolution.
-> ```cpp
-> solve Poisson(u, v) = int2d(th)( dx(u)*dx(v) + dy(u)*dy(v) ) - int1d(th, N)( h*v ) - int2d(th)( f*v ) + on(D, u=g);
-> ```
-> L'instruction `solve Poisson(u, v) = ` résoud dès sa déclaration le problème en modifiant les degrés de liberté de `u`. Comme pour `problem`, `u` doit être déclarée comme fonction élément fini avant la déclaration du problème. Ces trois méthodes sont dans l'ordre décroissant de leur performance.
-
-# Les structures algébriques abstraites avec `SageMath` <!-- omit in toc -->
